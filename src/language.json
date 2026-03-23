@@ -1,0 +1,25 @@
+{
+  "title": "Military Calisthenics ",
+  "ageQuestion": {
+    "title": "Military Calisthenics Challenge",
+    "text1": "SELECT YOUR AGE",
+    "text2": ["By continuing you agree to the ","Privacy Policy","and ","Terms of Use"]
+  },
+  "Over70million": {
+    "title": "Over 70 million",
+    "text1": "Users have chosen us",
+    "continue": "Continue"
+  },
+  "HaveYouEver": {
+    "title": "Have you ever done military calisthenics before?",
+    "selectOptions": ["Yes", "No"],
+    "continue": "Continue"
+  },
+  "HaveYouEverSelected": [
+    {
+      "title": "Military Calisthenics is a simple and powerful fitness choice!",
+      "text1": ["It's a workout that relies on ","your own bodyweight."],
+      "text2": ["We'll help you ","get fit ","at home without any equipment!"]
+    }
+  ]
+}
