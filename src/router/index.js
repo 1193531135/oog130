@@ -17,6 +17,11 @@ const routes = [
         name: 'motivatesYou2Exercise',
         component: () => import('@/components/MotivatesYou2Exercise.vue'),
     },
+    {
+        path: '/haveYouEverSelected',
+        name: 'haveYouEverSelected',
+        component: () => import('@/components/HaveYouEverSelected.vue'),
+    }
 ]
 
 const router = createRouter({

@@ -15,7 +15,7 @@
     "selectOptions": ["Yes", "No"],
     "continue": "Continue"
   },
-  "HaveYouEverSelected": [
+  "HaveYouEverSelected": [ 
     {
       "title": "Military Calisthenics is a simple and powerful fitness choice!",
       "text1": ["It's a workout that relies on ","your own bodyweight."],
