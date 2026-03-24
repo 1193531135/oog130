@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Laien';
+    font-weight: 400;
+    src: url('./Laien-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Laien';
+    font-weight: 500;
+    src: url('./Laien-Medium.ttf')
+}
+
+@font-face {
+    font-family: 'Laien';
+    font-weight: 600;
+    src: url('./Laien-SemiBold.ttf')
+}
+
+@font-face {
+    font-family: 'Laien';
+    font-weight: 700;
+    src: url('./Laien-Bold.ttf')
+}

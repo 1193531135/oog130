@@ -5,6 +5,9 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],
   base: './',
+  build:{
+    outDir: 'oog130_ad',
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src') // 👈 关键

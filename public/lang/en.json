@@ -21,5 +21,11 @@
       "text1": ["It's a workout that relies on ","your own bodyweight."],
       "text2": ["We'll help you ","get fit ","at home without any equipment!"]
     }
-  ]
+  ],
+  "MainGoal": {},
+  "MainGoalSelected": [],
+  "MotivatesYou2Exercise": {
+    "title": "What else motivates you to exercise?",
+    "selectOptions": ["Improve sleep\uD83C\uDF1B", "Enhance posture", "Enhance posture", "Reduce Stress", "Develop flexibility", "Improve overall health", "None of the above"]
+  }
 }

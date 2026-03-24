@@ -1,8 +1,22 @@
 <script setup>
+import { ref,onMounted } from "vue";
+import { readLanguage } from "@/tool";
+const loaded = ref(false);
+
+// 加载资源
+async function loadResources() {
+  // 语言不需要双向绑定直接挂载在windows
+  window.languageData = await readLanguage()
+  loaded.value = true;
+}
+
+onMounted(() => {
+  loadResources();
+})
 </script>
 
 <template>
-  <div class="page-container">
+  <div class="page-container" v-if="loaded">
     <div class="head-container">
       <img src="./assets/title-logo.png" class="head-logo">
       <div class="head-text">Military Calisthenics </div>
@@ -31,30 +45,31 @@
     box-sizing: border-box;
     width: 100%;
     .head-logo{
-      height: 3.05vw;
-      width: 3.05vw;
-      margin-right: 1.1vw;
+      height: 44px;
+      width: 44px;
+      margin-right: 16px;
     }
     .head-text {
-      height: 2.5vw;
-      width: 15.83vw;
       color: #85AD1C;
-      font-size: 1.66vw;
+      font-size: 24px;
+      text-transform: uppercase;
+      font-family: Anton;
+      letter-spacing: 1px
     }
-  }
-}
-/* iphone */
-@media screen and (max-width: 389px) {
-  body {
-    background-color: lightblue;
   }
 }
 
-/* ipad */
-@media screen and (min-width: 390px) and (max-width: 1024px) {
-  body {
-    background-color: lightgreen;
+@media (max-width: 768px) {
+  .page-container{
+    .head-container{
+      padding: 16px 24px;
+    }
   }
+}
+
+/* 0-500px 小屏手机 */
+@media (max-width: 500px) {
+
 }
 
 </style>
