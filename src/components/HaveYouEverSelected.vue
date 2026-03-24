@@ -26,12 +26,15 @@ console.log(pageText, viewMode)
       <span class="sub2">{{ pageText.text2[1] }}</span>
       <span class="sub1">{{ pageText.text2[2] }}</span>
     </div>
-    <div class="btn-container btn1" :style="'justify-content:' + btnAlign">
-      <div class="continue-btn" @click="emit('click')">
-        <div>Continue</div>
-        <img src="@/assets/select-item-icon.png">
+    <div class="btn1">
+      <div class="btn-container" :style="'justify-content:' + btnAlign">
+        <div class="continue-btn" @click="emit('click')">
+          <div>Continue</div>
+          <img src="@/assets/select-item-icon.png">
+        </div>
       </div>
     </div>
+
   </div>
   <div v-if="viewMode == 1" class="option2">
     <div class="subtitle">
@@ -41,10 +44,12 @@ console.log(pageText, viewMode)
       <span class="sub1">{{ pageText.text2[0] }}</span>
       <span class="sub2">{{ pageText.text2[1] }}</span>
     </div>
-     <div class="btn-container btn2" :style="'justify-content:' + btnAlign">
-      <div class="continue-btn" @click="emit('click')">
-        <div>Continue</div>
-        <img src="@/assets/select-item-icon.png">
+    <div class="btn2">
+      <div class="btn-container" :style="'justify-content:' + btnAlign">
+        <div class="continue-btn" @click="emit('click')">
+          <div>Continue</div>
+          <img src="@/assets/select-item-icon.png">
+        </div>
       </div>
     </div>
   </div>
@@ -77,8 +82,7 @@ console.log(pageText, viewMode)
 
 .subtitle {
   font-size: 20px;
-  width: 600px;
-  align-self: left;
+  width: 100%;
 
   .sub1 {
     color: #AAA;
@@ -96,9 +100,46 @@ console.log(pageText, viewMode)
   bottom: -128px;
   right: -63px;
 }
-.btn2{
+
+.btn2 {
   position: absolute;
   bottom: -118px;
   right: -89px;
+}
+
+@media (max-width: 600px) {
+
+  .img{
+    width: 180px;
+  }
+  .title{
+    font-size: 28px;
+    padding: 0 20px;
+  }
+  .option1,
+  .option2 {
+    width: 100vw;
+  }
+
+  .subtitle {
+    width: 100vw;
+    padding: 0 20px;
+
+    .sub1 {
+      font-size: 16px;
+    }
+
+    .sub2 {
+      font-size: 16px;
+    }
+  }
+
+  .btn1 {
+    position: initial;
+  }
+
+  .btn2 {
+    position: initial;
+  }
 }
 </style>
