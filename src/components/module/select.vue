@@ -61,6 +61,7 @@ onMounted(() => {
 <template>
   <div class="select-container">
     <div :class="'select-item' + (isActive(item.value) ? ' active' : '')"
+         :style="mutexVal && item.value === mutexVal ? 'margin-top: 20px' : ''"
          v-for="(item, index) in options"
          :key="index"
           @click="change(item.value,item.mutex)"
@@ -71,7 +72,10 @@ onMounted(() => {
       </template>
       <!--   圆形选中按钮样式   -->
       <template v-else>
-        <div class="select-item-sign"></div>
+        <div class="select-item-sign-text" v-if="item.mutex"> ❌</div>
+        <div class="select-item-sign" v-else>
+          <span class="sign-circle"></span>
+        </div>
         <div>{{ item.label }}</div>
       </template>
     </div>
@@ -89,18 +93,40 @@ onMounted(() => {
   font-weight: 500;
   .select-item{
     background-color: #3A3A3A;
+    gap: 18px;
     display: flex;
     align-items: center;
     padding: 0 26px;
-    box-sizing: border-box;
     border: 2px solid rgba(0,0,0,0);
     cursor: pointer;
+    text-align: left;
+    .select-item-sign{
+      min-width:20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2.5px solid white;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .sign-circle{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+    }
   }
   .select-item:active:not(.active){
     opacity: 0.7;
   }
   .select-item.active{
     border-color: var(--style-color);
+    .select-item-sign{
+      border-color: var(--style-color);
+      .sign-circle{
+        background-color: var(--style-color);
+      }
+    }
   }
 }
 </style>

@@ -11,20 +11,43 @@
     --style-color: #57810D;
 }
 
-/* 公共的 continue 按钮 */
-.continue-btn{
+/* 公共的 continue 按钮,和page-con背景 */
+.btn-container {
     display: flex;
-    width: 165px;
-    height: 52px;
-    color: white;
-    background-color: var(--style-color);
-    font-size: 20px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 16px;
-    box-sizing: border-box;
-    > img{
-        height: 24px;
-        width: 24px;
+    .continue-btn{
+        display: flex;
+        width: 165px;
+        height: 52px;
+        color: white;
+        font-weight: 600;
+        background-color: var(--style-color);
+        font-size: 18px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        box-sizing: border-box;
+        cursor: pointer;
+        > img{
+            height: 24px;
+            width: 24px;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .select-page-con{
+        margin-bottom: 88px;
+    }
+    .btn-container {
+        position: fixed;
+        height: 88px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px 16px;
+        display: flex;
+        border-top: 1px solid rgb(57, 57, 57);
+        background-color: rgb(30, 30, 30);
+        .continue-btn{ flex: 1 ;height: auto}
     }
 }

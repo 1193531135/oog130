@@ -19,6 +19,7 @@ function change(val){
 
 <template>
   <TextSelect
+      class="page-con"
       :title="pageText.title"
       :options="options"
       v-model="selectData"
