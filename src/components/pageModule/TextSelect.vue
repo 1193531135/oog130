@@ -29,32 +29,44 @@ function change(val){
 </script>
 
 <template>
-  <div class="page-con">
+  <div class="select-page-con">
     <div class="title">{{ title }}</div>
     <div class="subtitle">{{ subtitle }}</div>
-    <div class="select-box">
-      <Select v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
+      <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
       <div class="btn-container" :style="'justify-content:' + btnAlign">
         <div class="continue-btn" @click="emit('click')">
           <div>Continue</div>
           <img src="@/assets/select-item-icon.png">
         </div>
       </div>
-    </div>
   </div>
 </template>
 
 <style scoped lang="less">
-.page-con{
-  width: 498px;
+.select-page-con{
+  padding: 0 33px;
+  max-width: 498px;
+  box-sizing: border-box;
   text-align: center;
   .title {
     font-family: Laien,serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  /deep/ .select{
+    margin-bottom: 32px;
+    //预设11px padding
+    .select-item{
+      padding-top: 11px;
+      padding-bottom: 13px;
+    }
   }
 }
-.select-box{
-  padding: 0 33px;
+@media (max-width: 768px) {
+  .select-page-con{
+    padding: 0 24px;
+    .title{ font-size: 28px }
+  }
 }
-.btn-container { display: flex }
-
 </style>

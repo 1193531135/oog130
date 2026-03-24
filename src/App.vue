@@ -21,6 +21,11 @@ onMounted(() => {
       <img src="./assets/title-logo.png" class="head-logo">
       <div class="head-text">Military Calisthenics </div>
     </div>
+    <div class="progress-bar">
+      <div class="back-btn"></div>
+      <div class="progress-con"></div>
+      <div class="progress"></div>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -35,6 +40,7 @@ onMounted(() => {
   right: 0;
   color: white;
   display: flex;
+  overflow: auto;
   flex-direction: column;
   align-items: center;
   font-family: Poppins;
@@ -56,6 +62,9 @@ onMounted(() => {
       font-family: Anton;
       letter-spacing: 1px
     }
+  }
+  .progress-bar{
+    height: 44px;
   }
 }
 
