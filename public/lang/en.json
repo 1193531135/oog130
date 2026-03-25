@@ -3,34 +3,335 @@
   "ageQuestion": {
     "title": "Military Calisthenics Challenge",
     "text1": "SELECT YOUR AGE",
-    "text2": ["By continuing you agree to the ","Privacy Policy","and ","Terms of Use"]
+    "text2": [
+      "By continuing you agree to the ",
+      "Privacy Policy",
+      " and ",
+      "Terms of Use"
+    ]
   },
   "Over70million": {
     "title": "Over 70 million",
     "text1": "Users have chosen us",
     "continue": "Continue"
   },
-  "HaveYouEver": {
+  "MilitaryCalisthenicsBefore": {
     "title": "Have you ever done military calisthenics before?",
-    "selectOptions": ["Yes", "No"],
+    "selectOptions": [
+      "Yes",
+      "No"
+    ],
     "continue": "Continue"
   },
   "HaveYouEverSelected": [
     {
       "title": "Military Calisthenics is a simple and powerful fitness choice!",
-      "text1": ["It's a workout that relies on ","your own bodyweight."],
-      "text2": ["We'll help you ","get fit ","at home without any equipment!"]
+      "text1": [
+        "It's a workout that relies on ",
+        "your own bodyweight."
+      ],
+      "text2": [
+        "We'll help you ",
+        "get fit ",
+        "at home without any equipment!"
+      ],
+      "continue": "Continue"
     },
     {
       "title": "Military Calisthenics is a simple and powerful fitness choice!",
-      "text1": ["It's a workout that relies on ","your own bodyweight."],
-      "text2": ["We'll help you ","get fit ","at home without any equipment!"]
+      "text1": [
+        "It's a workout that relies on ",
+        "your own bodyweight."
+      ],
+      "text2": [
+        "We'll help you ",
+        "get fit ",
+        "at home without any equipment!"
+      ],
+      "continue": "Continue"
     }
   ],
-  "MainGoal": {},
-  "MainGoalSelected": [],
+  "MainGoal": {
+  },
+  "MainGoalSelected": [
+  ],
   "MotivatesYou2Exercise": {
     "title": "What else motivates you to exercise?",
-    "selectOptions": ["Improve sleep\uD83C\uDF1B", "Enhance posture", "Enhance posture", "Reduce Stress", "Develop flexibility", "Improve overall health", "None of the above"]
+    "selectOptions": [
+      "Improve sleep\uD83C\uDF1B",
+      "Enhance posture",
+      "Enhance posture",
+      "Reduce Stress",
+      "Develop flexibility",
+      "Improve overall health",
+      "None of the above"
+    ],
+    "continue": "Continue"
+  },
+  "ChooseBodyType": {
+    "title": "Choose your body type",
+    "selectOptions": [
+      "Slim",
+      "Mid-sized",
+      "Plus-sized",
+      "Overweight"
+    ]
+  },
+  "ChooseBodyWant": {
+    "title": "Choose the body you want",
+    "selectOptions": [
+      "Lean",
+      "Toned",
+      "Athletic",
+      "Strong"
+    ]
+  },
+  "WeightTypicallyChange": {
+    "title": "How does your weight typically change?",
+    "selectOptions": [
+      "I gain fast but lose slowly",
+      "I gain and lose weight easily",
+      "I struggle to gain weight or muscle"
+    ],
+    "continue": "Continue"
+  },
+  "BestShapeOfYourLife": {
+    "title": "How long ago were you in the best shape of your life?",
+    "selectOptions": [
+      "Less than a year ago",
+      "1-3 years ago",
+      "More than 3 years ago",
+      "Never"
+    ],
+    "continue": "Continue"
+  },
+  "Flexible": {
+    "title": "How flexible are you?",
+    "selectOptions": [
+      "Very flexible",
+      "Pretty flexible",
+      "Not that good",
+      "I'm not sure"
+    ],
+    "continue": "Continue"
+  },
+  "SelectAreas": {
+    "title": "Select areas",
+    "subtitle": "that you would like to focus on?",
+    "selectOptions": [
+      "Fullbody",
+      "Back",
+      "Butt",
+      "Legs",
+      "Belly",
+      "Arms"
+    ],
+    "continue": "Continue"
+  },
+  "StruggleWithFollowing": {
+    "title": "Do you struggle with any of the following?",
+    "selectOptions": [
+      "Sensitive back",
+      "Sensitive knees",
+      "All of this",
+      "None of the above"
+    ],
+    "continue": "Continue"
+  },
+  "StruggleWithFollowingSelected": [
+    {
+      "title": "We’ve got you covered!",
+      "text1": [
+        "You'll find plenty of ",
+        "exercises designed to strengthen your back."
+      ],
+      "text2": "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!",
+      "continue": "Got it"
+    },
+    {
+      "title": "We’ve got you covered!",
+      "text1": [
+        "You'll find plenty of ",
+        "exercises designed to strengthen your knees."
+      ],
+      "text2": "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!",
+      "continue": "Got it"
+    },
+    {
+      "title": "We’ve got you covered!",
+      "text1": [
+        "You'll find plenty of ",
+        "exercises designed to strengthen your body."
+      ],
+      "text2": "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!",
+      "continue": "Got it"
+    }
+  ],
+  "CurrentlyPerimenopauseOrMenopause": {
+    "title": "Are you currently going through perimenopause or menopause?",
+    "selectOptions": [
+      "Yes, I am",
+      "No, I’m not.",
+      "All of this",
+      "I’m not sure"
+    ],
+    "continue": "Continue"
+  },
+  "symptomsHave": {
+    "title": "Which of these symptoms do you have?",
+    "subtitle": "You may choose several options",
+    "selectOptions": [
+      "Hot flashes",
+      "Sleep problems",
+      "Fatigue",
+      "Mood swings",
+      "Joint Pain",
+      "Weight gain",
+      "None of the above"
+    ],
+    "continue": "Got it"
+  },
+  "ExperienceSimilarSymptoms": {
+    "title": "81% of women in your age group experience similar symptoms.",
+    "subtitle": "YCalisthenics improves your well-being with bodyweight, strength-building exercises.",
+    "continue": "Got it"
+  },
+  "BreathOnStairs": {
+    "title": "Do you get out of breath on stairs?",
+    "selectOptions": [
+      "Can't talk,too out of breath",
+      "Slightly out of breath, can talk",
+      "Okay after one flight",
+      "Can handle a few flights"
+    ],
+    "continue": "Continue"
+  },
+  "Train": {
+    "title": "How often do you train?",
+    "selectOptions": [
+      "Not at all",
+      "1-2 times a week",
+      "3 times a week",
+      "More than 3 times a week"
+    ],
+    "continue": "Continue"
+  },
+  "Walks": {
+    "title": "How often do you go for walks?",
+    "selectOptions": [
+      "Almost every day",
+      "3-4 times per week",
+      "1-2 times per week",
+      "More like once a month"
+    ],
+    "continue": "Continue"
+  },
+  "WillingWorkout": {
+    "title": "How much time are you willing to spend on a workout?",
+    "selectOptions": [
+      "15 minutes",
+      "30 minutes",
+      "1 hour",
+      "Let MadMuscles decide"
+    ],
+    "continue": "Continue"
+  },
+  "WorkScheduleLike": {
+    "title": "What is your work schedule like?",
+    "selectOptions": [
+      "9 to 5",
+      "Night shifts",
+      "My hours are flexible",
+      "I’m retired"
+    ],
+    "continue": "Continue"
+  },
+  "DescribeTypicalDay": {
+    "title": "How would you describe your typical day?",
+    "selectOptions": [
+      "I spend most of the day sitting",
+      "I take active breaks",
+      "I’m on my feet all day long",
+      "I have physical work"
+    ],
+    "continue": "Continue"
+  },
+  "CurrentEnergyLevels": {
+    "title": "How would you rate your current energy levels?",
+    "selectOptions": [
+      "Low energy",
+      "Moderate energy",
+      "High energy",
+      "It fluctuates"
+    ],
+    "continue": "Continue"
+  },
+  "MilitaryCalisthenics": {
+    "title": "Military Calisthenics will leave you feeling more energized",
+    "text1": [
+      "These workouts will build your strength and ",
+      "improve endurance."
+    ],
+    "text2": [
+      "You'll have the energy to ",
+      "keep up with your daily activities."
+    ],
+    "continue": "Got it"
+  },
+  "DrinkDaily": {
+    "title": "How much water do you drink daily?",
+    "selectOptions": [
+      {
+        "label": "Only coffee or tea \uD83C\uDF75",
+        "description": {
+          "title": "Drinking water is essential",
+          "subtitle": "If you're not hydrated, your body can't perform at its highest level. MadMuscles will remind you to drink enough water."
+        }
+      },
+      {
+        "label": "Less than 2 glasses\uD83D\uDCA7",
+        "subLabel": "up to 0,5 l/17 oz",
+        "description": {
+          "title": "Drinking water is essential",
+          "subtitle": "If you're not hydrated, your body can't perform at its highest level. MadMuscles will remind you to drink enough water."
+        }
+      },
+      {
+        "label": "2-6 glasses\uD83D\uDCA7\uD83D\uDCA7",
+        "subLabel": "0-1,5 l/17-50 oz",
+        "description": {
+          "title": "You drink more water than 50% of users*.",
+          "subtitle": "MadMuscles will remind you to drink enough water."
+        }
+      },
+      {
+        "label": "7-10 glasses\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7",
+        "subLabel": "1,5-2,5 l/50-85 oz",
+        "description": {
+          "title": "Wow! Impressive!",
+          "subtitle": "You drink more water than 75% of users. Keep it up!"
+        }
+      },
+      {
+        "label": "More than 10 glasses\uD83D\uDC33",
+        "subLabel": "more than 2,5 l/85 oz",
+        "description": {
+          "title": "Wow! Impressive!",
+          "subtitle": "You drink more water than 92% of users. Keep it up!"
+        }
+      }
+    ],
+    "subtitle": "*users of MadMuscles who took the quiz",
+    "continue": "Got it"
+  },
+  "UsuallyGet": {
+    "title": "How much sleep do you usually get?",
+    "selectOptions": [
+      "Less than 5 hours \uD83D\uDE44",
+      "5-6 hours \uD83E\uDD71",
+      "7-8 hours \uD83C\uDF1B",
+      "More than 8 hours \uD83D\uDE34"
+    ],
+    "continue": "Continue"
   }
 }

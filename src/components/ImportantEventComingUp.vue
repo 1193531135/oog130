@@ -5,7 +5,7 @@ const pageText = window.languageData.ageQuestion
 </script>
 
 <template>
-  <TextSelect :title=""></TextSelect>
+  <TextSelect :title="213"></TextSelect>
 </template>
 
 <style scoped lang="less">

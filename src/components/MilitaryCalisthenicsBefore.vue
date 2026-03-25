@@ -2,16 +2,16 @@
 import { ref ,useSlots,onMounted } from "vue";
 import { useRoute } from 'vue-router'
 const route = useRoute()
+
 import TextSelect from "@/components/pageModule/TextSelect.vue";
 const pageText = window.languageData[route.name]
 
-const selectData = ref([])
+const selectData = ref(null)
 
 const options = pageText.selectOptions.map((i,index) => {
   return {
     label: i,
     value: index,
-    mutex: index === pageText.selectOptions.length - 1
   }
 })
 function change(val){
@@ -25,7 +25,7 @@ function change(val){
       :title="pageText.title"
       :options="options"
       v-model="selectData"
-      :multiple="true"
+      :multiple="false"
       :btn-text="pageText.continue"
       @change="change"
   ></TextSelect>

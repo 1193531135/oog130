@@ -1,6 +1,10 @@
 <script setup>
 import { ref ,useSlots,onMounted } from "vue";
+import { PageData } from "@/tool/index.js";
 import Select from "@/components/module/select.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute()
 
 const props = defineProps({
   options: Array,
@@ -9,6 +13,10 @@ const props = defineProps({
   multiple: Boolean,
   title: String,
   subtitle: String,
+  btnText: {
+    type: String,
+    default: 'Continue'
+  },
   btnAlign: {
     type: String,
     default: 'right'
@@ -21,6 +29,9 @@ const selectData = ref(props.multiple?[]:null)
 
 // change事件
 function change(val){
+  // 存储数据
+  const pageData = new PageData()
+  pageData.set(route.name,val)
   emit('update:modelValue', val)
   // 触发外部change事件
   emit('change', val)
@@ -35,7 +46,7 @@ function change(val){
       <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
       <div class="btn-container" :style="'justify-content:' + btnAlign">
         <div class="continue-btn" @click="emit('click')">
-          <div>Continue</div>
+          <div>{{ btnText }}</div>
           <img src="@/assets/select-item-icon.png">
         </div>
       </div>

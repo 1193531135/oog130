@@ -7,7 +7,8 @@ const selectValue = ref(0)
 const options = ["18-29", "30-39", "40-49", "50+"].map((i, index) => ({label: i, value: index}))
 
 function change(val){
-  console.log(val)
+  // 存储数据
+  sessionStorage.setItem('age', options[val].label)
 }
 </script>
 
