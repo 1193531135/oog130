@@ -27,5 +27,8 @@ export class PageData  {
 export function push(){
   const route = router.currentRoute.value.fullPath
   const pushUrl = registerList[registerList.findIndex(i=> i.path === route) + 1].path
-  router.push(pushUrl)
+  // 触发太快延迟触发
+  setTimeout(()=>{
+    router.push(pushUrl)
+  },100)
 }

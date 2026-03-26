@@ -48,7 +48,15 @@
       ]
     }
   ],
-  "MainGoal": {},
+  "MainGoal": {
+    "title": "What's your main goal?",
+    "selectOptions": [
+      "Lose weight",
+      "Build Muscles and Strength",
+      "Gain Muscle and Lose Weight",
+      "Get Fit and Maintain Weight"
+    ]
+  },
   "MainGoalSelected": [
     {
       "title": "We know exactly how to make it happen!",

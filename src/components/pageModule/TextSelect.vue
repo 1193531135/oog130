@@ -5,6 +5,7 @@ import Select from "@/components/module/select.vue";
 import { useRoute } from "vue-router";
 import { push } from "@/tool/index.js";
 
+const pageData = new PageData()
 const route = useRoute()
 
 const props = defineProps({
@@ -25,13 +26,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue','change','click'])
-const selectData = ref(props.multiple?[]:null)
+const selectData = ref(pageData.get()[route.name] || props.multiple?[]:null)
 
 
 // change事件
 function change(val){
   // 存储数据
-  const pageData = new PageData()
   pageData.set(route.name,val)
   emit('update:modelValue', val)
   // 触发外部change事件
