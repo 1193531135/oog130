@@ -10,7 +10,7 @@ export const pageConfig= {
     },
     MilitaryCalisthenicsBeforeSelected:() => import("@/components/MilitaryCalisthenicsBeforeSelected.vue"),
     MainGoal: "",
-    MainGoalSelected: "",
+    MainGoalSelected: ()=> import("@/components/MainGoalSelected.vue"),
     MotivatesYou2Exercise: "",
     ChooseBodyType: "",
     ChooseBodyWant: "",

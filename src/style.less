@@ -1,6 +1,6 @@
 @import "@/assets/fontFamliy.css";
 
-*{
+* {
     padding: 0;
     margin: 0;
     //默认字体poppins
@@ -14,7 +14,8 @@
 /* 公共的 continue 按钮,和page-con背景 */
 .btn-container {
     display: flex;
-    .continue-btn{
+
+    .continue-btn {
         display: flex;
         width: 165px;
         height: 52px;
@@ -27,16 +28,19 @@
         padding: 0 16px;
         box-sizing: border-box;
         cursor: pointer;
-        > img{
+
+        >img {
             height: 24px;
             width: 24px;
         }
     }
 }
+
 @media (max-width: 768px) {
-    .select-page-con{
+    .select-page-con {
         margin-bottom: 88px;
     }
+
     .btn-container {
         position: fixed;
         height: 88px;
@@ -48,29 +52,42 @@
         display: flex;
         border-top: 1px solid rgb(57, 57, 57);
         background-color: rgb(30, 30, 30);
-        .continue-btn{ flex: 1 ;height: auto}
+
+        .continue-btn {
+            flex: 1;
+            height: auto
+        }
     }
 }
 
 // 文字页面样式模板
-.text-page{
+.text-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     .title {
         font-size: 40px;
         font-weight: 700;
         font-family: Laient, sans-serif;
     }
+
     .description {
         font-size: 20px;
         font-weight: 500;
-        color: #fff;
-        .gray {
-            color: #AAAAAA;
+        color: #AAAAAA;
+
+        .white {
+            color: #FFFFFF;
+            font-weight: 600;
         }
     }
+
     @media (max-width: 600px) {
         .title {
             font-size: 28px;
         }
+
         .description {
             font-size: 16px;
         }

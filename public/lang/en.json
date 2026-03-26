@@ -39,13 +39,66 @@
     },
     {
       "title": "You've got this!",
-      "text1": ["Our Military Calisthenics is a straightforward and powerful option for all fitness levels."],
-      "text2": ["We'll help you get in shape at home-","no equipment needed!"]
+      "text1": [
+        "Our Military Calisthenics is a straightforward and powerful option for all fitness levels."
+      ],
+      "text2": [
+        "We'll help you get in shape at home-",
+        "no equipment needed!"
+      ]
     }
   ],
-  "MainGoal": {
-  },
+  "MainGoal": {},
   "MainGoalSelected": [
+    {
+      "title": "We know exactly how to make it happen!",
+      "text1": [
+        "Our Military Calisthenics program is the perfect way ",
+        "to slim down at a pace that suits you, while enjoying the process!"
+      ],
+      "text2": [
+        "Life might have its challenges, but your fitness routine doesn't need to be one of them."
+      ],
+      "text3": [
+        "Our Calisthenics program is the perfect way",
+        "to slim down at a pace that suits you, while enjoying the process!"
+      ]
+    },
+    {
+      "title": "We have just what you need",
+      "text1": [
+        "Our Military Calisthenics program is ideal",
+        "for toning your body at your own pace, while "
+      ],
+      "text2": [
+        "Life might have its challenges, but your fitness routine doesn't need to be one of them."
+      ],
+      "text3": [
+        "Our Calisthenics program is ideal",
+        "for toning your body at your own pace, while enjoying every step!"
+      ]
+    },
+    {
+      "title": "We have just what you need",
+      "text1": [
+        "Our Military Calisthenics program is ideal",
+        "for toning your body at your own pace, while enjoying every step!"
+      ]
+    },
+    {
+      "title": "We have just what you need",
+      "text1": [
+        "Our Military Calisthenics program is ideal",
+        "for toning your body at your own pace, while enjoying every step!"
+      ],
+      "text2": [
+        "Life might have its challenges, but your fitness routine doesn't need to be one of them."
+      ],
+      "text3": [
+        "Our Calisthenics program is ideal",
+        "for toning your body at your own pace, while enjoying every step!"
+      ]
+    }
   ],
   "MotivatesYou2Exercise": {
     "title": "What else motivates you to exercise?",

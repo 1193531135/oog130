@@ -25,13 +25,13 @@ console.log(pageText, viewMode)
     <div class="title">{{ pageText.title }}</div>
     <div v-if="viewMode === 0" class="option1">
       <div class="subtitle description">
-        <span class="gray">{{ pageText.text1[0] }}</span>
-        <span class="">{{ pageText.text1[1] }}</span>
+        <span class="">{{ pageText.text1[0] }}</span>
+        <span class="white">{{ pageText.text1[1] }}</span>
       </div>
       <div class="subtitle description">
-        <span class="gray">{{ pageText.text2[0] }}</span>
-        <span class="">{{ pageText.text2[1] }}</span>
-        <span class="gray">{{ pageText.text2[2] }}</span>
+        <span class="">{{ pageText.text2[0] }}</span>
+        <span class="white">{{ pageText.text2[1] }}</span>
+        <span class="">{{ pageText.text2[2] }}</span>
       </div>
       <div class="btn1">
         <div class="btn-container" :style="'justify-content:' + btnAlign">
@@ -45,16 +45,16 @@ console.log(pageText, viewMode)
     </div>
     <div v-if="viewMode === 1" class="option2">
       <div class="subtitle description">
-        <span class="gray">{{ pageText.text1[0] }}</span>
+        <span class="">{{ pageText.text1[0] }}</span>
       </div>
       <div class="subtitle description">
-        <span class="gray">{{ pageText.text2[0] }}</span>
-        <span class="">{{ pageText.text2[1] }}</span>
+        <span class="">{{ pageText.text2[0] }}</span>
+        <span class="white">{{ pageText.text2[1] }}</span>
       </div>
       <div class="btn2">
         <div class="btn-container" :style="'justify-content:' + btnAlign">
           <div class="continue-btn" @click="emit('click')">
-            <div>Continue</div>
+            <div>Got it</div>
             <img src="@/assets/select-item-icon.png">
           </div>
         </div>
@@ -75,7 +75,10 @@ console.log(pageText, viewMode)
   width: 280px;
 }
 
-.title {}
+.title {
+  width: 592px;
+  text-align: center;
+}
 
 .option1 {
   width: 592px;
