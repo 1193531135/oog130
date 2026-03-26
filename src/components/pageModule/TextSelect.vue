@@ -3,6 +3,7 @@ import { ref ,useSlots,onMounted } from "vue";
 import { PageData } from "@/tool/index.js";
 import Select from "@/components/module/select.vue";
 import { useRoute } from "vue-router";
+import { push } from "@/tool/index.js";
 
 const route = useRoute()
 
@@ -39,6 +40,7 @@ function change(val){
 
 function gotIt(){
   emit('click')
+  push()
 }
 </script>
 

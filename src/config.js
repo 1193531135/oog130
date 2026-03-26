@@ -4,7 +4,7 @@ export const pageConfig= {
     MilitaryCalisthenicsBefore: {
         module:() => import("@/components/pageModule/TextSelect.vue"),
         props(content){
-            content.options = content.selectOptions.map(i => ({ label: i, value: i }))
+            content.options = content.selectOptions.map((i,index) => ({ label: i, value: index }))
             return content
         }
     },

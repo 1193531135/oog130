@@ -1,8 +1,13 @@
 <script setup>
 import { ref, useSlots, onMounted } from "vue";
 import { useRoute } from 'vue-router'
+import { PageData } from "@/tool/index.js";
+
+const pageData = new PageData()
+pageData.get()
 const route = useRoute()
-let viewMode = route.query.viewMode
+let viewMode = Number(pageData.get().MilitaryCalisthenicsBefore) || 0
+console.log('viewMode', pageData.get())
 const num = window.languageData.MilitaryCalisthenicsBeforeSelected
 viewMode = viewMode === 0 ? 0 : 1
 const pageText = num[viewMode]
@@ -15,41 +20,43 @@ console.log(pageText, viewMode)
 </script>
 
 <template>
-  <img class="img" src="../assets/militaryCalisthenics.png" alt="" srcset="">
-  <div class="title">{{ pageText.title }}</div>
-  <div v-if="viewMode === 0" class="option1">
-    <div class="subtitle">
-      <span class="sub1">{{ pageText.text1[0] }}</span>
-      <span class="sub2">{{ pageText.text1[1] }}</span>
-    </div>
-    <div class="subtitle">
-      <span class="sub1">{{ pageText.text2[0] }}</span>
-      <span class="sub2">{{ pageText.text2[1] }}</span>
-      <span class="sub1">{{ pageText.text2[2] }}</span>
-    </div>
-    <div class="btn1">
-      <div class="btn-container" :style="'justify-content:' + btnAlign">
-        <div class="continue-btn" @click="emit('click')">
-          <div>Continue</div>
-          <img src="@/assets/select-item-icon.png">
+  <div class="text-page">
+    <img class="img" src="../assets/militaryCalisthenics.png" alt="" srcset="">
+    <div class="title">{{ pageText.title }}</div>
+    <div v-if="viewMode === 0" class="option1">
+      <div class="subtitle description">
+        <span class="gray">{{ pageText.text1[0] }}</span>
+        <span class="">{{ pageText.text1[1] }}</span>
+      </div>
+      <div class="subtitle description">
+        <span class="gray">{{ pageText.text2[0] }}</span>
+        <span class="">{{ pageText.text2[1] }}</span>
+        <span class="gray">{{ pageText.text2[2] }}</span>
+      </div>
+      <div class="btn1">
+        <div class="btn-container" :style="'justify-content:' + btnAlign">
+          <div class="continue-btn" @click="emit('click')">
+            <div>Continue</div>
+            <img src="@/assets/select-item-icon.png">
+          </div>
         </div>
       </div>
-    </div>
 
-  </div>
-  <div v-if="viewMode === 1" class="option2">
-    <div class="subtitle">
-      <span class="sub1">{{ pageText.text1[0] }}</span>
     </div>
-    <div class="subtitle">
-      <span class="sub1">{{ pageText.text2[0] }}</span>
-      <span class="sub2">{{ pageText.text2[1] }}</span>
-    </div>
-    <div class="btn2">
-      <div class="btn-container" :style="'justify-content:' + btnAlign">
-        <div class="continue-btn" @click="emit('click')">
-          <div>Continue</div>
-          <img src="@/assets/select-item-icon.png">
+    <div v-if="viewMode === 1" class="option2">
+      <div class="subtitle description">
+        <span class="gray">{{ pageText.text1[0] }}</span>
+      </div>
+      <div class="subtitle description">
+        <span class="gray">{{ pageText.text2[0] }}</span>
+        <span class="">{{ pageText.text2[1] }}</span>
+      </div>
+      <div class="btn2">
+        <div class="btn-container" :style="'justify-content:' + btnAlign">
+          <div class="continue-btn" @click="emit('click')">
+            <div>Continue</div>
+            <img src="@/assets/select-item-icon.png">
+          </div>
         </div>
       </div>
     </div>
@@ -57,19 +64,18 @@ console.log(pageText, viewMode)
 </template>
 
 <style scoped lang="less">
+.text-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .img {
   margin-top: 42px;
   width: 280px;
 }
 
-.title {
-  font-size: 40px;
-  font-family: Laien;
-  max-width: 600px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 24px;
-}
+.title {}
 
 .option1 {
   width: 592px;
@@ -82,18 +88,8 @@ console.log(pageText, viewMode)
 }
 
 .subtitle {
-  font-size: 20px;
   width: 100%;
-
-  .sub1 {
-    color: #AAA;
-    font-weight: 500;
-  }
-
-  .sub2 {
-    color: #fff;
-    font-weight: 600;
-  }
+  margin-top: 24px;
 }
 
 .btn1 {
@@ -110,13 +106,14 @@ console.log(pageText, viewMode)
 
 @media (max-width: 600px) {
 
-  .img{
+  .img {
     width: 180px;
   }
-  .title{
-    font-size: 28px;
+
+  .title {
     padding: 0 20px;
   }
+
   .option1,
   .option2 {
     width: 100vw;
@@ -124,15 +121,9 @@ console.log(pageText, viewMode)
 
   .subtitle {
     width: 100vw;
-    padding: 0 20px;
-
-    .sub1 {
-      font-size: 16px;
-    }
-
-    .sub2 {
-      font-size: 16px;
-    }
+    padding-right: 20px;
+    padding-left: 20px;
+    box-sizing: border-box;
   }
 
   .btn1 {
