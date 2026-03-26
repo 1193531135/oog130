@@ -190,7 +190,9 @@
         "You'll find plenty of ",
         "exercises designed to strengthen your back."
       ],
-      "text2": "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!",
+      "text2": [
+        "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!"
+      ],
       "continue": "Got it"
     },
     {
@@ -199,7 +201,9 @@
         "You'll find plenty of ",
         "exercises designed to strengthen your knees."
       ],
-      "text2": "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!",
+      "text2": [
+        "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!"
+      ],
       "continue": "Got it"
     },
     {
@@ -208,7 +212,9 @@
         "You'll find plenty of ",
         "exercises designed to strengthen your body."
       ],
-      "text2": "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!",
+      "text2": [
+        "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!"
+      ],
       "continue": "Got it"
     }
   ],
@@ -403,5 +409,346 @@
       }
     ],
     "continue": "Continue"
+  },
+  "FollowHabits": {
+    "title": "Do you follow any of these habits?",
+    "selectOptions": [
+      {
+        "label": "Emotional eating🍫"
+      },
+      {
+        "label": "Snacking late at nighty"
+      },
+      {
+        "label": "Overeating🍔"
+      },
+      {
+        "label": "Skipping meals frequently"
+      },
+      {
+        "label": "None of the above"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "FoodCravings": {
+    "title": "What are your most common food cravings?",
+    "selectOptions": [
+      {
+        "label": "weets🍬"
+      },
+      {
+        "label": "Soda"
+      },
+      {
+        "label": "Salty snacks 🥛"
+      },
+      {
+        "label": "Fast food🍟"
+      },
+      {
+        "label": "None of the above"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "EatingHabits": {
+    "title": "Are you ready to spend 5 minutes a day improving your eating habits?",
+    "selectOptions": [
+      {
+        "label": "Yes,I’m ready!"
+      },
+      {
+        "label": "I’ll give it a try"
+      },
+      {
+        "label": "Not quite yet"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "FollowingFew": {
+    "title": "Have any of the following life events led to weight gain in the last few years?",
+    "selectOptions": [
+      {
+        "label": "Busy work or family life"
+      },
+      {
+        "label": "peri- or menopausal transitions"
+      },
+      {
+        "label": "Breakup or divorcet"
+      },
+      {
+        "label": "Stress or mental health issues"
+      },
+      {
+        "label": "Slower metabolism due to aging"
+      },
+      {
+        "label": "Financial struggles"
+      },
+      {
+        "label": "Post-treatment complications"
+      },
+      {
+        "label": "Difficult family life"
+      },
+      {
+        "label": "None of the above"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "YourHeight": {
+    "title": "What’s your height?",
+    "selectConfig": {
+      "title": "Units",
+      "selectOptions": [
+        "ft/in",
+        "cm"
+      ],
+      "inputLable": "Height（cm）",
+      "checkboxLabel": " consent to MadMuscles processing my health onboarding data tto provide services and enhance my user experience. Privacy Policy.",
+      "text1": "To withdraw consent, contact us anytime. ",
+      "continue": "Continue"
+    }
+  },
+  "CurrentWeight": {
+    "title": "What‘s your current weight?",
+    "selectConfig": {
+      "title": "Units",
+      "selectOptions": [
+        "lb",
+        "kg"
+      ],
+      "inputLable": "Current Weight（kg）",
+      "textBox": {
+        "title": "Calculating your body mass index",
+        "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
+      },
+      "continue": "Continue"
+    }
+  },
+  "TargetWeight": {
+    "title": "What‘s your target weight?",
+    "selectConfig": {
+      "title": "Units",
+      "selectOptions": [
+        "lb",
+        "kg"
+      ],
+      "inputLable": "Target Weight（kg）",
+      "textBox": {
+        "title": "Calculating your body mass index",
+        "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
+      },
+      "continue": "Continue"
+    }
+  },
+  "DateOfBirth": {
+    "title": "What‘s your date of birth?",
+    "inputLable": "Date of birth",
+    "textBox": {
+      "title": "We ask your age to create your personal plan",
+      "text": "Older people tend to have more body fat than younger people with the same BMI."
+    },
+    "continue": "Continue"
+  },
+  "PersonalSummary": {
+    "title": "Personal summary",
+    "selectOptions": [
+      {
+        "label": "Mid-sized",
+        "subLabel": "Body type"
+      },
+      {
+        "label": "Get Shredded",
+        "subLabel": "Goal"
+      },
+      {
+        "label": "Passive",
+        "subLabel": "Lifestyle"
+      },
+      {
+        "label": "Pro",
+        "subLabel": "Fitness level"
+      }
+    ],
+    "textBox": {
+      "title": "Your BMI",
+      "weightType": [
+        "Underweight",
+        "Normal weight",
+        "Overweight",
+        "Obesity"
+      ],
+      "text": "Your current BMI is within the Under Weight range for this age group.The data are for reference only. Please analyze according to the specific physical examination report."
+    },
+    "continue": "Got it"
+  },
+  "ComingUp": {
+    "title": "Do you have an important event coming up?",
+    "text1": "Having something to look forward to can be a great motivator for reaching your goal",
+    "selectOptions": [
+      {
+        "label": "Vacation"
+      },
+      {
+        "label": "Holiday"
+      },
+      {
+        "label": "Birthday"
+      },
+      {
+        "label": "amily occasion"
+      },
+      {
+        "label": "mportant date"
+      },
+      {
+        "label": "Reunion"
+      },
+      {
+        "label": "Wedding"
+      },
+      {
+        "label": "Competition"
+      },
+      {
+        "label": "Extreme sports"
+      },
+      {
+        "label": "Other"
+      },
+      {
+        "label": "No special events any time soon"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "EventTime": {
+    "title": "WWhen is your event?",
+    "text1": "We will keep this important event in mind for your journey",
+    "inputLable": "Your date",
+    "textBox": {
+      "title": "We ask your age to create your personal plan",
+      "text": "Older people tend to have more body fat than younger people with the same BMI."
+    },
+    "text2": "We are not sharing this data with any third parties.",
+    "button": "Skip this step",
+    "continue": "Continue"
+  },
+  "FinallyGet": {
+    "title": [
+      "The last plan you'll ever need to",
+      "finally get",
+      "in shape"
+    ],
+    "text1": "Based on our calculations, we believe you may hit your goal weight of 50 kg 🎉by",
+    "textBox": {
+      "title": "Apr 21, 2026",
+      "timeType": [
+        "Today",
+        "1st week",
+        "Aug 1"
+      ],
+      "text": "This chart is for illustrative purposes only"
+    },
+    "continue": "Continue"
+  },
+  "MotivationShape": {
+    "title": "What's your main motivation for getting in shape?",
+    "selectOptions": [
+      {
+        "label": "Feel more confident in my body"
+      },
+      {
+        "label": "Improve my health and energy levels"
+      },
+      {
+        "label": "Get back in shape after giving birth"
+      },
+      {
+        "label": "Relieve menopause symptoms"
+      },
+      {
+        "label": "Other"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "ConfidentReaching": {
+    "title": "How confident are you about reaching 50 kg by Apr 21, 2026?",
+    "selectOptions": [
+      {
+        "label": "I'm confident I can do it!"
+      },
+      {
+        "label": "I'm unsure,but ready to try!"
+      },
+      {
+        "label": "I'mstill not sure"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "EnterEmail": {
+    "Subheading": "Let's create your 7M account",
+    "title": [
+      "Enter your email to get your 4-week",
+      "Military Calisthenics Plan"
+    ],
+    "inputLable": "Email",
+    "text": "We respect your privacy and take protecting it very seriously-no spam",
+    "continue": "Continue"
+  },
+  "UserName": {
+    "Subheading": "Let's create your 7M account",
+    "title": "What‘s your name?",
+    "inputLable": "what should we call you?",
+    "continue": "Continue"
+  },
+  "CalisthenicsPlan": {
+    "title": [
+      "Hazel,",
+      "Your 4-week Military Calisthenics Plan Workout Plan is ready!"
+    ],
+    "textBox": {
+      "title": "Your weight",
+      "timeType": [
+        "Week 1",
+        "Week 2",
+        "Week 3",
+        "Week 4"
+      ],
+      "text": "This chart is for illustrative purposes only"
+    },
+    "continue": "Continue"
+  },
+  "BodyProfile": {
+    "text": "body profile"
+  },
+  "MakeCommitment": {
+    "Subheading": "ALMOST DONE!",
+    "title": [
+      "Are you ready",
+      "to make the commitment?"
+    ],
+    "selectOptions": [
+      {
+        "label": "Yes, I will do my first workout tomorrow"
+      },
+      {
+        "label": "Yes! I will do my first workout today!"
+      },
+      {
+        "label": "I'm not ready to make the commitment"
+      }
+    ],
+    "continue": "Continue"
+  },
+  "MealPlanning": {
+    "text": "Meal planning"
   }
 }
