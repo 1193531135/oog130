@@ -3,8 +3,6 @@ import { ref,onMounted } from "vue";
 import { readLanguage } from "@/tool";
 const loaded = ref(false);
 
-
-
 // 加载资源
 async function loadResources() {
   // 语言不需要双向绑定直接挂载在windows

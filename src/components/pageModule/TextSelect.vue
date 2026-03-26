@@ -37,6 +37,9 @@ function change(val){
   emit('change', val)
 }
 
+function gotIt(){
+  emit('click')
+}
 </script>
 
 <template>
@@ -45,7 +48,7 @@ function change(val){
     <div class="subtitle">{{ subtitle }}</div>
       <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
       <div class="btn-container" :style="'justify-content:' + btnAlign">
-        <div class="continue-btn" @click="emit('click')">
+        <div class="continue-btn" @click="gotIt">
           <div>{{ btnText }}</div>
           <img src="@/assets/select-item-icon.png">
         </div>

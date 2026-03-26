@@ -23,7 +23,7 @@
     ],
     "continue": "Continue"
   },
-  "HaveYouEverSelected": [
+  "MilitaryCalisthenicsBeforeSelected": [
     {
       "title": "Military Calisthenics is a simple and powerful fitness choice!",
       "text1": [
@@ -323,6 +323,31 @@
       "5-6 hours \uD83E\uDD71",
       "7-8 hours \uD83C\uDF1B",
       "More than 8 hours \uD83D\uDE34"
+    ],
+    "continue": "Continue"
+  },
+  "FollowDiets": {
+    "title": "Do you follow any of these diets?",
+    "selectOptions": [
+      {
+        "label": "Vegetarian \uD83C\uDF46",
+        "subLabel": "Excludes meat"
+      },
+      {
+        "label": "Vegan\uD83E\uDD55",
+        "subLabel": "Excludes all animal products"
+      },
+      {
+        "label": "Keto\uD83E\uDD51",
+        "subLabel": "Low-carb, high-fat"
+      },
+      {
+        "label": "Mediterranean\uD83C\uDF3E",
+        "subLabel": "Rich in plant-based foods"
+      },
+      {
+        "label": "None of the above"
+      }
     ],
     "continue": "Continue"
   }

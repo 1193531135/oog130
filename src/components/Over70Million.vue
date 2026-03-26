@@ -1,9 +1,26 @@
 <script setup>
+import { useRoute } from 'vue-router'
+import { push } from '@/tool/index.js'
+const route = useRoute()
+const pageText = window.languageData[route.name]
 
+function change(){
+  //
+  push()
+}
 </script>
 
 <template>
-  <div></div>
+  <div class="text-page">
+    <div class="title">{{ pageText.title }}</div>
+    <div class="description">{{ pageText.text1 }}</div>
+    <div class="btn-container">
+      <div class="continue-btn" @click="push">
+        <div>Continue</div>
+        <img src="@/assets/select-item-icon.png">
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="less">

@@ -2,9 +2,10 @@
 import { ref, useSlots, onMounted } from "vue";
 import { useRoute } from 'vue-router'
 const route = useRoute()
-const viewMode = route.query.viewMode
-const num = window.languageData.HaveYouEverSelected
-const pageText = viewMode == 0 ? num[0] : num[1]
+let viewMode = route.query.viewMode
+const num = window.languageData.MilitaryCalisthenicsBeforeSelected
+viewMode = viewMode === 0 ? 0 : 1
+const pageText = num[viewMode]
 
 
 function change(val) {
@@ -16,7 +17,7 @@ console.log(pageText, viewMode)
 <template>
   <img class="img" src="../assets/militaryCalisthenics.png" alt="" srcset="">
   <div class="title">{{ pageText.title }}</div>
-  <div v-if="viewMode == 0" class="option1">
+  <div v-if="viewMode === 0" class="option1">
     <div class="subtitle">
       <span class="sub1">{{ pageText.text1[0] }}</span>
       <span class="sub2">{{ pageText.text1[1] }}</span>
@@ -36,7 +37,7 @@ console.log(pageText, viewMode)
     </div>
 
   </div>
-  <div v-if="viewMode == 1" class="option2">
+  <div v-if="viewMode === 1" class="option2">
     <div class="subtitle">
       <span class="sub1">{{ pageText.text1[0] }}</span>
     </div>

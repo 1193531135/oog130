@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 import Select from './module/select.vue'
+import { push } from '@/tool/index.js'
 
 const pageText = window.languageData.ageQuestion
 const selectValue = ref(0)
@@ -9,27 +10,31 @@ const options = ["18-29", "30-39", "40-49", "50+"].map((i, index) => ({label: i,
 function change(val){
   // 存储数据
   sessionStorage.setItem('age', options[val].label)
+  //
+  push()
 }
 </script>
 
 <template>
-  <p style="height: 28px"></p>
-  <div class="title">{{ pageText.title }}</div>
-  <div class="content">
-    <img src="../assets/start.png">
-    <div class="select-con">
-      <div class="selec-title">{{ pageText.text1 }}</div>
-      <Select v-model="selectValue" :options="options" class="select" @change="change">
-        <template #default="{ itemData }">
-          <div>{{ itemData.label }}</div>
-          <img src="../assets/select-item-icon.png">
-        </template>
-      </Select>
-      <div class="end-text">
-        <span>{{ pageText.text2[0] }}</span>
-        <span class="special-text">{{ pageText.text2[1] }}</span>
-        <span>{{ pageText.text2[2] }}</span>
-        <span class="special-text">{{ pageText.text2[3] }}</span>
+  <div>
+    <p style="height: 28px"></p>
+    <div class="title">{{ pageText.title }}</div>
+    <div class="content">
+      <img src="../assets/start.png">
+      <div class="select-con">
+        <div class="selec-title">{{ pageText.text1 }}</div>
+        <Select v-model="selectValue" :options="options" class="select" @change="change">
+          <template #default="{ itemData }">
+            <div>{{ itemData.label }}</div>
+            <img src="../assets/select-item-icon.png">
+          </template>
+        </Select>
+        <div class="end-text">
+          <span>{{ pageText.text2[0] }}</span>
+          <span class="special-text">{{ pageText.text2[1] }}</span>
+          <span>{{ pageText.text2[2] }}</span>
+          <span class="special-text">{{ pageText.text2[3] }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +81,7 @@ function change(val){
     }
     .end-text{
       font-size: 16px;
+      white-space: break-spaces;
       font-family: Laien, serif;
       .special-text {
         color: var(--style-color);
@@ -110,6 +116,8 @@ function change(val){
         width: 100%;
         bottom: -44px;
         left: 0;
+        padding: 0 20px;
+        box-sizing: border-box;
       }
     }
   }
