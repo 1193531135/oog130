@@ -13,8 +13,7 @@ const pageText = num[viewMode]
 
 
 function change(val) {
-  console.log(val)
-  push
+  push()
 }
 console.log(pageText, viewMode)
 </script>

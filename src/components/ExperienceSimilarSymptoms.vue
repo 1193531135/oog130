@@ -20,14 +20,9 @@ function change(val) {
     <div class="box">
       <div class="title">{{ pageText.title }}</div>
       <div class="description">
-        <span>{{ pageText.text1[0] }}</span>
-        <span class="white">{{ pageText.text1[1] }}</span>
+        <span>{{ pageText.subtitle }}</span>
       </div>
-      <div class="description">
-        <span>{{ pageText.text2[0] }}</span>
-        <span class="white">{{ pageText.text2[1] }}</span>
-      </div>
-      <img class="img" src="@/assets/MilitaryCalisthenicsImg.png" alt="Military Calisthenics">
+      <img class="img" src="@/assets/ExperienceSimilarSymptoms.png" alt="Military Calisthenics">
       <div class="btn">
         <div class="btn-container">
           <div class="continue-btn" @click="change">
@@ -62,6 +57,7 @@ function change(val) {
   .description {
     margin-top: 24px;
     width: 100%;
+    text-align: center;
     padding: 0 30px;
     box-sizing: border-box;
   }

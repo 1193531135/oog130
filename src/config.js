@@ -38,7 +38,7 @@ const config = {
     StruggleWithFollowingSelected: () => import("@/components/StruggleWithFollowingSelected.vue"),
     CurrentlyPerimenopauseOrMenopause: "",
     symptomsHave: "",
-    ExperienceSimilarSymptoms: "",
+    ExperienceSimilarSymptoms: () => import("@/components/ExperienceSimilarSymptoms.vue"),
     BreathOnStairs: "",
     Train: "",
     Walks: "",
