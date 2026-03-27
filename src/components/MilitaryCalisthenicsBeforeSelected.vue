@@ -98,14 +98,14 @@ console.log(pageText, viewMode)
 
 .btn1 {
   position: absolute;
-  bottom: -128px;
-  right: -63px;
+  margin-top: 56px;
+  margin-left: 450px;
 }
 
 .btn2 {
   position: absolute;
-  bottom: -118px;
-  right: -89px;
+   margin-top: 56px;
+  margin-left: 450px;
 }
 
 @media (max-width: 600px) {

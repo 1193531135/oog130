@@ -54,7 +54,9 @@ const config = {
     FoodCravings: "",
     EatingHabits: "",
     FollowingFew: "",
-    YourHeight: "",
+    YourHeight: {
+        module: () => import("@/components/YourHeight.vue"),
+    },
     CurrentWeight: "",
     TargetWeight: "",
     DateOfBirth: "",
