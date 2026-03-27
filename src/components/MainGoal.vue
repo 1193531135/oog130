@@ -30,7 +30,7 @@ function change(val) {
     <Select v-model="selectValue" :options="options" class="select" @change="change">
       <template #default="{ itemData }">
         <div>{{ itemData.label }}</div>
-        <img :src="itemData.imgUrl">
+        <img :src="itemData.imgUrl"/>
       </template>
     </Select>
   </div>
