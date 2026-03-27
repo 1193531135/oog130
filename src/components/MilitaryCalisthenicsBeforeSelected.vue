@@ -68,10 +68,12 @@ console.log(pageText, viewMode)
   display: flex;
   flex-direction: column;
   align-items: center;
+
+
 }
 
 .img {
-  margin-top: 42px;
+  // margin-top: 42px;
   width: 280px;
 }
 
@@ -88,6 +90,7 @@ console.log(pageText, viewMode)
 .option2 {
   width: 540px;
   position: relative;
+  overflow: auto;
 }
 
 .subtitle {
@@ -108,12 +111,18 @@ console.log(pageText, viewMode)
 }
 
 @media (max-width: 600px) {
+  .text-page {
+    height: 100vh;
+    overflow-y: scroll;
+  }
 
   .img {
     width: 180px;
   }
 
   .title {
+    width: 100vw;
+    box-sizing: border-box;
     padding: 0 20px;
   }
 

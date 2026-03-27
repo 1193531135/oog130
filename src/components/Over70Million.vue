@@ -14,6 +14,7 @@ function change(){
   <div class="text-page">
     <div class="title">{{ pageText.title }}</div>
     <div class="description">{{ pageText.text1 }}</div>
+    <img class="img" src="../assets/Over70million.png" alt="" srcset="">
     <div class="btn-container">
       <div class="continue-btn" @click="push">
         <div>Continue</div>
@@ -24,5 +25,7 @@ function change(){
 </template>
 
 <style scoped lang="less">
-
+  .img{
+    width: 343px;
+  }
 </style>
