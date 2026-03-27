@@ -1,4 +1,8 @@
 // Function 模式默认隐藏进度条
+import { push } from "@/tool/index.js";
+
+const images = import.meta.glob('@/assets/image/*', { eager: true })
+console.log("images", images)
 const config = {
     ageQuestion: () => import("@/components/AgeQuestion.vue"),
     Over70million: {
@@ -28,16 +32,76 @@ const config = {
             return content
         }
     },
-    ChooseBodyType: "",
-    ChooseBodyWant: "",
-    WeightTypicallyChange: "",
-    BestShapeOfYourLife: "",
-    Flexible: "",
+    ChooseBodyType: {
+        module: () => import("@/components/ChooseBodyType.vue"),
+    },
+    ChooseBodyWant: {
+        module: () => import("@/components/ChooseBodyType.vue"),
+    },
+    WeightTypicallyChange: {
+        module: () => import("@/components/pageModule/ImageSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
+            content.imgUrl = images["/src/assets/image/weightTypicallyChange-bg.png"]?.default
+            return content
+        }
+    },
+    BestShapeOfYourLife: {
+        module: () => import("@/components/pageModule/ImageSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
+            content.imgUrl = images["/src/assets/image/weightTypicallyChange-bg.png"]?.default
+            return content
+        }
+    },
+    Flexible: {
+        module: () => import("@/components/pageModule/ImageSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
+            content.imgUrl = images["/src/assets/image/weightTypicallyChange-bg.png"]?.default
+            return content
+        }
+    },
     SelectAreas: "",
-    StruggleWithFollowing: "",
+    StruggleWithFollowing: {
+        module: () => import("@/components/pageModule/ImageSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({
+                label: i,
+                value: index,
+                mutex: index === content.selectOptions.length - 1
+            }))
+            content.imgUrl = images["/src/assets/image/weightTypicallyChange-bg.png"]?.default
+            return content
+        }
+    },
     StruggleWithFollowingSelected: () => import("@/components/StruggleWithFollowingSelected.vue"),
-    CurrentlyPerimenopauseOrMenopause: "",
-    symptomsHave: "",
+    CurrentlyPerimenopauseOrMenopause: {
+        module: () => import("@/components/pageModule/TextSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({
+                label: i,
+                value: index,
+            }))
+            content.btnAlign = "left"
+            content.handleNextStep = (val) => {
+                push(val === 0 ? undefined: "/breathOnStairs")
+            }
+            return content
+        }
+    },
+    symptomsHave: {
+        module: () => import("@/components/pageModule/TextSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({
+                label: i,
+                value: index,
+                mutex: index === content.selectOptions.length - 1
+            }))
+
+            return content
+        }
+    },
     ExperienceSimilarSymptoms: () => import("@/components/ExperienceSimilarSymptoms.vue"),
     BreathOnStairs: "",
     Train: "",

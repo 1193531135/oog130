@@ -13,7 +13,7 @@ const selectValue = ref(pageData.get()[route.name])
 const options = pageText.selectOptions.map((i, index) => ({
   label: i,
   value: index,
-  imgUrl: new URL("@/assets/image/mainGoal-select-item.png", import.meta.url)
+  imgUrl: new URL("@/assets/image/choose-body-0.png", import.meta.url)
 }))
 
 function change(val) {
@@ -29,8 +29,8 @@ function change(val) {
     <div class="title">{{ pageText.title }}</div>
     <Select v-model="selectValue" :options="options" class="select" @change="change">
       <template #default="{ itemData }">
-        <div>{{ itemData.label }}</div>
         <img :src="itemData.imgUrl"/>
+        <div>{{ itemData.label }}</div>
       </template>
     </Select>
   </div>
@@ -38,7 +38,6 @@ function change(val) {
 
 <style lang="less" scoped>
 .page-con {
-  width: 681px;
 }
 
 .title {
@@ -50,13 +49,31 @@ function change(val) {
 }
 
 .page-con {
-  /deep/ .select-item {
-    height: 141px;
-    padding-right: 0;
-    justify-content: space-between;
-
-    img {
-      width: 167px
+  /deep/ .select-container{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .select-item {
+      padding: 0;
+      justify-content: space-between;
+      flex-direction: column;
+      gap: 0;
+      width: calc(100vw * 270 / 1440);
+      > div{
+        height: 32px;
+        width: 100%;
+        text-align: center;
+        background-color: #5E5E5E;
+        line-height: 32px;
+        font-family: Laien,serif;
+      }
+      > img {
+        object-fit: contain;
+        width: 100%;
+      }
+    }
+    .select-item.active{
+      > div{ background-color: var(--style-color) }
     }
   }
 }
@@ -65,6 +82,13 @@ function change(val) {
   .page-con {
     width: auto;
     padding: 0 24px;
+    /deep/ .select-container{
+      flex-direction: row;
+      flex-wrap: wrap;
+      .select-item {
+        width: calc(50% - 20px);
+      }
+    }
   }
   .title {
     font-size: 30px;

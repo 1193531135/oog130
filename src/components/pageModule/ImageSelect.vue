@@ -21,8 +21,9 @@ const props = defineProps({
   },
   btnAlign: {
     type: String,
-    default: 'right'
+    default: 'left'
   },
+  imgUrl: String,
   handleNextStep: Function
 })
 
@@ -30,6 +31,7 @@ const emit = defineEmits(['update:modelValue', 'change', 'click'])
 const selectData = ref(pageData.get()[route.name] || (props.multiple ? [] : null))
 
 const isDisabled = computed(() => props.multiple ? !selectData.value.length : selectData.value === null)
+// const bgImage = new URL(props.imgUrl, import.meta.url)
 
 // change事件
 function change(val) {
@@ -49,11 +51,18 @@ function goIt() {
   <div class="select-page-con">
     <div class="title">{{ title }}</div>
     <div class="subtitle">{{ subtitle }}</div>
-    <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
-    <div class="btn-container" :style="'justify-content:' + btnAlign">
-      <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
-        <div>{{ btnText }}</div>
-        <img src="@/assets/select-item-icon.png">
+    <div class="content-con">
+      <div class="select-con">
+        <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
+        <div class="btn-container" :style="'justify-content:' + btnAlign">
+          <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
+            <div>{{ btnText }}</div>
+            <img src="@/assets/select-item-icon.png">
+          </div>
+        </div>
+      </div>
+      <div class="content-image">
+        <img :src="imgUrl">
       </div>
     </div>
   </div>
@@ -61,38 +70,66 @@ function goIt() {
 
 <style scoped lang="less">
 .select-page-con {
-  padding: 0 33px 20px;
   max-width: 498px;
   box-sizing: border-box;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-bottom: 20px;
 
   .title {
     font-family: Laien, serif;
     font-size: 40px;
     font-weight: 700;
-    width: 100%;
     margin-bottom: 24px;
   }
-
-  /deep/ .select {
-    margin-bottom: 32px;
-    //预设11px padding
-    .select-item {
-      padding-top: 11px;
-      padding-bottom: 13px;
+  .content-con{
+    display: flex;
+    align-items: flex-start;
+    /deep/ .select {
+      width: 328px;
+      margin-bottom: 32px;
+      //预设11px padding
+      .select-item {
+        padding-top: 11px;
+        padding-bottom: 13px;
+      }
+    }
+    .content-image{
+      width: 280px;
+      margin-left: -60px;
+      img{
+        object-fit: contain;
+        width: 100%;
+      }
     }
   }
 }
 
 @media (max-width: 768px) {
   .select-page-con {
-    padding: 0 24px;
-
+    padding: 0 16px;
     .title {
       font-size: 28px
+    }
+    .content-con{
+      .select-con{
+        width: 100%;
+        position: relative;
+        z-index: 1;
+      }
+      /deep/ .select {
+        width: calc(100% - 98px);
+        margin-bottom: 32px;
+        //预设11px padding
+        .select-item {
+          padding-top: 11px;
+          padding-bottom: 13px;
+        }
+      }
+      .content-image{
+        width: 228px;
+        position: absolute;
+        right: 0;
+      }
     }
   }
 }

@@ -14,7 +14,7 @@
 /* 公共的 continue 按钮,和page-con背景 */
 .btn-container {
     display: flex;
-
+    width: 100%;
     .continue-btn {
         display: flex;
         width: 165px;
@@ -34,6 +34,12 @@
             width: 24px;
         }
     }
+    .continue-btn.disabled {
+        background-color: #2E4507;
+        cursor: not-allowed;
+        opacity: 0.4;
+        pointer-events: none;
+    }
 }
 
 @media (max-width: 768px) {
@@ -46,7 +52,6 @@
         height: 88px;
         bottom: 0;
         left: 0;
-        width: 100%;
         box-sizing: border-box;
         padding: 15px 16px;
         display: flex;

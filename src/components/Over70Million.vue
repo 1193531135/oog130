@@ -16,7 +16,7 @@ function change(){
     <div class="description">{{ pageText.text1 }}</div>
     <img class="img" src="../assets/Over70million.png" alt="" srcset="">
     <div class="btn-container">
-      <div class="continue-btn" @click="push">
+      <div class="continue-btn" @click="change">
         <div>Continue</div>
         <img src="@/assets/select-item-icon.png">
       </div>

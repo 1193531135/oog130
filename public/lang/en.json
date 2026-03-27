@@ -231,7 +231,6 @@
     "selectOptions": [
       "Yes, I am",
       "No, I’m not.",
-      "All of this",
       "I’m not sure"
     ],
     "continue": "Continue"

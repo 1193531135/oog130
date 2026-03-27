@@ -37,6 +37,13 @@ function change(val){
       }
 
   }
+  else {
+    //单选
+    if(props.modelValue === val) {
+      // 已经选中则取消选中
+      updateVal = null
+    }
+  }
   emit('update:modelValue', updateVal)
 
   // 触发外部change事件
@@ -85,10 +92,11 @@ onMounted(() => {
 <style scoped lang="less">
 /* 公共的选择器样式 */
 .select-container{
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: Poppins,serif;
   font-weight: 500;
   .select-item{
