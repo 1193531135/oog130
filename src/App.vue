@@ -1,7 +1,13 @@
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref,onMounted,computed } from "vue";
 import { readLanguage } from "@/tool";
+import { useRoute } from "vue-router";
+import { registerList } from "@/router/index.js";
+
 const loaded = ref(false);
+const route = useRoute()
+
+const routeIndex = computed(() => registerList.findIndex(i=> i.path === route.path) )
 
 // 加载资源
 async function loadResources() {
@@ -10,8 +16,11 @@ async function loadResources() {
   loaded.value = true;
 }
 
-const routePool = ["/ageQuestion", "/over70Million", "motivatesYou2Exercise"]
-
+const back = () => {
+  if(routeIndex.value > 0){
+    window.history.back()
+  }
+}
 
 onMounted(() => {
   loadResources();
@@ -24,10 +33,12 @@ onMounted(() => {
       <img src="./assets/title-logo.png" class="head-logo">
       <div class="head-text">Military Calisthenics </div>
     </div>
-    <div class="progress-bar">
-      <div class="back-btn"></div>
-      <div class="progress-con"></div>
-      <div class="progress"></div>
+    <div class="progress-bar" v-show="!registerList[routeIndex].config.progressHidden">
+      <img src="@/assets/back.png" class="back-btn" @click="back"/>
+      <div class="progress-con">
+        <div class="progress" :style="'width:' + (routeIndex / (registerList.length - 1) * 100) + '%'"></div>
+      </div>
+      <div class="progress-text">{{ routeIndex }}/{{ registerList.length }}</div>
     </div>
     <router-view></router-view>
   </div>
@@ -68,6 +79,26 @@ onMounted(() => {
   }
   .progress-bar{
     height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 60px;
+    gap: 24px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    .back-btn{ height: 32px;width: 32px }
+    .progress-con{
+      flex: 1;
+      height: 4px;
+      background-color: rgba(46, 46, 46, 1);
+      .progress{
+        background-color: var(--style-color);
+        height: 100%;
+        transition: width 0.3s;
+      }
+    }
+    .progress-text{ color: #AAA }
   }
 }
 
@@ -75,6 +106,18 @@ onMounted(() => {
   .page-container{
     .head-container{
       padding: 16px 24px;
+    }
+    .progress-bar{
+      padding: 0 24px;
+      gap: 5px;
+      margin-bottom: 24px;
+      .back-btn{ height: 24px;width: 24px }
+      .progress-con{
+        flex: 1;
+        height: 4px;
+        background-color: rgba(46, 46, 46, 1);
+      }
+      .progress-text{ font-size: 12px }
     }
   }
 }

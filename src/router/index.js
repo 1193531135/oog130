@@ -5,8 +5,6 @@ import { pageConfig } from "@/config.js"
 // 引入模板
 
 const autoRegisterList = Object.keys(pageConfig).filter(i => pageConfig[i]).map((name) => {
-    // 格式化简单传入的数据
-    pageConfig[name].constructor === Function && (pageConfig[name] = { module:pageConfig[name]})
     // 创建模板壳子
     const component = defineComponent({
         setup() {
@@ -26,6 +24,7 @@ const autoRegisterList = Object.keys(pageConfig).filter(i => pageConfig[i]).map(
         path: '/' + name[0].toLowerCase() + name.substring(1),
         name,
         component,
+        config: pageConfig[name].config
     }
 })
 

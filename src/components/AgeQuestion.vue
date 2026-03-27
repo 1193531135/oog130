@@ -2,14 +2,19 @@
 import {ref} from 'vue'
 import Select from './module/select.vue'
 import { push } from '@/tool/index.js'
+import { PageData } from "@/tool/index.js";
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const pageText = window.languageData.ageQuestion
-const selectValue = ref(0)
+const pageData = new PageData()
+const selectValue = ref(pageData.get()[route.name])
+
 const options = ["18-29", "30-39", "40-49", "50+"].map((i, index) => ({label: i, value: index}))
 
 function change(val){
   // 存储数据
-  sessionStorage.setItem('age', options[val].label)
+  pageData.set(route.name,val)
   //
   push()
 }
