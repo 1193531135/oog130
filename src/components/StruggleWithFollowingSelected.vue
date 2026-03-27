@@ -1,19 +1,20 @@
 <script setup>
-import { ref, useSlots, onMounted } from "vue";
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
+import { push } from '@/tool/index.js'
 
 const pageData = new PageData()
 pageData.get()
 const route = useRoute()
 let viewMode = Number(pageData.get().StruggleWithFollowing) || 0
 console.log('viewMode1', viewMode)
-const num = window.languageData.StruggleWithFollowingSelected
+const num = window.languageData[route.name]
 const pageText = num[viewMode]
 
 
 function change(val) {
   console.log(val)
+  push
 }
 console.log(pageText, viewMode)
 </script>
@@ -31,8 +32,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text2[0] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container">
+          <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -50,8 +51,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text2[0] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container">
+          <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -69,8 +70,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text2[0] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container">
+          <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
             <img src="@/assets/select-item-icon.png">
           </div>

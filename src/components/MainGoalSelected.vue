@@ -1,19 +1,19 @@
 <script setup>
-import { ref, useSlots, onMounted } from "vue";
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-
+import { push } from '@/tool/index.js'
 const pageData = new PageData()
 pageData.get()
 const route = useRoute()
 let viewMode = Number(pageData.get().MilitaryCalisthenicsBefore) || 3
 console.log('viewMode', viewMode)
-const num = window.languageData.MilitaryCalisthenicsBefore
+const num = window.languageData[route.name]
 const pageText = num[viewMode]
 
 
 function change(val) {
   console.log(val)
+  push()
 }
 console.log(pageText, viewMode)
 </script>
@@ -35,8 +35,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text3[1] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container" >
+          <div class="continue-btn" @click="change">
             <div>Got it</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -58,8 +58,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text3[1] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container" >
+          <div class="continue-btn" @click="change">
             <div>Got it</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -74,8 +74,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text1[1] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container">
+          <div class="continue-btn" @click="change">
             <div>Got it</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -97,8 +97,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text3[1] }}</span>
       </div>
       <div class="btn">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container" >
+          <div class="continue-btn" @click="change">
             <div>Got it</div>
             <img src="@/assets/select-item-icon.png">
           </div>

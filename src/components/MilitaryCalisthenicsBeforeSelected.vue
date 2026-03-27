@@ -1,20 +1,21 @@
 <script setup>
-import { ref, useSlots, onMounted } from "vue";
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
+import { push } from '@/tool/index.js'
 
 const pageData = new PageData()
 pageData.get()
 const route = useRoute()
 let viewMode = Number(pageData.get().MilitaryCalisthenicsBefore) || 0
 console.log('viewMode', pageData.get())
-const num = window.languageData.MilitaryCalisthenicsBeforeSelected
+const num = window.languageData[route.name]
 viewMode = viewMode === 0 ? 0 : 1
 const pageText = num[viewMode]
 
 
 function change(val) {
   console.log(val)
+  push()
 }
 console.log(pageText, viewMode)
 </script>
@@ -34,8 +35,8 @@ console.log(pageText, viewMode)
         <span class="">{{ pageText.text2[2] }}</span>
       </div>
       <div class="btn1">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container">
+          <div class="continue-btn" @click="change">
             <div>Continue</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -52,8 +53,8 @@ console.log(pageText, viewMode)
         <span class="white">{{ pageText.text2[1] }}</span>
       </div>
       <div class="btn2">
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
-          <div class="continue-btn" @click="emit('click')">
+        <div class="btn-container">
+          <div class="continue-btn" @click="change">
             <div>Got it</div>
             <img src="@/assets/select-item-icon.png">
           </div>
@@ -68,8 +69,6 @@ console.log(pageText, viewMode)
   display: flex;
   flex-direction: column;
   align-items: center;
-
-
 }
 
 .img {
@@ -90,7 +89,6 @@ console.log(pageText, viewMode)
 .option2 {
   width: 540px;
   position: relative;
-  overflow: auto;
 }
 
 .subtitle {
