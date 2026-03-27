@@ -46,7 +46,7 @@ const config = {
     WorkScheduleLike: "",
     DescribeTypicalDay: "",
     CurrentEnergyLevels: "",
-    MilitaryCalisthenics: "",
+    MilitaryCalisthenics: () => import("@/components/MilitaryCalisthenics.vue"),
     DrinkDaily: "",
     UsuallyGet: "",
     FollowDiets: "",
