@@ -17,15 +17,31 @@ function change(val) {
     push()
 }
 
+
 const height = ref('')
+const height_cm = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
 let placeholder_1 = ref("_ft")
 let placeholder_2 = ref("__in")
+//提示文本
+const isErrorText = ref('Height must be greater than or equal to 90 cm')
+
+// ft/in输入框
 // 验证逻辑：失焦时检查是否为空
 const validate = () => {
-    isFocused.value = false
-    isError.value = height.value.trim() === ''
+    let val = height.value.replace(/\D/g, '').length
+
+    isErrorText.value = "Height must be greater than or equal to 3 ft"
+    console.log(val)
+    if (val == 3) {
+        isFocused.value = true
+        isError.value = false
+
+    } else {
+        isFocused.value = false
+        isError.value = true
+    }
 }
 const onInput = (e) => {
     console.log('onInput正在输入：', e.target.value.length, '-------', height.value.length)
@@ -53,7 +69,7 @@ const onInput = (e) => {
             e.target.value = height.value
         }
     } else {
-        console.log('onInput用户正在输入',height.value,val)
+        console.log('onInput用户正在输入', height.value, val)
         //输入
         if (val.length == 1) {
             console.log('输入1')
@@ -63,7 +79,7 @@ const onInput = (e) => {
         } else if (val.length == 2) {
             console.log('输入2')
             height.value = val[0] + ' ft ' + val[1]
-             placeholder_1.value = ''
+            placeholder_1.value = ''
             placeholder_2.value = "_in"
             e.target.value = height.value
         } else if (val.length == 3) {
@@ -76,23 +92,24 @@ const onInput = (e) => {
     }
 
 }
-// 监听删除键（键盘 backspace / delete）
-const onDelete = (e) => {
-    // // 这里写你要的逻辑：限制数字、格式化、校验等
-    // let val = e.target.value.replace(/\D/g, '') // 去掉非数字
-    // console.log('onDelete去掉非数字：', val, val.length)
-    // console.log('onDelete用户按下了删除键')
-    // // 这里写你要执行的逻辑
-
-    // console.log(height.value)
+// cm输入框
+// 验证逻辑：失焦时检查是否为空
+const validate1 = () => {
+    isErrorText.value = "Height must be greater than or equal to 90 cm"
+    if (height_cm.value < 90 || height_cm.value === '') {
+        isFocused.value = false
+        isError.value = true
+    } else {
+        isFocused.value = true
+        isError.value = false
+    }
 }
-
 const onInput1 = (e) => {
     console.log('正在输入：', e.target.value)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
-    height.value = val
+    height_cm.value = val
 }
 
 </script>
@@ -130,15 +147,17 @@ const onInput1 = (e) => {
             <!-- 错误提示图标 -->
             <div v-if="isError" class="error-icon">!</div>
         </div>
+
+
         <!-- cm -->
         <div v-if="unit === 'cm'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="height" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate" />
+            <input v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
+                @blur="validate1" />
             <div class="input-text">
-                <span class="unit">{{ height }}</span>
+                <span class="unit">{{ height_cm }}</span>
                 <span>cm</span>
             </div>
 
@@ -147,7 +166,7 @@ const onInput1 = (e) => {
         </div>
 
         <!-- 错误提示文字 -->
-        <p v-if="isError" class="error-text">This is a required question</p>
+        <p v-if="isError" class="error-text">{{ isErrorText }}</p>
 
 
 
@@ -264,15 +283,15 @@ const onInput1 = (e) => {
 
 
         .error-icon {
-            width: 32px;
-            height: 32px;
+            width: 20px;
+            height: 20px;
             background-color: #ff3b30;
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 13px;
             font-weight: bold;
             margin-left: auto;
         }
@@ -289,14 +308,12 @@ const onInput1 = (e) => {
         box-shadow: 0 0 0 1px #57810D;
     }
 
-
-
-
-
     .error-text {
         color: #ff3b30;
-        font-size: 1.5rem;
-        margin: 8px 0 0 0;
+        font-size: 12px;
+        line-height: 16px;
+        width: 100%;
+        margin-top: 8px;
     }
 
 
