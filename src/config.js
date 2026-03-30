@@ -254,8 +254,12 @@ const config = {
     YourHeight: {
         module: () => import("@/components/YourHeight.vue"),
     },
-    CurrentWeight: "",
-    TargetWeight: "",
+    CurrentWeight: {
+        module: () => import("@/components/CurrentWeight.vue"),
+    },
+    TargetWeight: {
+        module: () => import("@/components/TargetWeight.vue"),
+    },
     DateOfBirth: "",
     PersonalSummary: "",
     ComingUp: "",

@@ -18,24 +18,21 @@ function change(val) {
 }
 
 
-const height = ref('')
-const height_cm = ref('')
+const targetWeight_lb = ref('')
+const targetWeight_kg = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
-let placeholder_1 = ref("_ft")
-let placeholder_2 = ref("__in")
-const checked = ref(false)// 复选框状态
 //提示文本
-const isErrorText = ref('Height must be greater than or equal to 90 cm')
+const isErrorText = ref('Weight must be greater than or equal to 77 lb')
 
 // ft/in输入框
 // 验证逻辑：失焦时检查是否为空
 const validate = () => {
-    let val = height.value.replace(/\D/g, '').length
+    let val = targetWeight_lb.value.replace(/\D/g, '') - 0
 
-    isErrorText.value = "Height must be greater than or equal to 3 ft"
+    isErrorText.value = "Weight must be greater than or equal to 77 lb"
     console.log(val)
-    if (val == 3) {
+    if (val >= 77) {
         isFocused.value = true
         isError.value = false
 
@@ -45,59 +42,18 @@ const validate = () => {
     }
 }
 const onInput = (e) => {
-    console.log('onInput正在输入：', e.target.value.length, '-------', height.value.length)
+    console.log('onInput正在输入：', e.target.value.length, '-------', targetWeight_lb.value.length)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
-    let oldVal = height.value.replace(/\D/g, '')
-    console.log('onInput去掉非数字：', '新：：' + val, '旧：' + oldVal)
-    if (e.target.value.length < height.value.length) {
-        console.log('onInput用户按下了删除键')
-        //删除
-        if (oldVal.length == 3) {
-            height.value = val[0] + ' ft ' + val[1]
-            console.log(height.value)
-            placeholder_2.value = '_in'
-            e.target.value = height.value
-        } else if (oldVal.length == 2) {
-            height.value = val[0] + ' ft'
-            placeholder_2.value = '__in'
-            e.target.value = height.value
-
-        } else if (oldVal.length == 1) {
-            placeholder_1.value = '_ft'
-            placeholder_2.value = '__in'
-            height.value = ''
-            e.target.value = height.value
-        }
-    } else {
-        console.log('onInput用户正在输入', height.value, val)
-        //输入
-        if (val.length == 1) {
-            console.log('输入1')
-            height.value = val + ' ft'
-            placeholder_1.value = ''
-            e.target.value = height.value
-        } else if (val.length == 2) {
-            console.log('输入2')
-            height.value = val[0] + ' ft ' + val[1]
-            placeholder_1.value = ''
-            placeholder_2.value = "_in"
-            e.target.value = height.value
-        } else if (val.length == 3) {
-            console.log('输入3')
-            height.value = val[0] + ' ft ' + val[1] + val[2] + ' in'
-            placeholder_1.value = ''
-            placeholder_2.value = ''
-            e.target.value = height.value
-        }
-    }
+    if (val.length > 3) val = val.slice(0, 3)   // 最多3位
+    targetWeight_lb.value = val
 
 }
 // cm输入框
 // 验证逻辑：失焦时检查是否为空
 const validate1 = () => {
-    isErrorText.value = "Height must be greater than or equal to 90 cm"
-    if (height_cm.value < 90 || height_cm.value === '') {
+    isErrorText.value = "Weight must be greater than or equal to 35 kg"
+    if (targetWeight_kg.value < 35 || targetWeight_kg.value === '') {
         isFocused.value = false
         isError.value = true
     } else {
@@ -110,7 +66,7 @@ const onInput1 = (e) => {
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
-    height_cm.value = val
+    targetWeight_kg.value = val
 }
 
 
@@ -134,17 +90,16 @@ const onInput1 = (e) => {
         <div class="inputLable">{{ pageText.inputLable + ' (' + unit + ')' }}</div>
 
         <!-- 输入框容器 -->
-        <!-- ft/in -->
+        <!-- lb -->
         <div class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
-        }" v-if="unit === 'ft/in'">
-            <input @keydown.delete="onDelete" @input="onInput" class="input" placeholder="" @focus="isFocused = true"
+        }" v-if="unit === 'lb'">
+            <input v-model="targetWeight_lb" @input="onInput" class="input" placeholder="__" @focus="isFocused = true"
                 @blur="validate" />
             <div class="input-text">
-                <span>{{ height }}</span>
-                <span class="placeholder">{{ placeholder_1 }}</span>
-                <span class="placeholder">{{ placeholder_2 }}</span>
+                <span class="unit">{{ targetWeight_lb }}</span>
+                <span>lb</span>
             </div>
 
             <!-- 错误提示图标 -->
@@ -153,14 +108,14 @@ const onInput1 = (e) => {
 
 
         <!-- cm -->
-        <div v-if="unit === 'cm'" class="input-wrapper" :class="{
+        <div v-if="unit === 'kg'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
+            <input v-model="targetWeight_kg" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
                 @blur="validate1" />
             <div class="input-text">
-                <span class="unit">{{ height_cm }}</span>
+                <span class="unit">{{ targetWeight_kg }}</span>
                 <span>cm</span>
             </div>
 
@@ -170,17 +125,17 @@ const onInput1 = (e) => {
 
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
-        <div class="checkbox-wrap">
-            <div @click="checked = !checked" class="checkbox" :class="{ 'checkbox-tick': checked }">
+        <!-- 当输入的时候 class:grenn -->
+        <div class="textBox">
+            <p class="textBox-title">{{ pageText.textBox.title }}</p>
+            <p class="textBox-content ">{{ pageText.textBox.text }}</p>
+        </div>
+        <div v-if="ishow" class="textBox bmi">
+            <p class="textBox-title">Your BMI is 21, considered Normal</p>
+            <p class="textBox-content ">We'll use this information to customize your plan to your needs.</p>
 
-            </div>
-            <div class="lable">{{ pageText.checkboxLabel }}</div>
         </div>
-        <div class="text">
-            <span>{{ pageText.text[0] }}</span>
-            <span class="underline">{{ pageText.text[1] }}</span>
-            <span>{{ pageText.text[2] }}</span>
-        </div>
+
         <div class="btn">
             <div class="btn-container">
                 <div class="continue-btn" @click="change">
@@ -199,6 +154,10 @@ const onInput1 = (e) => {
     align-items: center;
     width: 513px;
     box-sizing: border-box;
+
+    .title {
+        text-align: center;
+    }
 
     .unit-switch {
         margin-top: 50px;
@@ -290,11 +249,6 @@ const onInput1 = (e) => {
             }
         }
 
-        /* 输入有内容时，文字透明 */
-        .input:not(:placeholder-shown) {
-            color: transparent;
-        }
-
         .input::placeholder {
             color: #515151;
         }
@@ -335,75 +289,37 @@ const onInput1 = (e) => {
         margin-top: 8px;
     }
 
-    // 复选框样式
-    /* 隐藏原生复选框 */
-    .checkbox-wrap {
+
+
+    .textBox {
         width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        line-height: 18px;
-        cursor: pointer;
-        margin-top: 16px;
-
-        .checkbox {
-            position: relative;
-            width: 24px;
-            height: 24px;
-            background: transparent;
-            border: 2px solid #969696;
-            cursor: pointer;
-
-            /* 勾选颜色 */
-        }
-
-        .checkbox-tick {
-            // background-color: #000;
-        }
-
-        .checkbox::after {
-            position: absolute;
-            box-sizing: content-box;
-            content: "";
-            border: 2px solid #fff;
-            border-left: 0;
-            border-top: 0;
-            height: 13px;
-            width: 5px;
-            position: absolute;
-            left: 9px;
-            top: 2px;
-            transform: rotate(45deg) scale(0.6);
-            opacity: 0;
-            transition: transform .15s ease-in .05s;
-            transform-origin: center;
-        }
-
-        .checkbox-tick::after {
-            opacity: 1;
-            transform: rotate(45deg) scaleY(1);
-        }
-
-        .lable {
-            max-width: 469px;
-            color: #969696;
-            font-size: 14px;
-            font-family: Laient, sans-serif;
-        }
-
-
-    }
-
-    .text {
-        width: 100%;
-        color: #fff;
-        font-size: 14px;
-        font-family: Laient, sans-serif;
+        height: auto;
+        padding: 20px 24px;
+        box-sizing: border-box;
+        border: 1px solid #515151;
+        background: #3A3A3A;
         margin-top: 24px;
 
-        .underline {
-            text-decoration: underline;
+
+        .textBox-title {
+            width: 100%;
+            color: #fff;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
         }
+
+        .textBox-content {
+            width: 100%;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            color: #969696;
+        }
+    }
+
+    .bmi {
+        background-color: #202919;
     }
 
     .btn {
@@ -411,6 +327,8 @@ const onInput1 = (e) => {
         margin-left: 260px;
         margin-top: 112px;
     }
+
+
 
 }
 

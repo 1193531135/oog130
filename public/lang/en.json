@@ -532,14 +532,14 @@
       "selectOptions": [
         "lb",
         "kg"
-      ],
-      "inputLable": "Current Weight（kg）",
-      "textBox": {
-        "title": "Calculating your body mass index",
-        "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
-      },
-      "continue": "Continue"
-    }
+      ]
+    },
+    "textBox": {
+      "title": "Calculating your body mass index",
+      "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
+    },
+    "inputLable": "Current Weight（kg）",
+    "continue": "Continue"
   },
   "TargetWeight": {
     "title": "What‘s your target weight?",
@@ -548,14 +548,14 @@
       "selectOptions": [
         "lb",
         "kg"
-      ],
-      "inputLable": "Target Weight（kg）",
-      "textBox": {
-        "title": "Calculating your body mass index",
-        "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
-      },
-      "continue": "Continue"
-    }
+      ]
+    },
+    "inputLable": "Target Weight（kg）",
+    "textBox": {
+      "title": "Calculating your body mass index",
+      "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
+    },
+    "continue": "Continue"
   },
   "DateOfBirth": {
     "title": "What‘s your date of birth?",
