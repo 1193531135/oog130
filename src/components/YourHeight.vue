@@ -24,6 +24,7 @@ const isFocused = ref(false)
 const isError = ref(false)
 let placeholder_1 = ref("_ft")
 let placeholder_2 = ref("__in")
+const checked = ref(false)// 复选框状态
 //提示文本
 const isErrorText = ref('Height must be greater than or equal to 90 cm')
 
@@ -112,13 +113,15 @@ const onInput1 = (e) => {
     height_cm.value = val
 }
 
+
+
 </script>
 
 <template>
     <div class="text-page">
         <div class="title">{{ pageText.title }}</div>
         <div class="unit-switch">
-            <span class="description">Units</span>
+            <span class="description">{{ pageText.selectConfig.title }}</span>
             <div class="buttons">
                 <button :class="{ active: unit === selectOptions[0] }" @click="unit = selectOptions[0]">
                     {{ selectOptions[0] }}
@@ -167,8 +170,17 @@ const onInput1 = (e) => {
 
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
+        <div class="checkbox-wrap">
+            <div @click="checked = !checked" class="checkbox" :class="{ 'checkbox-tick': checked }">
 
-
+            </div>
+            <div class="lable">{{ pageText.checkboxLabel }}</div>
+        </div>
+        <div class="text">
+            <span>{{ pageText.text[0] }}</span>
+            <span class="underline">{{ pageText.text[1] }}</span>
+            <span>{{ pageText.text[2] }}</span>
+        </div>
 
     </div>
 </template>
@@ -316,8 +328,89 @@ const onInput1 = (e) => {
         margin-top: 8px;
     }
 
+    // 复选框样式
+    /* 隐藏原生复选框 */
+    .checkbox-wrap {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 18px;
+        cursor: pointer;
+        margin-top: 16px;
+
+        .checkbox {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: 2px solid #969696;
+            cursor: pointer;
+
+            /* 勾选颜色 */
+        }
+
+        .checkbox-tick {
+            // background-color: #000;
+        }
+
+        .checkbox::after {
+            position: absolute;
+            box-sizing: content-box;
+            content: "";
+            border: 2px solid #fff;
+            border-left: 0;
+            border-top: 0;
+            height: 13px;
+            width: 5px;
+            position: absolute;
+            left: 9px;
+            top: 2px;
+            transform: rotate(45deg) scale(0.6);
+            opacity: 0;
+            transition: transform .15s ease-in .05s;
+            transform-origin: center;
+        }
+
+        .checkbox-tick::after {
+            opacity: 1;
+            transform: rotate(45deg) scaleY(1);
+        }
+
+        .lable {
+            max-width: 469px;
+            color: #969696;
+            font-size: 14px;
+            font-family: Laient, sans-serif;
+        }
+
+
+    }
+
+    .text {
+        width: 100%;
+        color: #fff;
+        font-size: 14px;
+        font-family: Laient, sans-serif;
+        margin-top: 24px;
+
+        .underline {
+            text-decoration: underline;
+        }
+    }
+
+
 
 }
 
-@media (max-width: 600px) {}
+@media (max-width: 600px) {
+    .text-page {
+        width: 100vw;
+        padding: 0 20px;
+        box-sizing: border-box;
+        .lable{
+            width: 80vw;
+        }
+    }
+}
 </style>
