@@ -517,9 +517,13 @@
       ]
     },
     "inputLable": "Height",
-      "checkboxLabel": " consent to MadMuscles processing my health onboarding data tto provide services and enhance my user experience. Privacy Policy.",
-      "text1": "To withdraw consent, contact us anytime. ",
-      "continue": "Continue"
+    "checkboxLabel": " consent to MadMuscles processing my health onboarding data tto provide services and enhance my user experience. Privacy Policy.",
+    "text": [
+      "To withdraw consent, ",
+      "contact us",
+      " anytime."
+    ],
+    "continue": "Continue"
   },
   "CurrentWeight": {
     "title": "What‘s your current weight?",
