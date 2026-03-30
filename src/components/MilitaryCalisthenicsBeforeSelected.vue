@@ -4,10 +4,10 @@ import { PageData } from "@/tool/index.js";
 import { push } from '@/tool/index.js'
 
 const pageData = new PageData()
-pageData.get()
+pageData
 const route = useRoute()
-let viewMode = Number(pageData.get().MilitaryCalisthenicsBefore) || 0
-console.log('viewMode', pageData.get())
+let viewMode = Number(pageData.MilitaryCalisthenicsBefore) || 0
+console.log('viewMode', pageData)
 const num = window.languageData[route.name]
 viewMode = viewMode === 0 ? 0 : 1
 const pageText = num[viewMode]

@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const pageText = window.languageData.ageQuestion
 const pageData = new PageData()
-const selectValue = ref(pageData.get()[route.name])
+const selectValue = ref(pageData[route.name])
 
 const options = ["18-29", "30-39", "40-49", "50+"].map((i, index) => ({label: i, value: index}))
 

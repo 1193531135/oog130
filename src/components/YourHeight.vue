@@ -7,7 +7,7 @@ import { ref, computed } from 'vue'
 
 
 const pageData = new PageData()
-pageData.get()
+pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
 console.log('pageText', pageText)

@@ -12,14 +12,11 @@ export function readLanguage() {
 // pageData存储
 export class PageData  {
   constructor() {
-    this.data = sessionStorage.getItem("pageData") ? JSON.parse(sessionStorage.getItem("pageData")) : {}
+    Object.assign(this, sessionStorage.getItem("pageData") ? JSON.parse(sessionStorage.getItem("pageData")) : {})
   }
   set(key,val){
-    this.data[key] = val
-    sessionStorage.setItem("pageData",JSON.stringify(this.data))
-  }
-  get(){
-    return this.data
+    this[key] = val
+    sessionStorage.setItem("pageData",JSON.stringify(this))
   }
 }
 

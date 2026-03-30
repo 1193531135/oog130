@@ -27,12 +27,6 @@ function change(val) {
 <template>
   <div class="page-con">
     <div class="title">{{ pageText.title }}</div>
-    <Select v-model="selectValue" :options="options" class="select" @change="change">
-      <template #default="{ itemData }">
-        <div>{{ itemData.label }}</div>
-        <img :src="itemData.imgUrl"/>
-      </template>
-    </Select>
   </div>
 </template>
 

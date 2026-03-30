@@ -8,7 +8,7 @@ import {useRoute} from 'vue-router'
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const selectValue = ref(pageData.get()[route.name])
+const selectValue = ref(pageData[route.name])
 
 const options = pageText.selectOptions.map((i, index) => ({
   label: i,

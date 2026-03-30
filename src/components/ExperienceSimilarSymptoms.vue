@@ -4,7 +4,7 @@ import { PageData } from "@/tool/index.js";
 import { push } from '@/tool/index.js'
 
 const pageData = new PageData()
-pageData.get()
+pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
 

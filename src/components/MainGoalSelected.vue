@@ -3,9 +3,9 @@ import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { push } from '@/tool/index.js'
 const pageData = new PageData()
-pageData.get()
+pageData
 const route = useRoute()
-let viewMode = Number(pageData.get().MilitaryCalisthenicsBefore) || 3
+let viewMode = Number(pageData.MilitaryCalisthenicsBefore) || 3
 console.log('viewMode', viewMode)
 const num = window.languageData[route.name]
 const pageText = num[viewMode]

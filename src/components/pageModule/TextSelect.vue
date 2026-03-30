@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue', 'change', 'click'])
-const selectData = ref(pageData.get()[route.name] || (props.multiple ? [] : null))
+const selectData = ref(pageData[route.name] || (props.multiple ? [] : null))
 
 const isDisabled = computed(() => props.multiple ? !selectData.value.length : selectData.value === null)
 

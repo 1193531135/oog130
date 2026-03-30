@@ -4,9 +4,9 @@ import { PageData } from "@/tool/index.js";
 import { push } from '@/tool/index.js'
 
 const pageData = new PageData()
-pageData.get()
+pageData
 const route = useRoute()
-let viewMode = Number(pageData.get().StruggleWithFollowing) || 0
+let viewMode = Number(pageData.StruggleWithFollowing) || 0
 console.log('viewMode1', viewMode)
 const num = window.languageData[route.name]
 const pageText = num[viewMode]
