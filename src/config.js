@@ -263,7 +263,9 @@ const config = {
     DateOfBirth: "",
     PersonalSummary: "",
     ComingUp: "",
-    EventTime: "",
+    EventTime: {
+        module: () => import("@/components/EventTime.vue"),
+    },
     FinallyGet: "",
     MotivationShape: textSelectDefaultConfig,
     ConfidentReaching: textSelectDefaultConfig,
