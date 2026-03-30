@@ -256,10 +256,14 @@ const config = {
     },
     CurrentWeight: "",
     TargetWeight: "",
-    DateOfBirth: "",
+    DateOfBirth: {
+        module: () => import("@/components/DateOfBirth.vue"),
+    },
     PersonalSummary: "",
     ComingUp: "",
-    EventTime: "",
+    EventTime: {
+        module: () => import("@/components/EventTime.vue"),
+    },
     FinallyGet: "",
     MotivationShape: textSelectDefaultConfig,
     ConfidentReaching: textSelectDefaultConfig,

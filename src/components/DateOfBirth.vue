@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 import Select from './module/select.vue'
-import { push } from '@/tool/index.js'
+import {push} from '@/tool/index.js'
 import {PageData} from "@/tool/index.js";
 import {useRoute} from 'vue-router'
 
@@ -23,7 +23,13 @@ function change(val) {
 <template>
   <div class="page-con">
     <div class="title">{{ pageText.title }}</div>
-    <a-date-picker v-model:value="value1" />
+    <a-date-picker
+        v-model:value="value1"
+        placeholder="DD / MM / YYYY"
+        format="DD / MM / YYYY"
+        :getPopupContainer="(trigger) => trigger.parentNode"
+        :showToday="false"
+    />
   </div>
 </template>
 
@@ -41,15 +47,7 @@ function change(val) {
 }
 
 .page-con {
-  /deep/ .ant-picker {
-    width: 428px;
-    height: 64px;
-    padding: 10px 20px;
-    font-size: 20px;
-    img {
-      width: 167px
-    }
-  }
+
 }
 
 @media (max-width: 768px) {
@@ -57,6 +55,7 @@ function change(val) {
     width: auto;
     padding: 0 24px;
   }
+
   .title {
     font-size: 30px;
   }
