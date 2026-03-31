@@ -639,7 +639,7 @@
     "continue": "Continue"
   },
   "EventTime": {
-    "title": "WWhen is your event?",
+    "title": "When is your event?",
     "text1": "We will keep this important event in mind for your journey",
     "inputLable": "Your date",
     "textBox": {
