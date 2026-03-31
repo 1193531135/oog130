@@ -260,7 +260,9 @@ const config = {
     TargetWeight: {
         module: () => import("@/components/TargetWeight.vue"),
     },
-    DateOfBirth: "",
+    DateOfBirth: {
+        module: () => import("@/components/DateOfBirth.vue"),
+    },
     PersonalSummary: "",
     ComingUp: "",
     EventTime: {
