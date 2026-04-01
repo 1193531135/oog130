@@ -275,7 +275,7 @@ const config = {
     UserName: () => import("@/components/UserName.vue"),
     CalisthenicsPlan: "",
     BodyProfile: "",
-    MakeCommitment: "",
+    MakeCommitment: ()=> import("@/components/MakeCommitment.vue"),
     MealPlanning: "",
 }
 // 做一些统一处理
