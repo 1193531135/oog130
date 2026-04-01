@@ -29,13 +29,18 @@ function change(val) {
                 <span style="color: #57810D;">{{ pageText.title[0] }}</span>
                 <span>{{ pageText.title[1] }}</span>
             </div>
-            <div class="select-container">
+            <Select v-model="selectValue" :options="options" class="select" @change="change">
+                <template #default="{ itemData }">
+                    <div>{{ itemData.label }}</div>
+                </template>
+            </Select>
+            <!-- <div class="select-container">
                 <div v-for="value in options" :key="value.value" class="select-item">
                     <span>{{ value.label }}</span>
                 </div>
-            </div>
+            </div> -->
         </div>
-    </div> 
+    </div>
 </template>
 
 <style scoped lang="less">
@@ -74,7 +79,7 @@ function change(val) {
             font-size: 30px;
         }
 
-        .select-container {
+        /deep/.select-container {
             .select-item {
                 margin-top: 20px;
                 height: 72px;
@@ -85,9 +90,10 @@ function change(val) {
                 display: flex;
                 align-items: center;
             }
-            .select-item :hover {
-                background-color: rgb(79, 79, 79);
-            }
+
+            // .select-item :hover {
+            //     background-color: rgb(79, 79, 79);
+            // }
         }
     }
 
