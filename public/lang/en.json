@@ -761,5 +761,29 @@
   },
   "MealPlanning": {
     "text": "Meal planning"
+  },
+  "EndAnimation": {
+    "textList": [
+      {
+        "label": "Build strength with military calisthenics",
+        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+      },
+      {
+        "label": "No equipment needed, just your body",
+        "bg": "conic-gradient(from 180deg at 50% 50%, #1A1033 0deg, #8C72F3 360deg)"
+      },
+      {
+        "label": "Train anywhere, anytime",
+        "bg": "conic-gradient(from 180deg at 50% 50%, #0A152A 0deg, #698CDB 360deg)"
+      },
+      {
+        "label": "Progressively harder workouts for all levels",
+        "bg": "conic-gradient(from 180deg at 50% 50%, #031A10 0deg, #086A4B 360deg)"
+      },
+      {
+        "label": "Get fit like a special forces operator",
+        "bg": "conic-gradient(from 180deg at 50% 50%, #2A1A02 0deg, #F09F14 360deg)"
+      }
+    ]
   }
 }

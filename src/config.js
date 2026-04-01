@@ -277,6 +277,7 @@ const config = {
     BodyProfile: () => import("@/components/BodyProfile.vue"),
     MakeCommitment: ()=> import("@/components/MakeCommitment.vue"),
     MealPlanning: () => import("@/components/MealPlanning.vue"),
+    EndAnimation:() => import("@/components/EndAnimation.vue"),
 }
 // 做一些统一处理
 Object.keys(config).forEach(key => {
