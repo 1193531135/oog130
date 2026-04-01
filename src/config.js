@@ -274,9 +274,9 @@ const config = {
     EnterEmail: () => import("@/components/EnterEmail.vue"),
     UserName: () => import("@/components/UserName.vue"),
     CalisthenicsPlan: "",
-    BodyProfile: "",
+    BodyProfile: () => import("@/components/BodyProfile.vue"),
     MakeCommitment: ()=> import("@/components/MakeCommitment.vue"),
-    MealPlanning: "",
+    MealPlanning: () => import("@/components/MealPlanning.vue"),
 }
 // 做一些统一处理
 Object.keys(config).forEach(key => {

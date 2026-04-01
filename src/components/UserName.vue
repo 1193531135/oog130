@@ -5,7 +5,6 @@ import { push } from '@/tool/index.js'
 import { ref } from 'vue'
 
 const pageData = new PageData()
-pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
 

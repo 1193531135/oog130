@@ -34,11 +34,7 @@ function change(val) {
                     <div>{{ itemData.label }}</div>
                 </template>
             </Select>
-            <!-- <div class="select-container">
-                <div v-for="value in options" :key="value.value" class="select-item">
-                    <span>{{ value.label }}</span>
-                </div>
-            </div> -->
+            
         </div>
     </div>
 </template>
