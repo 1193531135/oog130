@@ -63,7 +63,9 @@ const config = {
             return content
         }
     },
-    SelectAreas: "",
+    SelectAreas: {
+        module: () => import("@/components/SelectAreas.vue"),
+    },
     StruggleWithFollowing: {
         module: () => import("@/components/pageModule/ImageSelect.vue"),
         props(content) {
@@ -182,7 +184,9 @@ const config = {
         }
     },
     MilitaryCalisthenics: () => import("@/components/MilitaryCalisthenics.vue"),
-    DrinkDaily: "",
+    DrinkDaily: {
+        module: () => import("@/components/DrinkDaily.vue"),
+    },
     UsuallyGet: {
         module: () => import("@/components/pageModule/TextSelect.vue"),
         props(content) {
@@ -198,9 +202,10 @@ const config = {
         module: () => import("@/components/pageModule/TextSelect.vue"),
         props(content) {
             content.options = content.selectOptions.map((i, index) => ({
-                label: i,
+                label: i.label,
                 value: index,
-                mutex: index === content.selectOptions.length - 1
+                mutex: index === content.selectOptions.length - 1,
+                subLabel: i.subLabel
             }))
             return content
         }
@@ -268,7 +273,9 @@ const config = {
     EventTime: {
         module: () => import("@/components/EventTime.vue"),
     },
-    FinallyGet: "",
+    FinallyGet: {
+        module: () => import("@/components/FinallyGet.vue"),
+    },
     MotivationShape: textSelectDefaultConfig,
     ConfidentReaching: textSelectDefaultConfig,
     EnterEmail: () => import("@/components/EnterEmail.vue"),
