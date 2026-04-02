@@ -5,11 +5,12 @@ import { push } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 
+
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
 const selectValue = ref(pageData[route.name])
-
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 const value1 = ref();
 const dateofBirth = ref('')
 const isFocused = ref(false)
@@ -29,13 +30,16 @@ const validate = () => {
 
   // isErrorText.value = "Height must be greater than or equal to 3 ft"
   console.log(val)
-  if (val==8) {
+  if (val == 8) {
     isFocused.value = true
     isError.value = false
+    isDisabled.value = false
 
   } else {
     isFocused.value = false
     isError.value = true
+    isDisabled.value = true
+
   }
 }
 const onInput = (e) => {
@@ -126,7 +130,7 @@ const onInput = (e) => {
     }
     e.target.value = dateofBirth.value
   }
-
+  validate()
 
 }
 
@@ -161,7 +165,7 @@ const onInput = (e) => {
     </div>
     <div class="btn">
       <div class="btn-container">
-        <div class="continue-btn" @click="change">
+        <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
           <div>{{ pageText.continue }}</div>
           <img src="@/assets/select-item-icon.png">
         </div>
