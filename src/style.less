@@ -120,3 +120,56 @@
         width: 100%;
     }
 }
+
+// 自定义checkbox样式
+.checkbox-custom {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    background: transparent;
+    border: var(--border-width) solid #969696;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 24px;
+    --border-width:2px;
+    // 勾的宽高比
+    --aspect-ratio: 2.6;
+    // 勾的厚度
+    --check-thickness:2px;
+    // 勾的宽度
+    --check-width: 0.2em;
+    --check-height: calc(var(--aspect-ratio) * var(--check-width));
+    //实际容器宽度
+    --w:calc(1em - 2*var(--border-width));
+    /* √2 ≈ 1.4142 */
+    --g2: 1.4142;
+    --k: 0.353553; /* = 1 / (2√2) */
+    //--offset-x: calc(var(--check-width) * (var(--aspect-ratio) - 1) * var(--k));
+    //元素在左下角旋转后，超出了容器部分，宽度为(g2 * check-width)/2,宽度偏移量为  (容器宽度/2 - g2 * check-width / 2 - (check-height - check-width)/(2*g2) )
+    --offset-x: calc(
+            (1 - var(--g2)/2) * var(--check-width) * -1
+        + (var(--w)/2 - var(--check-width) * var(--g2) / 2 - (var(--check-height) - var(--check-width))/(2*var(--g2)))
+    );
+    // 高度偏移量应该为 (容器宽度/2 - g2 * check-width / 4) 最后减去边框，加上border的厚度
+    --offset-y: calc((var(--w)/2 - var(--check-height) * var(--g2) / 4 ) - 2px/var(--g2));
+    &::after {
+        position: absolute;
+        bottom: var(--offset-y);
+        left: var(--offset-x);
+        box-sizing: border-box;
+        content: "";
+        border: 2px solid var(--gou-color, white);
+        border-left: 0;
+        border-top: 0;
+        height: calc(var(--aspect-ratio) * var(--check-width));
+        width: var(--check-width);
+        transform: rotate(45deg);
+        transform-origin:100% 100%;
+        opacity: 0;
+
+        transition: all 0.2s;
+    }
+    &.active::after {
+        opacity: 1;
+    }
+}

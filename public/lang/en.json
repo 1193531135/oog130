@@ -111,7 +111,7 @@
   "MotivatesYou2Exercise": {
     "title": "What else motivates you to exercise?",
     "selectOptions": [
-      "Improve sleep\uD83C\uDF1B",
+      "Improve sleep🌛",
       "Enhance posture",
       "Enhance posture",
       "Reduce Stress",
@@ -340,14 +340,14 @@
     "title": "How much water do you drink daily?",
     "selectOptions": [
       {
-        "label": "Only coffee or tea \uD83C\uDF75",
+        "label": "Only coffee or tea 🍵",
         "description": {
           "title": "Drinking water is essential",
           "subtitle": "If you're not hydrated, your body can't perform at its highest level. MadMuscles will remind you to drink enough water."
         }
       },
       {
-        "label": "Less than 2 glasses\uD83D\uDCA7",
+        "label": "Less than 2 glasses💧",
         "subLabel": "up to 0,5 l/17 oz",
         "description": {
           "title": "Drinking water is essential",
@@ -355,7 +355,7 @@
         }
       },
       {
-        "label": "2-6 glasses\uD83D\uDCA7\uD83D\uDCA7",
+        "label": "2-6 glasses💧💧",
         "subLabel": "0-1,5 l/17-50 oz",
         "description": {
           "title": "You drink more water than 50% of users*.",
@@ -363,7 +363,7 @@
         }
       },
       {
-        "label": "7-10 glasses\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7",
+        "label": "7-10 glasses💧💧💧",
         "subLabel": "1,5-2,5 l/50-85 oz",
         "description": {
           "title": "Wow! Impressive!",
@@ -371,7 +371,7 @@
         }
       },
       {
-        "label": "More than 10 glasses\uD83D\uDC33",
+        "label": "More than 10 glasses🐳",
         "subLabel": "more than 2,5 l/85 oz",
         "description": {
           "title": "Wow! Impressive!",
@@ -385,10 +385,10 @@
   "UsuallyGet": {
     "title": "How much sleep do you usually get?",
     "selectOptions": [
-      "Less than 5 hours \uD83D\uDE44",
-      "5-6 hours \uD83E\uDD71",
-      "7-8 hours \uD83C\uDF1B",
-      "More than 8 hours \uD83D\uDE34"
+      "Less than 5 hours 🙄",
+      "5-6 hours 🥱",
+      "7-8 hours 🌛",
+      "More than 8 hours 😴"
     ],
     "continue": "Continue"
   },
@@ -396,19 +396,19 @@
     "title": "Do you follow any of these diets?",
     "selectOptions": [
       {
-        "label": "Vegetarian \uD83C\uDF46",
+        "label": "Vegetarian 🍆",
         "subLabel": "Excludes meat"
       },
       {
-        "label": "Vegan\uD83E\uDD55",
+        "label": "Vegan🥕",
         "subLabel": "Excludes all animal products"
       },
       {
-        "label": "Keto\uD83E\uDD51",
+        "label": "Keto🥑",
         "subLabel": "Low-carb, high-fat"
       },
       {
-        "label": "Mediterranean\uD83C\uDF3E",
+        "label": "Mediterranean🌾",
         "subLabel": "Rich in plant-based foods"
       },
       {
@@ -420,90 +420,46 @@
   "FollowHabits": {
     "title": "Do you follow any of these habits?",
     "selectOptions": [
-      {
-        "label": "Emotional eating🍫"
-      },
-      {
-        "label": "Snacking late at nighty"
-      },
-      {
-        "label": "Overeating🍔"
-      },
-      {
-        "label": "Skipping meals frequently"
-      },
-      {
-        "label": "None of the above"
-      }
+      "Emotional eating🍫",
+      "Snacking late at nighty",
+      "Overeating🍔",
+      "Skipping meals frequently",
+      "None of the above"
     ],
     "continue": "Continue"
   },
   "FoodCravings": {
     "title": "What are your most common food cravings?",
     "selectOptions": [
-      {
-        "label": "weets🍬"
-      },
-      {
-        "label": "Soda"
-      },
-      {
-        "label": "Salty snacks 🥛"
-      },
-      {
-        "label": "Fast food🍟"
-      },
-      {
-        "label": "None of the above"
-      }
+      "weets🍬",
+      "Soda",
+      "Salty snacks 🥛",
+      "Fast food🍟",
+      "None of the above"
     ],
     "continue": "Continue"
   },
   "EatingHabits": {
     "title": "Are you ready to spend 5 minutes a day improving your eating habits?",
     "selectOptions": [
-      {
-        "label": "Yes,I’m ready!"
-      },
-      {
-        "label": "I’ll give it a try"
-      },
-      {
-        "label": "Not quite yet"
-      }
+      "Yes,I’m ready!",
+      "I’ll give it a try",
+      "Not quite yet"
     ],
     "continue": "Continue"
   },
   "FollowingFew": {
     "title": "Have any of the following life events led to weight gain in the last few years?",
     "selectOptions": [
-      {
-        "label": "Busy work or family life"
-      },
-      {
-        "label": "peri- or menopausal transitions"
-      },
-      {
-        "label": "Breakup or divorcet"
-      },
-      {
-        "label": "Stress or mental health issues"
-      },
-      {
-        "label": "Slower metabolism due to aging"
-      },
-      {
-        "label": "Financial struggles"
-      },
-      {
-        "label": "Post-treatment complications"
-      },
-      {
-        "label": "Difficult family life"
-      },
-      {
-        "label": "None of the above"
-      }
+      "Busy work or family life",
+      "peri- or menopausal transitions",
+      "Breakup or divorcet",
+      "Stress or mental health issues",
+      "Slower metabolism due to aging",
+      "Financial struggles",
+      "Post-treatment complications",
+      "Difficult family life",
+      "None of the above"
     ],
     "continue": "Continue"
   },
@@ -602,39 +558,17 @@
     "title": "Do you have an important event coming up?",
     "text1": "Having something to look forward to can be a great motivator for reaching your goal",
     "selectOptions": [
-      {
-        "label": "Vacation"
-      },
-      {
-        "label": "Holiday"
-      },
-      {
-        "label": "Birthday"
-      },
-      {
-        "label": "amily occasion"
-      },
-      {
-        "label": "mportant date"
-      },
-      {
-        "label": "Reunion"
-      },
-      {
-        "label": "Wedding"
-      },
-      {
-        "label": "Competition"
-      },
-      {
-        "label": "Extreme sports"
-      },
-      {
-        "label": "Other"
-      },
-      {
-        "label": "No special events any time soon"
-      }
+      "Vacation",
+      "Holiday",
+      "Birthday",
+      "amily occasion",
+      "mportant date",
+      "Reunion",
+      "Wedding",
+      "Competition",
+      "Extreme sports",
+      "Other",
+      "No special events any time soon"
     ],
     "continue": "Continue"
   },
@@ -671,36 +605,20 @@
   "MotivationShape": {
     "title": "What's your main motivation for getting in shape?",
     "selectOptions": [
-      {
-        "label": "Feel more confident in my body"
-      },
-      {
-        "label": "Improve my health and energy levels"
-      },
-      {
-        "label": "Get back in shape after giving birth"
-      },
-      {
-        "label": "Relieve menopause symptoms"
-      },
-      {
-        "label": "Other"
-      }
+      "Feel more confident in my body",
+      "Improve my health and energy levels",
+      "Get back in shape after giving birth",
+      "Relieve menopause symptoms",
+      "Other"
     ],
     "continue": "Continue"
   },
   "ConfidentReaching": {
     "title": "How confident are you about reaching 50 kg by Apr 21, 2026?",
     "selectOptions": [
-      {
-        "label": "I'm confident I can do it!"
-      },
-      {
-        "label": "I'm unsure,but ready to try!"
-      },
-      {
-        "label": "I'mstill not sure"
-      }
+      "I'm confident I can do it!",
+      "I'm unsure,but ready to try!",
+      "I'mstill not sure"
     ],
     "continue": "Continue"
   },
@@ -747,15 +665,9 @@
       "to make the commitment?"
     ],
     "selectOptions": [
-      {
-        "label": "Yes, I will do my first workout tomorrow"
-      },
-      {
-        "label": "Yes! I will do my first workout today!"
-      },
-      {
-        "label": "I'm not ready to make the commitment"
-      }
+      "Yes, I will do my first workout tomorrow",
+      "Yes! I will do my first workout today!",
+      "I'm not ready to make the commitment"
     ],
     "continue": "Continue"
   },

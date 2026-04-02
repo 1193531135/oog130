@@ -60,6 +60,7 @@ onMounted(() => {
   font-family: Poppins;
   .head-container{
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     padding: 1vw 2.2vw;
     box-sizing: border-box;
@@ -84,6 +85,7 @@ onMounted(() => {
     align-items: center;
     width: 100%;
     padding: 0 60px;
+    flex-shrink: 0;
     gap: 24px;
     border-radius: 15px;
     box-sizing: border-box;

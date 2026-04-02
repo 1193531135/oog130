@@ -26,7 +26,7 @@ const props = defineProps({
   handleNextStep: Function
 })
 
-const emit = defineEmits(['update:modelValue', 'change', 'click'])
+const emit = defineEmits(['update:modelValue', 'change', 'click','updateRefs'])
 const selectData = ref(pageData[route.name] || (props.multiple ? [] : null))
 
 const isDisabled = computed(() => props.multiple ? !selectData.value.length : selectData.value === null)
@@ -49,7 +49,7 @@ function goIt() {
   <div class="select-page-con">
     <div class="title">{{ title }}</div>
     <div class="subtitle">{{ subtitle }}</div>
-    <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
+    <Select @updateRefs="(refs) => $emit('updateRefs', refs)" class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
     <div class="btn-container" :style="'justify-content:' + btnAlign">
       <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
         <div>{{ btnText }}</div>

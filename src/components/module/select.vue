@@ -8,7 +8,8 @@ const props = defineProps({
 })
 
 const isSlot = useSlots()
-const emit = defineEmits(['update:modelValue','change'])
+const emit = defineEmits(['update:modelValue','change','updateRefs'])
+const itemRefs = ref([])
 const mutexVal = ref(null)
 
 // change事件
@@ -61,7 +62,8 @@ function isActive(val){
 
 onMounted(() => {
   // 判断是否存在互斥选项
-  mutexVal.value = props.options.filter(item => item.mutex)[0]?.value
+  mutexVal.value = props.options.filter(item => item.mutex)[0]?.value;
+  emit('updateRefs', itemRefs.value)
 })
 </script>
 
@@ -71,7 +73,8 @@ onMounted(() => {
          :style="mutexVal && item.value === mutexVal ? 'margin-top: 20px' : ''"
          v-for="(item, index) in options"
          :key="index"
-          @click="change(item.value,item.mutex)"
+         @click="change(item.value,item.mutex)"
+         ref="itemRefs"
     >
       <!--  自定义预留插槽    -->
       <template v-if="isSlot.default">
@@ -83,7 +86,10 @@ onMounted(() => {
         <div class="select-item-sign" v-else>
           <span class="sign-circle"></span>
         </div>
-        <div>{{ item.label }}</div>
+        <div>
+          <div class="select-label">{{ item.label }}</div>
+          <div v-if="item.subLabel" class="select-subLabel">{{ item.subLabel }}</div>
+        </div>
       </template>
     </div>
   </div>
@@ -122,6 +128,10 @@ onMounted(() => {
         height: 10px;
         border-radius: 50%;
       }
+    }
+    .select-subLabel{
+      font-size: 15px;
+      color: #AAA;
     }
   }
   .select-item:active:not(.active){

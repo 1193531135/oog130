@@ -171,7 +171,7 @@ const onInput1 = (e) => {
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
         <div class="checkbox-wrap">
-            <div @click="checked = !checked" class="checkbox" :class="{ 'checkbox-tick': checked }">
+            <div @click="checked = !checked" class="checkbox-custom" :class="{ 'active': checked }">
 
             </div>
             <div class="lable">{{ pageText.checkboxLabel }}</div>
@@ -338,44 +338,6 @@ const onInput1 = (e) => {
         line-height: 18px;
         cursor: pointer;
         margin-top: 16px;
-
-        .checkbox {
-            position: relative;
-            width: 24px;
-            height: 24px;
-            background: transparent;
-            border: 2px solid #969696;
-            cursor: pointer;
-
-            /* 勾选颜色 */
-        }
-
-        .checkbox-tick {
-            // background-color: #000;
-        }
-
-        .checkbox::after {
-            position: absolute;
-            box-sizing: content-box;
-            content: "";
-            border: 2px solid #fff;
-            border-left: 0;
-            border-top: 0;
-            height: 13px;
-            width: 5px;
-            position: absolute;
-            left: 9px;
-            top: 2px;
-            transform: rotate(45deg) scale(0.6);
-            opacity: 0;
-            transition: transform .15s ease-in .05s;
-            transform-origin: center;
-        }
-
-        .checkbox-tick::after {
-            opacity: 1;
-            transform: rotate(45deg) scaleY(1);
-        }
 
         .lable {
             max-width: 469px;
