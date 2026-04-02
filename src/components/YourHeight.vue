@@ -369,7 +369,6 @@ const onInput1 = (e) => {
     }
 
     .btn {
-        position: absolute;
         margin-left: 260px;
         margin-top: 112px;
     }
