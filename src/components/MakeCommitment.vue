@@ -34,7 +34,7 @@ function change(val) {
                     <div>{{ itemData.label }}</div>
                 </template>
             </Select>
-            
+
         </div>
     </div>
 </template>
@@ -87,9 +87,9 @@ function change(val) {
                 align-items: center;
             }
 
-            // .select-item :hover {
-            //     background-color: rgb(79, 79, 79);
-            // }
+            .select-item :hover {
+                background-color: rgb(79, 79, 79);
+            }
         }
     }
 

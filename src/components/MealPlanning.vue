@@ -27,7 +27,7 @@ const dashOffset = computed(() => {
 onMounted(() => {
     const timer = setInterval(() => {
         if (progress.value >= 100) {
-            
+            change()
             clearInterval(timer)
         } else {
             progress.value += 1
