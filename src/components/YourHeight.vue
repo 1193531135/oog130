@@ -5,68 +5,59 @@ import { push } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 
 const pageData = new PageData()
-pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
-console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
-const unit = ref(selectOptions[0])
+const unit = ref(pageData[route.name]?.unit || selectOptions[0])
+const height = ref(pageData[route.name]?.height || '')
+const height_cm = ref(pageData[route.name]?.height || '')
+const checked = ref(pageData[route.name]?.checked || '')
+const isDisabled = ref(!pageData[route.name])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
+        height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, ''),
+        checked: checked.value
     })
     push()
 }
 
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
-const height = ref('')
-const height_cm = ref('')
+
 const isFocused = ref(false)
 const isError = ref(false)
 let placeholder_1 = ref("_ft")
 let placeholder_2 = ref("__in")
-const checked = ref(false)// 复选框状态
-//提示文本
 const isErrorText = ref('Height must be greater than or equal to 90 cm')
 
-// ft/in输入框
-// 验证逻辑：实时检查
+// ft/in 验证
 const validate = () => {
     let val = height.value.replace(/\D/g, '')
-
     isErrorText.value = "Height must be greater than or equal to 3 ft"
-    console.log(val)
+    
     if (val.length == 3 && (val - 0) % 100 >= 3) {
         isFocused.value = true
         isError.value = false
-        isDisabled.value = false
-
+        isDisabled.value = !checked.value
     } else {
         isFocused.value = false
         isError.value = true
         isDisabled.value = true
     }
 }
+
 const onInput = (e) => {
-    console.log('onInput正在输入：', e.target.value.length, '-------', height.value.length)
-    // 这里写你要的逻辑：限制数字、格式化、校验等
-    let val = e.target.value.replace(/\D/g, '') // 去掉非数字
+    let val = e.target.value.replace(/\D/g, '')
     let oldVal = height.value.replace(/\D/g, '')
-    console.log('onInput去掉非数字：', '新：：' + val, '旧：' + oldVal)
+    
     if (e.target.value.length < height.value.length) {
-        console.log('onInput用户按下了删除键')
-        //删除
         if (oldVal.length == 3) {
             height.value = val[0] + ' ft ' + val[1]
-            console.log(height.value)
             placeholder_2.value = '_in'
             e.target.value = height.value
         } else if (oldVal.length == 2) {
             height.value = val[0] + ' ft'
             placeholder_2.value = '__in'
             e.target.value = height.value
-
         } else if (oldVal.length == 1) {
             placeholder_1.value = '_ft'
             placeholder_2.value = '__in'
@@ -74,32 +65,26 @@ const onInput = (e) => {
             e.target.value = height.value
         }
     } else {
-        console.log('onInput用户正在输入', height.value, val)
-        //输入
         if (val.length == 1) {
-            console.log('输入1')
             height.value = val + ' ft'
             placeholder_1.value = ''
             e.target.value = height.value
         } else if (val.length == 2) {
-            console.log('输入2')
             height.value = val[0] + ' ft ' + val[1]
             placeholder_1.value = ''
             placeholder_2.value = "_in"
             e.target.value = height.value
         } else if (val.length == 3) {
-            console.log('输入3')
             height.value = val[0] + ' ft ' + val[1] + val[2] + ' in'
             placeholder_1.value = ''
             placeholder_2.value = ''
             e.target.value = height.value
         }
     }
-    // 实时验证
     validate()
 }
-// cm输入框
-// 验证逻辑：实时检查
+
+// cm 验证
 const validate1 = () => {
     isErrorText.value = "Height must be greater than or equal to 90 cm"
     if (height_cm.value < 90 || height_cm.value === '') {
@@ -109,20 +94,18 @@ const validate1 = () => {
     } else {
         isFocused.value = true
         isError.value = false
-        isDisabled.value = false
+        isDisabled.value = !checked.value
     }
 }
+
 const onInput1 = (e) => {
-    console.log('正在输入：', e.target.value)
-    // 这里写你要的逻辑：限制数字、格式化、校验等
-    let val = e.target.value.replace(/\D/g, '') // 去掉非数字
-    if (val.length > 3) val = val.slice(0, 3)   // 最多3位
+    let val = e.target.value.replace(/\D/g, '')
+    if (val.length > 3) val = val.slice(0, 3)
     height_cm.value = val
-    // 实时验证
     validate1()
 }
 
-// 单位切换时重置所有状态
+// 单位切换重置
 watch(unit, () => {
     isError.value = false
     isDisabled.value = true
@@ -131,9 +114,19 @@ watch(unit, () => {
     height_cm.value = ''
     placeholder_1.value = "_ft"
     placeholder_2.value = "__in"
+    checked.value = false
 })
 
-//  聚焦
+// 复选框监听
+watch(checked, () => {
+    if (unit.value === 'ft/in') {
+        validate()
+    } else {
+        validate1()
+    }
+})
+
+// 输入框聚焦
 const inputRef = ref(null)
 const focusInput = () => {
     if (inputRef.value) {
@@ -158,8 +151,7 @@ const focusInput = () => {
         </div>
         <div class="inputLable">{{ pageText.inputLable + ' (' + unit + ')' }}</div>
 
-        <!-- 输入框容器 -->
-        <!-- ft/in -->
+        <!-- ft/in 输入框 -->
         <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
@@ -170,13 +162,10 @@ const focusInput = () => {
                 <span class="placeholder">{{ placeholder_1 }}</span>
                 <span class="placeholder">{{ placeholder_2 }}</span>
             </div>
-
-            <!-- 错误提示图标 -->
             <div v-if="isError" class="error-icon">!</div>
         </div>
 
-
-        <!-- cm -->
+        <!-- cm 输入框 -->
         <div @click="focusInput" v-if="unit === 'cm'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
@@ -186,24 +175,22 @@ const focusInput = () => {
                 <span class="unit">{{ height_cm }}</span>
                 <span>cm</span>
             </div>
-
-            <!-- 错误提示图标 -->
             <div v-if="isError" class="error-icon">!</div>
         </div>
 
-        <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
+        
         <div class="checkbox-wrap">
-            <div @click="checked = !checked" class="checkbox-custom" :class="{ 'active': checked }">
-
-            </div>
+            <div @click="checked = !checked" class="checkbox-custom" :class="{ 'active': checked }"></div>
             <div class="lable">{{ pageText.checkboxLabel }}</div>
         </div>
+
         <div class="text">
             <span>{{ pageText.text[0] }}</span>
             <span class="underline">{{ pageText.text[1] }}</span>
             <span>{{ pageText.text[2] }}</span>
         </div>
+
         <div class="btn">
             <div class="btn-container">
                 <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
@@ -252,10 +239,6 @@ const focusInput = () => {
                 border: 2px solid #57810D;
             }
         }
-
-
-
-
     }
 
     .inputLable {
@@ -266,9 +249,6 @@ const focusInput = () => {
         margin-top: 71px;
     }
 
-
-
-    // 输入框样式
     .input-wrapper {
         width: 100%;
         box-sizing: border-box;
@@ -285,17 +265,12 @@ const focusInput = () => {
         .input {
             position: relative;
             z-index: 5;
-            // flex: 1;
             background: transparent;
             border: none;
             outline: none;
             font-size: 20px;
-            // width: 40px;
-            /* 防止内容溢出 */
             color: #fff;
-            /* 默认白色 */
             caret-color: #fff;
-            /* 光标白色 */
         }
 
         .input-text {
@@ -313,7 +288,6 @@ const focusInput = () => {
             }
         }
 
-        /* 输入有内容时，文字透明 */
         .input:not(:placeholder-shown) {
             color: transparent;
         }
@@ -321,8 +295,6 @@ const focusInput = () => {
         .input::placeholder {
             color: #515151;
         }
-
-
 
         .error-icon {
             width: 20px;
@@ -339,12 +311,10 @@ const focusInput = () => {
         }
     }
 
-    /* 错误状态 */
     .input-wrapper.error {
         border-color: #ff3b30;
     }
 
-    /* 聚焦状态 */
     .input-wrapper.focus {
         border-color: #57810D;
         box-shadow: 0 0 0 1px #57810D;
@@ -358,8 +328,6 @@ const focusInput = () => {
         margin-top: 8px;
     }
 
-    // 复选框样式
-    /* 隐藏原生复选框 */
     .checkbox-wrap {
         width: 100%;
         display: flex;
@@ -375,8 +343,6 @@ const focusInput = () => {
             font-size: 14px;
             font-family: Laient, sans-serif;
         }
-
-
     }
 
     .text {
@@ -395,7 +361,6 @@ const focusInput = () => {
         margin-left: 260px;
         margin-top: 112px;
     }
-
 }
 
 @media (max-width: 600px) {

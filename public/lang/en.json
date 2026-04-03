@@ -506,7 +506,7 @@
         "kg"
       ]
     },
-    "inputLable": "Target Weight（kg）",
+    "inputLable": "Target Weight",
     "textBox": {
       "title": "Calculating your body mass index",
       "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
@@ -520,6 +520,10 @@
       "title": "We ask your age to create your personal plan",
       "text": "Older people tend to have more body fat than younger people with the same BMI."
     },
+    "prompt":[
+      "Please enter a valid date of birth",
+      "Age must be less than or equal to 100"
+    ],
     "continue": "Continue"
   },
   "PersonalSummary": {

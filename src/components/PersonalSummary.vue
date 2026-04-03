@@ -5,18 +5,19 @@ import { push } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 import Select from './module/select.vue'
 
-const selectValue = ref(null)
-const isDisabled = ref(true)
+
 const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
+const selectValue = ref(pageData[route.name])
+const isDisabled = ref(!pageData[route.name])
 const options = pageText.selectOptions.map((i, index) => ({ label: i.label, value: index, subLabel: i.subLabel }))
 
 function change(val) {
     console.log(val)
     pageData.set(route.name, val)
 }
-watch(selectValue, (newVal) => {
+watch(selectValue, (newVal) => { 
     isDisabled.value = newVal === null
 })
 // BMI 值
