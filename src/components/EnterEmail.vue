@@ -11,9 +11,10 @@ const pageText = window.languageData[route.name]
 
 
 function change(val) {
+     pageData.set(route.name,email.value)
     push()
 }
-
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 const email = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
@@ -29,17 +30,26 @@ const validate = () => {
     if (istrue) {
         isFocused.value = true
         isError.value = false
+        isDisabled.value = false
 
     } else {
         isFocused.value = false
         isError.value = true
+        isDisabled.value = true
+
     }
 }
 const onInput = (e) => {
     console.log(e.target.value)
-
+    validate()
 }
-
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 </script>
 
 <template>
@@ -52,11 +62,11 @@ const onInput = (e) => {
             <span style="color: #57810D;">{{ pageText.title[1] }}</span>
         </div>
         <div class="inputLable">{{ pageText.inputLable }}</div>
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="email" @input="onInput" class="input" placeholder="name@example.com"
+            <input ref="inputRef" v-model="email" @input="onInput" class="input" placeholder="name@example.com"
                 @focus="isFocused = true" @blur="validate" />
 
             <!-- 错误提示图标 -->
@@ -67,7 +77,7 @@ const onInput = (e) => {
         <div class="description">{{ pageText.text }}</div>
         <div class="btn">
             <div class="btn-container">
-                <div class="continue-btn" @click="change">
+                <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
                     <div>{{ pageText.continue }}</div>
                     <img src="@/assets/select-item-icon.png">
                 </div>
@@ -216,6 +226,7 @@ const onInput = (e) => {
         .promptBox {
             width: 100%;
         }
+
         .title {
             width: 100%;
         }

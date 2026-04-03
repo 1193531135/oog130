@@ -13,6 +13,11 @@ console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
 const unit = ref(selectOptions[0])
 function change(val) {
+    pageData.set(route.name, {
+        unit: unit.value,
+        weight: unit.value === 'lb' ? CurrentWeight_lb.value.replace(/\D/g, '') : CurrentWeight_kg.value.replace(/\D/g, '')
+
+    })
     push()
 }
 
@@ -81,7 +86,12 @@ watch(unit, () => {
     CurrentWeight_lb.value = ''
     CurrentWeight_kg.value = ''
 })
-
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 
 </script>
 
@@ -103,11 +113,11 @@ watch(unit, () => {
 
         <!-- 输入框容器 -->
         <!-- lb -->
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }" v-if="unit === 'lb'">
-            <input v-model="CurrentWeight_lb" @input="onInput" class="input" placeholder="__" @focus="isFocused = true"
+            <input ref="inputRef" v-model="CurrentWeight_lb" @input="onInput" class="input" placeholder="__" @focus="isFocused = true"
                 @blur="validate" />
             <div class="input-text">
                 <span class="unit">{{ CurrentWeight_lb }}</span>
@@ -120,11 +130,11 @@ watch(unit, () => {
 
 
         <!-- cm -->
-        <div v-if="unit === 'kg'" class="input-wrapper" :class="{
+        <div @click="focusInput" v-if="unit === 'kg'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="CurrentWeight_kg" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
+            <input ref="inputRef" v-model="CurrentWeight_kg" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
                 @blur="validate1" />
             <div class="input-text">
                 <span class="unit">{{ CurrentWeight_kg }}</span>

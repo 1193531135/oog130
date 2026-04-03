@@ -10,35 +10,46 @@ const pageText = window.languageData[route.name]
 
 
 function change(val) {
+    pageData.set(route.name, userName.value)
     push()
 }
 
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 const userName = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
-const isErrorText = ref('Please enter your email address')
+const isErrorText = ref('Please enter your name')
 //邮箱正则 
 const reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 // ft/in输入框
 // 验证逻辑：失焦时检查是否为空
 const validate = () => {
-    let istrue = reg.test(userName.value)
-    if (istrue) {
+    // let istrue = reg.test(userName.value)
+    if (userName.value.trim() !== '') {
         isFocused.value = true
         isError.value = false
+        isDisabled.value = false
 
     } else {
         isFocused.value = false
         isError.value = true
+        isDisabled.value = true
     }
 }
 const onInput = (e) => {
     console.log(e.target.value)
+    validate()
 
 }
-
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 </script>
 
 <template>
@@ -50,11 +61,11 @@ const onInput = (e) => {
             {{ pageText.title }}
         </div>
         <div class="inputLable">{{ pageText.inputLable }}</div>
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="userName" @input="onInput" class="input" placeholder="name@example.com"
+            <input ref="inputRef" v-model="userName" @input="onInput" class="input" placeholder="Enter your name"
                 @focus="isFocused = true" @blur="validate" />
 
             <!-- 错误提示图标 -->

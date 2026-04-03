@@ -9,20 +9,16 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const selectValue = ref(pageData[route.name])
 const isDisabled = ref(true) // 按钮禁用状态，初始为true
-const value1 = ref();
 const dateofBirth = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
 let placeholder_1 = ref("DD/MM/YYYY")
-let placeholder_2 = ref("")
 //提示文本
 const isErrorText = ref('Please enter a valid date of birth')
 function change(val) {
   // 存储数据
-  pageData.set(route.name, val)
-  //
+  pageData.set(route.name, dateofBirth.value)
   push()
 }
 const validate = () => {
@@ -134,7 +130,12 @@ const onInput = (e) => {
 
 }
 
-
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 </script>
 
 <template>
@@ -144,8 +145,8 @@ const onInput = (e) => {
     <div class="input-wrapper" :class="{
       error: isError,
       focus: isFocused
-    }">
-      <input @input="onInput" class="input" placeholder="" @focus="isFocused = true" @blur="validate" />
+    }  " @click="focusInput">
+      <input ref="inputRef" @input="onInput" class="input" placeholder="" @focus="isFocused = true" @blur="validate" />
       <div class="input-text">
         <span>{{ dateofBirth }}</span>
         <span class="placeholder">{{ placeholder_1 }}</span>

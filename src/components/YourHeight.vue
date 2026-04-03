@@ -12,6 +12,10 @@ console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
 const unit = ref(selectOptions[0])
 function change(val) {
+    pageData.set(route.name, {
+        unit: unit.value,
+        height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
+    })
     push()
 }
 
@@ -29,11 +33,11 @@ const isErrorText = ref('Height must be greater than or equal to 90 cm')
 // ft/in输入框
 // 验证逻辑：实时检查
 const validate = () => {
-    let val = height.value.replace(/\D/g, '').length
+    let val = height.value.replace(/\D/g, '')
 
     isErrorText.value = "Height must be greater than or equal to 3 ft"
     console.log(val)
-    if (val == 3) {
+    if (val.length == 3 && (val - 0) % 100 >= 3) {
         isFocused.value = true
         isError.value = false
         isDisabled.value = false
@@ -128,6 +132,14 @@ watch(unit, () => {
     placeholder_1.value = "_ft"
     placeholder_2.value = "__in"
 })
+
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 </script>
 
 <template>
@@ -148,11 +160,11 @@ watch(unit, () => {
 
         <!-- 输入框容器 -->
         <!-- ft/in -->
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }" v-if="unit === 'ft/in'">
-            <input @keydown.delete="onDelete" @input="onInput" class="input" placeholder="" @focus="isFocused = true" />
+            <input ref="inputRef" @keydown.delete="onDelete" @input="onInput" class="input" placeholder="" @focus="isFocused = true" />
             <div class="input-text">
                 <span>{{ height }}</span>
                 <span class="placeholder">{{ placeholder_1 }}</span>
@@ -165,11 +177,11 @@ watch(unit, () => {
 
 
         <!-- cm -->
-        <div v-if="unit === 'cm'" class="input-wrapper" :class="{
+        <div @click="focusInput" v-if="unit === 'cm'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true" />
+            <input ref="inputRef" v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true" />
             <div class="input-text">
                 <span class="unit">{{ height_cm }}</span>
                 <span>cm</span>

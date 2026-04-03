@@ -14,6 +14,11 @@ console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
 const unit = ref(selectOptions[0])
 function change(val) {
+    pageData.set(route.name, {
+        unit: unit.value,
+        weight: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
+
+    })
     push()
 }
 
@@ -82,7 +87,13 @@ watch(unit, () => {
     targetWeight_lb.value = ''
     targetWeight_kg.value = ''
 })
-
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 
 </script>
 
@@ -104,12 +115,12 @@ watch(unit, () => {
 
         <!-- 输入框容器 -->
         <!-- lb -->
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }" v-if="unit === 'lb'">
-            <input v-model="targetWeight_lb" @input="onInput" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate" />
+            <input ref="inputRef" v-model="targetWeight_lb" @input="onInput" class="input" placeholder="__"
+                @focus="isFocused = true" @blur="validate" />
             <div class="input-text">
                 <span class="unit">{{ targetWeight_lb }}</span>
                 <span>lb</span>
@@ -121,12 +132,12 @@ watch(unit, () => {
 
 
         <!-- cm -->
-        <div v-if="unit === 'kg'" class="input-wrapper" :class="{
+        <div @click="focusInput" v-if="unit === 'kg'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="targetWeight_kg" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate1" />
+            <input ref="inputRef" v-model="targetWeight_kg" @input="onInput1" class="input" placeholder="__"
+                @focus="isFocused = true" @blur="validate1" />
             <div class="input-text">
                 <span class="unit">{{ targetWeight_kg }}</span>
                 <span>cm</span>
