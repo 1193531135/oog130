@@ -6,7 +6,7 @@ import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const pageText = window.languageData.ageQuestion
+const pageText = window.languageData.AgeQuestion
 const pageData = new PageData()
 const selectValue = ref(pageData[route.name])
 

@@ -11,7 +11,7 @@ const textSelectDefaultConfig = {
     }
 }
 const config = {
-    ageQuestion: () => import("@/components/AgeQuestion.vue"),
+    AgeQuestion: () => import("@/components/AgeQuestion.vue"),
     Over70million: {
         module: () => import("@/components/Over70million.vue")
     },
@@ -105,7 +105,9 @@ const config = {
             return content
         }
     },
-    ExperienceSimilarSymptoms: () => import("@/components/ExperienceSimilarSymptoms.vue"),
+    ExperienceSimilarSymptoms: {
+        module:() => import("@/components/ExperienceSimilarSymptoms.vue")
+    },
     BreathOnStairs: {
         module: () => import("@/components/pageModule/ImageSelect.vue"),
         props(content) {
@@ -183,7 +185,9 @@ const config = {
             return content
         }
     },
-    MilitaryCalisthenics: () => import("@/components/MilitaryCalisthenics.vue"),
+    MilitaryCalisthenics: {
+        module: () => import("@/components/MilitaryCalisthenics.vue"),
+    },
     DrinkDaily: {
         module: () => import("@/components/DrinkDaily.vue"),
     },
@@ -271,18 +275,30 @@ const config = {
     PersonalSummary: {
         module: () => import("@/components/PersonalSummary.vue"),
     },
-    ComingUp: "",
+    ComingUp: {
+        module: () => import("@/components/pageModule/TextSelect.vue"),
+        props(content) {
+            content.options = content.selectOptions.map((i, index) => ({
+                label: i,
+                value: index,
+                mutex: index === content.selectOptions.length - 1
+            }))
+            content.handleNextStep = (val) => {
+                push(val.includes(content.selectOptions.length - 1) ? "/finallyGet":undefined)
+            }
+            content.multiple = true
+            return content
+        }
+    },
     EventTime: {
         module: () => import("@/components/EventTime.vue"),
     },
-    FinallyGet: {
-        module: () => import("@/components/FinallyGet.vue"),
-    },
+    FinallyGet: () => import("@/components/FinallyGet.vue"),
     MotivationShape: textSelectDefaultConfig,
     ConfidentReaching: textSelectDefaultConfig,
     EnterEmail: () => import("@/components/EnterEmail.vue"),
     UserName: () => import("@/components/UserName.vue"),
-    CalisthenicsPlan: "",
+    CalisthenicsPlan: () => import("@/components/CalisthenicsPlan.vue"),
     BodyProfile: () => import("@/components/BodyProfile.vue"),
     MakeCommitment: ()=> import("@/components/MakeCommitment.vue"),
     MealPlanning: () => import("@/components/MealPlanning.vue"),
