@@ -1,199 +1,107 @@
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-import * as echarts from 'echarts/core'
-import { LineChart } from 'echarts/charts'
-import { GridComponent, MarkPointComponent } from 'echarts/components'
-import { CanvasRenderer } from 'echarts/renderers'
-echarts.use([
-  LineChart,
-  GridComponent,
-  MarkPointComponent,
-  CanvasRenderer
-])
+import {ref} from "vue";
+import {PageData, push} from "@/tool/index.js";
+import {useRoute} from "vue-router";
 
-const chartRef = ref(null)
-let chart = null
+const route = useRoute()
+const data = ref([])
+const image = ref([])
+const pageText = window.languageData[route.name]
 
-const xLabels = ['','Week 1', 'Week 2', 'Week 3', 'Week 4','']
-const trendData = [null,88, 52, 40, 18,null]
-const startPoint = [xLabels[0], trendData[0]]
-const endPoint = [xLabels[xLabels.length - 1], trendData[trendData.length - 1]]
+const pageData = new PageData();
 
-const option = {
-  grid: {
-    left: 10,
-    right: 10,
-    top: 28,
-    bottom: 44,
-    containLabel: true
-  },
-  xAxis: {
-    type: 'category',
-    data: xLabels,
-    boundaryGap: false,
-    axisLine: { show: false },
-    axisTick: { show: false },
-    axisLabel: {
-      color: 'rgba(170,170,170,0.92)',
-      fontSize: 14,
-      fontWeight: 700,
-      margin: 18
-    },
-    splitLine: {
-      show: true,
-      lineStyle: {
-        type: 'dashed',
-        color: 'rgba(129,129,129,0.65)',
-        width: 1
-      },
-      interval: function (index) {
-        // 不显示第一个和最后一个
-        return index !== 0 && index !== trendData.length - 1
-      }
-    }
-  },
-  yAxis: {
-    type: 'value',
-    min: 0,
-    max: 100,
-    splitNumber: 4,
-    axisLine: { show: false },
-    axisTick: { show: false },
-    axisLabel: { show: false },
-    splitLine: {
-      show: true,
-      lineStyle: {
-        type: 'dashed',
-        color: 'rgba(129,129,129,0.65)',
-        width: 1
-      },
-      interval: function (index) {
-        return index !== 0
-      }
-    }
-  },
-  series: [
-    {
-      type: 'line',
-      data: trendData,
-      smooth: 0.4,
-      symbol: 'none',
-      lineStyle: {
-        width: 4,
-        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-          { offset: 0, color: '#FA0A77' },
-          { offset: 0.58, color: '#E9F85B' },
-          { offset: 1, color: '#56B718' }
-        ])
-      },
-      areaStyle: {
-        color: {
-          type: 'linear',
-          x: 1,
-          y: 0,
-          x2: 0,
-          y2:0,
-          colorStops: [
-            {
-              offset: 0,
-              color: 'rgba(87, 129, 13, 0.10)' // 顶部
-            },
-            {
-              offset: 0.3,
-              color: 'rgba(235, 255, 83, 0.10)' // 底部透明
-            },
-            {
-              offset: 0.8,
-              color: 'rgba(239, 2, 94, 0.10)' // 底部透明
-            },
-          ]
-        },
-      },
-      markPoint: {
-        symbol: 'circle',
-        symbolSize: 32,
-        label: { show: false },
-        z: 4,
-        data: [
-          {
-            coord: startPoint,
-            itemStyle: {
-              color: '#fff',
-              borderColor: '#FA0A77',
-              borderWidth: 6
-            }
-          },
-          {
-            coord: endPoint,
-            itemStyle: {
-              color: '#fff',
-              borderColor: '#56B718',
-              borderWidth: 6
-            }
-          }
-        ]
-      }
-    },
-    {
-      type: 'line',
-      data: trendData,
-      smooth: 0.4,
-      symbol: 'none',
-      lineStyle: { opacity: 0 },
-      areaStyle: { opacity: 0 },
-      markPoint: {
-        symbol: 'circle',
-        symbolSize: 12,
-        label: { show: false },
-        z: 5,
-        data: [
-          {
-            coord: startPoint,
-            itemStyle: {
-              color: '#FA0A77'
-            }
-          },
-          {
-            coord: endPoint,
-            itemStyle: {
-              color: '#56B718'
-            }
-          }
-        ]
-      }
-    }
-  ]
-};
 
-onMounted(() => {
-  chart = echarts.init(chartRef.value)
-  chart.setOption(option)
-  window.addEventListener('resize', resizeChart)
-})
+const startVal = Number(pageData["CurrentWeight"].weight)
+const endVal = Number(pageData["TargetWeight"].weight)
 
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', resizeChart)
-  chart?.dispose()
-  chart = null
-})
+image.value = startVal > endVal ?
+    new URL("@/assets/image/calisthenicsPlan-down.png", import.meta.url) :
+    new URL("@/assets/image/calisthenicsPlan-up.png", import.meta.url);
 
-function resizeChart() {
-  chart?.resize()
+startVal === endVal && (image.value =  new URL("@/assets/image/calisthenicsPlan-flat.png", import.meta.url));
+
+// data.value[0].value = pageData["CurrentWeight"]
+// data.value[2].value = pageData["TargetWeight"]
+function change() {
+  push()
 }
+
 </script>
 
 <template>
-  <div class="">
-    <div class="name"></div>
-    <div class="title"></div>
-    <div class="subtitle"></div>
-    <div ref="chartRef" class="chart"></div>
+  <div class="select-page-con">
+    <div class="title">
+      <div class="special">{{ pageData["UserName"] }},</div>
+      <div>{{ pageText.title[0] }}</div>
+    </div>
+    <div class="month">{{ pageText.textBox.month }}</div>
+    <div class="trend-line" >
+      <img :src="image">
+    </div>
+    <div class="end-text">{{ pageText.textBox.text }}</div>
+    <div class="btn-container" style="justify-content:right">
+      <div class="continue-btn" @click="change">
+        <div>{{ pageText.continue }}</div>
+        <img src="@/assets/select-item-icon.png">
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped lang="less">
-.chart{
-  width: 479px;
-  height: 295px;
+.select-page-con {
+  padding: 0 0 20px;
+  max-width: 498px;
+  box-sizing: border-box;
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+
+  .title {
+    font-family: Laien, serif;
+    font-size: 35px;
+    font-weight: 700;
+    width: 680px;
+    text-align: left;
+    margin-bottom: 24px;
+    .special{
+      color: var(--style-color);
+    }
+  }
+
+  .month{ text-align: left;width: 100% }
+
+  .trend-line{
+    margin-top: 20px;
+    border: none;
+    width: 447px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .end-text{
+    margin: 22px 0;
+    text-align: left;
+    width: 100%;
+    color: #AAAAAA;
+  }
+}
+
+@media (max-width: 768px) {
+  .select-page-con {
+    padding: 0 24px;
+
+    .title {
+      font-size: 28px;
+      width: 100%;
+    }
+    .trend-line{
+      margin-top: 0;
+      width: 100%;
+    }
+  }
 }
 </style>

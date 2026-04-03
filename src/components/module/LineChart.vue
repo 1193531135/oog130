@@ -4,7 +4,6 @@ import * as echarts from 'echarts/core'
 import {LineChart} from 'echarts/charts'
 import {GridComponent} from 'echarts/components'
 import {SVGRenderer} from 'echarts/renderers'
-import { useRoute } from "vue-router";
 
 // 注册
 echarts.use([
@@ -14,21 +13,33 @@ echarts.use([
 ])
 
 const props = defineProps({
-  lineChartData: Object
+  lineChartData: Array,
+  type: String
 })
 
 const chartRef = ref(null)
 const optionTrue = ref(null)
+const widthTrue = ref(null)
+const myChart = ref(null)
 
 // const imageDomLine = document.createElement('img')
 const imageDomLabel2 = document.createElement('img')
 const imageDomLabel = document.createElement('img')
 // imageDomLine.src = './assets/img_1.png'
-imageDomLabel2.src = new URL("@/assets/image/line-chart-tag2", import.meta.url)
-imageDomLabel.src = new URL("@/assets/image/line-chart-tag", import.meta.url)
+imageDomLabel2.src = new URL("@/assets/image/line-chart-tag2.png", import.meta.url)
+imageDomLabel.src = new URL("@/assets/image/line-chart-tag.png", import.meta.url)
 // 45,170,80
+const startVal = Number(props.lineChartData[0].value.weight)
+const endVal = Number(props.lineChartData[2].value.weight)
+const lineChartData = props.lineChartData.map(i => {
+  return {
+    label: i.label,
+    value: i.value.weight + i.value.unit
+  }
+})
+let type = startVal > endVal ? 'down' : 'up';
+(startVal === endVal) && (type = 'flat');
 
-let type = props.lineChartData.type || 'down'
 // 指定图表的配置项和数据
 let option = {
   // 视图区域的配置
@@ -79,27 +90,27 @@ const beforeData = [
   },
   {
     value: [56, 207],
-    label: "Today",
-    label2: props.lineChartData.first || "58.9kg",
+    label: lineChartData[0]?.label || "Today",
+    label2: lineChartData[0]?.value || "58.9kg",
     label2Class:"startText",
     //   原点颜色
     verticalLine: '#EF035F',
   },
   {
     value: [175, 145],
-    label: "1st week",
-    label2: props.lineChartData.oneLastWeek || "58.9kg",
+    label: lineChartData[1]?.label || "1st week",
+    label2: lineChartData[1]?.value || "58.9kg",
     label2Class:"centerText",
     //原点颜色和垂线颜色一致
     verticalLine: '#ED7859',
   },
   {
     value: [400, 48],
-    label: "Aug 1",
-    label2: props.lineChartData.oneLastWeek || "58.9kg",
+    label: lineChartData[2]?.label || "Aug 1",
+    label2: lineChartData[2]?.value || "58.9kg",
     label2Class:"endText",
     // labelHidden: true,
-    verticalLine: props.lineChartData.endTime || '#57810D',
+    verticalLine: '#57810D',
     labelStyle: {
       color: "#57810D"
     },
@@ -109,29 +120,30 @@ const beforeData = [
   },
 ]
 if (type === 'flat') {
-  beforeData.some(i => {
-    i.value[1] = 110
-  })
-  //  echarts 数据点高度不能完全一致，不然不会渲染
-  beforeData[beforeData.length - 1].value[1] = 110.1
-}
-if (type === 'up') {
-  beforeData.some(i => {
+  beforeData.forEach(i => {
     i.value[1] = 135
   })
-  beforeData[0].value[1] = 30
-  beforeData[1].value[1] = 30
+  //  echarts 数据点高度不能完全一致，不然不会渲染
+  beforeData[beforeData.length - 1].value[1] = 135.1
+}
+if (type === 'up') {
+  beforeData[2].value[1] = 115;
+  [beforeData[0].value[1],beforeData[4].value[1]] = [beforeData[4].value[1],beforeData[0].value[1]];
+  [beforeData[1].value[1],beforeData[3].value[1]] = [beforeData[3].value[1],beforeData[1].value[1]];
+  // 微调
+  beforeData[3].value[1] -=10
+  beforeData[4].value[1] = beforeData[3].value[1]
 }
 // 数据高度赋值110%
-beforeData.some(i => {
+beforeData.forEach(i => {
   i.value[1] *= 1.1
 })
 // 文本替换
 if (props.lineChartData.endText) {
-  beforeData.filter(i => i.label).some((i, index) => {
+  beforeData.filter(i => i.label).forEach((i, index) => {
     i.label = props.lineChartData.endText[index]
   })
-  beforeData.filter(i => i.label2).some((i, index) => {
+  beforeData.filter(i => i.label2).forEach((i, index) => {
     i.label2 = props.lineChartData.topLabel
   })
 }
@@ -160,14 +172,14 @@ function createLine(pointArray, option = {}) {
           verticalAlign: 'top',
           fontWeight: 600,
           fontFamily: "",
-          fontSize: 18 / 479 * widthTrue,
+          fontSize: 18 / 479 * widthTrue.value,
           ...(option.labelStyle || {})
         }
       }
     },
     lineStyle: {
       normal: {
-        width: (option.width || 1.5) / 479 * widthTrue,  // 虚线宽度
+        width: (option.width || 1.5) / 479 * widthTrue.value,  // 虚线宽度
         type: option.type || [6, 6],  // 虚线类型
         color: option.color || 'blue'  // 虚线颜色
       }
@@ -179,7 +191,7 @@ function createLine(pointArray, option = {}) {
 // 生成数据点
 function computeData(inputData) {
   let array = []
-  inputData.some((item, index) => {
+  inputData.forEach((item, index) => {
     array[index] = item.value
   })
   return array
@@ -187,18 +199,19 @@ function computeData(inputData) {
 
 // 数据初始化
 function init() {
-  // 获取设备容器的宽度
-  let widthTrue = chartRef.value.offsetWidth
-  beforeData.some(item => {
+  option.series = []
+  beforeData.forEach(item => {
     // 生成垂线
-    item.label && option.series.push(createLine([[item.value[0], 0], item.value], {
-      ...item,
-      type: [4, 4],
-      color: item.verticalLine,
-      formatter(params) {
-        return params.dataIndex === 0 ? `{text|${item.label}}` : ''
-      },
-    }))
+    if (item.label) {
+      option.series.push(createLine([[item.value[0], 0], item.value], {
+        ...item,
+        type: [4, 4],
+        color: item.verticalLine,
+        formatter(params) {
+          return params.dataIndex === 0 ? `{text|${item.label}}` : ''
+        },
+      }))
+    }
   })
   // 最后生成弧线
   const curveSeries = {
@@ -210,7 +223,7 @@ function init() {
     symbol: (value, params) => {
       return beforeData[params.dataIndex].verticalLine ? 'circle' : 'none'
     },
-    symbolSize: 20 / 360 * widthTrue,
+    symbolSize: 20 / 360 * widthTrue.value,
     itemStyle: {
       borderWidth: 2,
       borderColor: 'white',
@@ -240,7 +253,7 @@ function init() {
       },
     },
     lineStyle: {
-      width: 6 / 479 * widthTrue,
+      width: 6 / 479 * widthTrue.value,
       color: {
         // image: imageDomLine, // 支持为 HTMLImageElement, HTMLCanvasElement，不支持路径字符串
         // repeat: 'no-repeat'
@@ -271,49 +284,50 @@ function init() {
           backgroundColor: {
             image: imageDomLabel
           },
-          width: 139 / 479 * widthTrue,
-          height: 81 / 479 * widthTrue,
+          width: 139 / 479 * widthTrue.value,
+          height: 81 / 479 * widthTrue.value,
           color: 'white',
           align: "center",
           verticalAlign: 'top',
           fontWeight: 600,
-          fontSize: 32 / 479 * widthTrue,
-          padding: [0, 0, 10 / 479 * widthTrue, 0],
+          fontSize: 32 / 479 * widthTrue.value,
+          padding: [0, 0, 10 / 479 * widthTrue.value, 0],
         },
         "centerText": {
           backgroundColor: {
             image: imageDomLabel2,
           },
-          width: 76 / 479 * widthTrue,
-          height: 42 / 479 * widthTrue,
+          width: 76 / 479 * widthTrue.value,
+          height: 42 / 479 * widthTrue.value,
           color: '#323233',
           align: "center",
           verticalAlign: 'top',
           fontWeight: 700,
-          fontSize: 17 / 479 * widthTrue,
-          padding: [0, 0, 6 / 479 * widthTrue, 0],
+          fontSize: 17 / 479 * widthTrue.value,
+          padding: [0, 0, 6 / 479 * widthTrue.value, 0],
         },
         "startText": {
           color: 'white',
           align: "center",
           verticalAlign: 'top',
           fontWeight: 600,
-          fontSize: 18 / 479 * widthTrue,
-          padding: [0, 0, 10 / 479 * widthTrue, 0],
+          fontSize: 18 / 479 * widthTrue.value,
+          padding: [0, 0, 10 / 479 * widthTrue.value, 0],
         },
       }
     },
   }
   // 生成弧线备份
   option.series.push(curveSeries)
-  myChart.setOption(optionTrue.value)
+  myChart.value.setOption(option)
 }
 
 
 onMounted(() => {
-  const myChart = echarts.init(chartRef.value, null, {
+  myChart.value = echarts.init(chartRef.value, null, {
     renderer: 'svg'
   })
+  widthTrue.value = chartRef.value.offsetWidth
   init()
 })
 </script>

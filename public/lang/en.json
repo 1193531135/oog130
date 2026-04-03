@@ -1,6 +1,6 @@
 {
   "title": "Military Calisthenics ",
-  "ageQuestion": {
+  "AgeQuestion": {
     "title": "Military Calisthenics Challenge",
     "text1": "SELECT YOUR AGE",
     "text2": [
@@ -235,7 +235,7 @@
     ],
     "continue": "Continue"
   },
-  "symptomsHave": {
+  "SymptomsHave": {
     "title": "Which of these symptoms do you have?",
     "subtitle": "You may choose several options",
     "selectOptions": [
@@ -590,9 +590,9 @@
       "finally get",
       "in shape"
     ],
-    "text1": "Based on our calculations, we believe you may hit your goal weight of 50 kg 🎉by",
+    "subtitle": "Based on our calculations, we believe you may hit your goal weight of 50 kg 🎉by",
     "textBox": {
-      "title": "Apr 21, 2026",
+      "month": "Apr 21, 2026",
       "timeType": [
         "Today",
         "1st week",
@@ -640,11 +640,10 @@
   },
   "CalisthenicsPlan": {
     "title": [
-      "Hazel,",
       "Your 4-week Military Calisthenics Plan Workout Plan is ready!"
     ],
     "textBox": {
-      "title": "Your weight",
+      "month": "Your weight",
       "timeType": [
         "Week 1",
         "Week 2",
