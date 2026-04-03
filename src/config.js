@@ -11,7 +11,7 @@ const textSelectDefaultConfig = {
     }
 }
 const config = {
-    TaiChiBeginners:'',
+    TaiChiBeginners:() => import('@/components/TaiChiBeginners.vue'),
     ChooserGender:'',
     TaiChiExperienceCheck:'',
     TaiChiBeginnerGuide:'',

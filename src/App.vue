@@ -31,7 +31,7 @@ onMounted(() => {
   <div class="page-container" v-if="loaded">
     <div class="head-container">
       <img src="./assets/title-logo.png" class="head-logo">
-      <div class="head-text">Military Calisthenics </div>
+      <div class="head-text">Tai CHi</div>
     </div>
     <div class="progress-bar" v-show="!registerList[routeIndex].config.progressHidden">
       <img src="@/assets/back.png" class="back-btn" @click="back"/>
@@ -46,7 +46,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-container{
-  background-color: rgb(29,26,26);
+  background-color: #F8F8F8;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -66,13 +66,13 @@ onMounted(() => {
     box-sizing: border-box;
     width: 100%;
     .head-logo{
-      height: 44px;
-      width: 44px;
+      height: 27px;
+      width: 27px;
       margin-right: 16px;
     }
     .head-text {
-      color: #85AD1C;
-      font-size: 24px;
+      color: #2E73E0;
+      font-size: 27px;
       text-transform: uppercase;
       font-family: Anton;
       letter-spacing: 1px
