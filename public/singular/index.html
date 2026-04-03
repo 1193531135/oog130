@@ -2,420 +2,362 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <script src="./echarts.min.js"></script>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-  .echarts-container {
-    width: 100%;
-    position: relative;
-  }
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+    }
 
-  .propup {
-    padding-bottom: 65.38%;
-  }
+    .echarts-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
 
-  .content-con {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+    #animation {
+        width: 100%;
+        height: 100%;
+    }
 
-  #animation {
-    flex: 1;
-    width: 100%;
-  }
+    .linear {
+        transition: fill-opacity 0.2s
+    }
 
-  .linear {
-    transition: fill-opacity 0.2s
-  }
+    .label-con {
+        height: 13.72%;
+        width: 100%;
+        background-color: blueviolet;
+    }
 
-  .label-con {
-    height: 13.72%;
-    width: 100%;
-    background-color: blueviolet;
-  }
-
-  defs image {
-    width: 100%;
-    height: 100%;
-  }
+    defs image {
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
 <body>
-  <div class="echarts-container">
-    <div class="propup"></div>
-    <div class="content-con">
-      <div id="animation"></div>
-    </div>
-  </div>
-  <button onclick="dataChange(afterData)">change</button>
-  <button onclick="dataChange(beforeData)">init</button>
-  <script>
+<div class="echarts-container">
+        <div id="animation"></div>
+</div>
+<!--<button onclick="dataChange(afterData)">change</button>-->
+<!--<button onclick="dataChange(beforeData)">init</button>-->
+<script>
     let myChart = echarts.init(document.getElementById('animation'), null, {
-      renderer: 'svg',
-      // width:'100%',
-      // height:'100%'
+        renderer: 'svg',
     });
     // 获取设备容器的宽度
     let widthTrue = document.getElementById('animation').offsetWidth
     // const imageDomLine = document.createElement('img')
-    const imageDomBg = document.createElement('img')
+    const imageDomLabel2 = document.createElement('img')
     const imageDomLabel = document.createElement('img')
     // imageDomLine.src = './assets/img_1.png'
-    imageDomBg.src = './bg.png'
+    imageDomLabel2.src = './tag2.png'
     imageDomLabel.src = './tag.png'
     // 45,170,80
     window.animationData = Object.fromEntries(new URLSearchParams(location.search))
     console.log(window.animationData)
     let type = window.animationData.type || 'down'
-    const beforeData = [
-      {
-        value: [0, 216],
-      },
-      {
-        value: [45, 204],
-        label: "Today",
-        //   原点颜色
-        verticalLine: '#EF035F',
-        connectKey: "a",
-        //   连线颜色
-        connectLineStyle: {
-          color: 'rgba(0, 0, 0, 0)',
-        }
-      },
-      {
-        value: [45 + 170 + 80, 52],
-        label: "XOct 01",
-        label2: "XOct 02",
-        labelHidden: true,
-        verticalLine: '#57810D',
-        labelStyle: {
-          color: "rgb(239,2,94)"
-        },
-        areaKey: "area"
-      },
-      {
-        value: [45 + 170 + 80, 52],
-        label: "XNov 012",
-        verticalLine: '#57810D',
-        connectKey: "a",
-        labelStyle: {
-          color: "rgb(239,2,94)"
-        },
-        areaKey: "area"
-      },
-      {
-        value: [390, 52],
-        connectKey: "a",
-      },
-    ]
-    let afterData = [
-      {
-        value: [0, 216],
-      },
-      {
-        value: [45, 204],
-        label: "Today",
-        verticalLine: 'rgb(150,77,237)',
-        connectKey: "a",
-        connectLineStyle: {
-          color: 'rgb(224, 226, 231)',
-          width: 3
-        }
-      },
-      {
-        value: [45 + 170, 52],
-        label: "XOct 01",
-        verticalLine: 'rgb(239,2,92)',
-      },
-      {
-        value: [45 + 170 + 80, 52],
-        label: "XNov 01",
-        verticalLine: 'rgb(239,2,92)',
-        connectKey: "a"
-      },
-      {
-        value: [390, 52],
-        connectKey: "a",
-      },
-    ]
-    if (type === 'flat') {
-      afterData.some(i => { i.value[1] = 110 })
-      beforeData.some(i => { i.value[1] = 110 })
-      //  echarts 数据点高度不能完全一致，不然不会渲染
-      beforeData[beforeData.length - 1].value[1] = 110.1
-      afterData[afterData.length - 1].value[1] = 110.1
-    }
-    if (type === 'up') {
-      afterData.some(i => { i.value[1] = 135 })
-      beforeData.some(i => { i.value[1] = 135 })
-      beforeData[0].value[1] = 30
-      beforeData[1].value[1] = 30
-      afterData[0].value[1] = 20
-      afterData[1].value[1] = 30
-    }
-    // 文本替换
-    if(window.animationData.endText){
-      beforeData.filter(i => i.label).some((i,index) => {i.label = window.animationData.endText[index]})
-      afterData.filter(i => i.label).some((i,index) => {i.label = window.animationData.endText[index]})
-      beforeData.filter(i => i.label2).some((i,index) => {i.label2 = window.animationData.topLabel})
-      afterData.filter(i => i.label2).some((i,index) => {i.label2 = window.animationData.topLabel})
-    }
     // 指定图表的配置项和数据
     let option = {
-      // 视图区域的配置
-      grid: {
-        left: 0,
-        top: '1.4%',
-        right: 0,
-        bottom: '13.72%',
-      },
-      xAxis: {
-        type: 'value', //X 轴类型是数值轴
-        min: 0, // 开始值
-        max: 390, // 结束值
-        boundaryGap: false, // 坐标轴两边留白策略
-        splitLine: { // 网格线
-          show: false
+        // 视图区域的配置
+        grid: {
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: '10%',
         },
-        axisTick: { // 坐标轴刻度线
-          show: false
+        xAxis: {
+            type: 'value', //X 轴类型是数值轴
+            min: 0, // 开始值
+            max: 479, // 结束值
+            boundaryGap: false, // 坐标轴两边留白策略
+            splitLine: { // 网格线
+                show: false
+            },
+            axisTick: { // 坐标轴刻度线
+                show: false
+            },
+            axisLine: { // 坐标轴轴线
+                show: true
+            },
+            axisLabel: { // 坐标轴刻度标签
+                show: false
+            },
         },
-        axisLine: { // 坐标轴轴线
-          show: false
+        //   同x轴配置
+        yAxis: {
+            type: 'value',
+            min: 0,
+            max: 295,
+            axisLine: {
+                show: false
+            },
+            axisLabel: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            }
         },
-        axisLabel: { // 坐标轴刻度标签
-          show: false
-        },
-      },
-      //   同x轴配置
-      yAxis: {
-        type: 'value',
-        min: 0,
-        max: 216,
-        axisLine: {
-          show: false
-        },
-        axisLabel: {
-          show: false
-        },
-        splitLine: {
-          show: false
-        }
-      },
-      series: [],
+        series: [],
     };
+    const beforeData = [
+        {
+            value: [0, 209],
+        },
+        {
+            value: [56, 207],
+            label: "Today",
+            label2: window.animationData.first || "58.9kg",
+            label2Class:"startText",
+            //   原点颜色
+            verticalLine: '#EF035F',
+        },
+        {
+            value: [175, 145],
+            label: "1st week",
+            label2: window.animationData.oneLastWeek || "58.9kg",
+            label2Class:"centerText",
+            //原点颜色和垂线颜色一致
+            verticalLine: '#ED7859',
+        },
+        {
+            value: [400, 48],
+            label: "Aug 1",
+            label2: window.animationData.oneLastWeek || "58.9kg",
+            label2Class:"endText",
+            // labelHidden: true,
+            verticalLine: window.animationData.endTime || '#57810D',
+            labelStyle: {
+                color: "#57810D"
+            },
+        },
+        {
+            value: [479, 48],
+        },
+    ]
+    if (type === 'flat') {
+        beforeData.some(i => {
+            i.value[1] = 110
+        })
+        //  echarts 数据点高度不能完全一致，不然不会渲染
+        beforeData[beforeData.length - 1].value[1] = 110.1
+    }
+    if (type === 'up') {
+        beforeData.some(i => {
+            i.value[1] = 135
+        })
+        beforeData[0].value[1] = 30
+        beforeData[1].value[1] = 30
+    }
+    // 数据高度赋值110%
+    beforeData.some(i => {
+        i.value[1] *= 1.1
+    })
+    // 文本替换
+    if (window.animationData.endText) {
+        beforeData.filter(i => i.label).some((i, index) => {
+            i.label = window.animationData.endText[index]
+        })
+        beforeData.filter(i => i.label2).some((i, index) => {
+            i.label2 = window.animationData.topLabel
+        })
+    }
 
     // 生成连接的虚线
     function createLine(pointArray, option = {}) {
-      return {
-        type: 'line',
-        key: option.key || '',
-        smooth: 0.3,
-        symbol: 'rect',
-        itemStyle: {
-          color: 'rgba(0,0,0,0)'
-        },
-        animationDurationUpdate: option.animationDuration || 500,
-        animationDelayUpdate: option.animationDelay || 0,
-        label: {
-          show: option.labelHidden ? !option.labelHidden : true,
-          position: "bottom",
-          formatter: option.formatter || '',
-          rich: {
-            text: {
-              // 默认底部文字颜色
-              color: 'white',
-              align: "center",
-              verticalAlign: 'top',
-              fontWeight: 600,
-              fontFamily
-              fontSize: 15 / 390 * widthTrue,
-              ...(option.labelStyle || {})
-            }
-          }
-        },
-        lineStyle: {
-          normal: {
-            width: (option.width || 1.5) / 390 * widthTrue,  // 虚线宽度
-            type: option.type || [6, 6],  // 虚线类型
-            color: option.color || 'blue'  // 虚线颜色
-          }
-        },
-        data: pointArray
-      }
-    }
-    // 生成数据点
-    function computeData(inputData) {
-      let array = []
-      inputData.some((item, index) => {
-        array[index] = item.value
-      })
-      return array
+        return {
+            type: 'line',
+            key: option.key || '',
+            smooth: 0.3,
+            symbol: 'rect',
+            itemStyle: {
+                color: 'rgba(0,0,0,0)'
+            },
+            animationDurationUpdate: option.animationDuration || 500,
+            animationDelayUpdate: option.animationDelay || 0,
+            label: {
+                show: option.labelHidden ? !option.labelHidden : true,
+                position: "bottom",
+                formatter: option.formatter || '',
+                rich: {
+                    text: {
+                        // 默认底部文字颜色
+                        color: 'white',
+                        align: "center",
+                        verticalAlign: 'top',
+                        fontWeight: 600,
+                        fontFamily: "",
+                        fontSize: 18 / 479 * widthTrue,
+                        ...(option.labelStyle || {})
+                    }
+                }
+            },
+            lineStyle: {
+                normal: {
+                    width: (option.width || 1.5) / 479 * widthTrue,  // 虚线宽度
+                    type: option.type || [6, 6],  // 虚线类型
+                    color: option.color || 'blue'  // 虚线颜色
+                }
+            },
+            data: pointArray
+        }
     }
 
-    function dataChange(data) {
-      // 修改弧线参数 和 复制的弧线
-      option.series[option.series.length - 1].data = computeData(data)
-      option.series[option.series.length - 2].data = computeData(data.filter((i, index) => index > 1 && index < 4))
-      // 闪烁效果
-      setTimeout(async () => {
-        let path = document.getElementById('animation').querySelectorAll('g')[1].querySelector('path')
-        path.style.fillOpacity = '0.3'
-        await new Promise(re => setTimeout(() => { path.style.fillOpacity = '0'; re() }, 200))
-        await new Promise(re => setTimeout(() => { path.style.fillOpacity = '0.3'; re() }, 200))
-        await new Promise(re => setTimeout(() => { path.style.fillOpacity = '0'; re() }, 200))
-      }, 1000)
-      // option.series[option.series.length - 2].areaStyle = { color:'rgb(239,2,94)',opacity:0.7 }
-      // 修改垂线参数
-      data.filter(i => i.label).some((item, index) => {
-        option.series[index].data = [[item.value[0], 0], item.value]
-        if (item.verticalLine) {
-          option.series[index].lineStyle.normal.color = item.verticalLine
-        }
-        // 展示label参数
-        if (item.label) {
-          option.series[index].label.show = !item.labelHidden
-        }
-        // 闪烁
-      })
-      // 连接线修改
-      {
-        const connectKeyArr = {}
-        data.filter(i => i.connectKey).some((item, index) => {
-          connectKeyArr[item.connectKey] || (connectKeyArr[item.connectKey] = { array: [], style: {} })
-          connectKeyArr[item.connectKey].array.push(item.value)
-          item.connectLineStyle && (connectKeyArr[item.connectKey].style = item.connectLineStyle)
+    // 生成数据点
+    function computeData(inputData) {
+        let array = []
+        inputData.some((item, index) => {
+            array[index] = item.value
         })
-        Object.keys(connectKeyArr).some(key => {
-          let line = option.series.filter(i => i.key === key)[0]
-          line.data = connectKeyArr[key].array
-          line.lineStyle.normal = { ...line.lineStyle.normal, ...connectKeyArr[key].style }
-        })
-      }
-      // 修改
-      myChart.setOption(option);
+        return array
     }
+
     // 数据初始化
     function init() {
-      const connectKeyArr = {}
-      beforeData.some(item => {
-        // 生成垂线
-        item.label && option.series.push(createLine([[item.value[0], 0], item.value], {
-          ...item,
-          type: [4, 4],
-          color: item.verticalLine,
-          formatter(params) {
-            return params.dataIndex === 0 ? `{text|${item.label}}` : ''
-          },
-        }))
-        // 生成连接线数据
-        if (item.connectKey) {
-          connectKeyArr[item.connectKey] || (connectKeyArr[item.connectKey] = { array: [], style: {} })
-          connectKeyArr[item.connectKey].array.push(item.value)
-          item.connectLineStyle && (connectKeyArr[item.connectKey].style = item.connectLineStyle)
-        }
-        // 生成区域数据
-      })
-      // 生成连接线
-      Object.keys(connectKeyArr).some((key) => {
-        let { array, style } = connectKeyArr[key]
-        option.series.push(createLine(array, { ...style, key }))
-      })
-      // 最后生成弧线
-      const curveSeries = {
-        name: 'line',
-        type: 'line',
-        smooth: true,
-        animation: true,
-        data: computeData(beforeData),
-        symbol: (value, params) => {
-          return beforeData[params.dataIndex].verticalLine ? 'circle' : 'none'
-        },
-        symbolSize: 20 / 360 * widthTrue,
-        itemStyle: {
-          borderWidth: 2,
-          borderColor: 'white',
-          color: (params) => beforeData[params.dataIndex].verticalLine,
-        },
-        areaStyle: {
-          color: {
-            image: imageDomBg,
-            repeat: 'no-repeat'
-          }
-        },
-        lineStyle: {
-          width: 6 / 390 * widthTrue,
-          color: {
-            // image: imageDomLine, // 支持为 HTMLImageElement, HTMLCanvasElement，不支持路径字符串
-            // repeat: 'no-repeat'
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [
-              { offset: 0, color: 'rgb(139,83,254)'}, 
-              // { offset: 0.5, color: 'rgb(212,47,145)'}, 
-              { offset: 1, color: 'rgb(255,25,80)' }
-            ],
-            global: false // 缺省为 false
-          }
-        },
-        label: {
-          show: true,
-          position: 'top',
-          distance: 0,
-          formatter: (params) => {
-            let label2 = beforeData[params.dataIndex].label2
-            return label2 ? (label2 === 'area' ? '{area|}' : `{xoct02|${label2}}`) : ''
-          },
-          rich: {
-            "xoct02": {
-              backgroundColor: {
-                image: imageDomLabel
-              },
-              width: 96 / 390 * widthTrue,
-              height: 72 / 390 * widthTrue,
-              color: 'white',
-              align: "center",
-              verticalAlign: 'top',
-              fontWeight: 700,
-              fontSize: 22 / 390 * widthTrue,
-              padding: [0, 0, 10 / 390 * widthTrue, 0],
-            },
-            area: {
-              width: 80 / 390 * widthTrue,
-              height: 52 / 390 * widthTrue,
-              color: "inherit",
-              backgroundColor: "rgba(239,2,94,0.7)"
+        const connectKeyArr = {}
+        beforeData.some(item => {
+            // 生成垂线
+            item.label && option.series.push(createLine([[item.value[0], 0], item.value], {
+                ...item,
+                type: [4, 4],
+                color: item.verticalLine,
+                formatter(params) {
+                    return params.dataIndex === 0 ? `{text|${item.label}}` : ''
+                },
+            }))
+            // 生成连接线数据
+            if (item.connectKey) {
+                connectKeyArr[item.connectKey] || (connectKeyArr[item.connectKey] = {array: [], style: {}})
+                connectKeyArr[item.connectKey].array.push(item.value)
+                item.connectLineStyle && (connectKeyArr[item.connectKey].style = item.connectLineStyle)
             }
-          }
-        },
-      }
-      // 生成弧线备份
-      const areaSeries = JSON.parse(JSON.stringify(curveSeries))
-      areaSeries.data = computeData(beforeData.filter((i, index) => index > 1 && index < 4))
-      areaSeries.symbol = 'none'
-      areaSeries.lineStyle = {}
-      areaSeries.areaStyle = { color: 'rgb(239,2,94)', opacity: 0 }
-      option.series.push(areaSeries)
-      option.series.push(curveSeries)
-      myChart.setOption(option);
+            // 生成区域数据
+        })
+        // 生成连接线
+        // Object.keys(connectKeyArr).some((key) => {
+        //     let {array, style} = connectKeyArr[key]
+        //     option.series.push(createLine(array, {...style, key}))
+        // })
+        // 最后生成弧线
+        const curveSeries = {
+            name: 'line',
+            type: 'line',
+            smooth: true,
+            animation: true,
+            data: computeData(beforeData),
+            symbol: (value, params) => {
+                return beforeData[params.dataIndex].verticalLine ? 'circle' : 'none'
+            },
+            symbolSize: 20 / 360 * widthTrue,
+            itemStyle: {
+                borderWidth: 2,
+                borderColor: 'white',
+                color: (params) => beforeData[params.dataIndex].verticalLine,
+            },
+            areaStyle: {
+                color: {
+                    type: 'linear',
+                    x: 1,
+                    y: 0,
+                    x2: 0,
+                    y2:0,
+                    colorStops: [
+                        {
+                            offset: 0,
+                            color: 'rgba(87, 129, 13, 0.10)' // 顶部
+                        },
+                        {
+                            offset: 0.3,
+                            color: 'rgba(235, 255, 83, 0.10)' // 底部透明
+                        },
+                        {
+                            offset: 0.8,
+                            color: 'rgba(239, 2, 94, 0.10)' // 底部透明
+                        },
+                    ]
+                },
+            },
+            lineStyle: {
+                width: 6 / 479 * widthTrue,
+                color: {
+                    // image: imageDomLine, // 支持为 HTMLImageElement, HTMLCanvasElement，不支持路径字符串
+                    // repeat: 'no-repeat'
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 1,
+                    y2: 0,
+                    colorStops: [
+                        {offset: 0, color: '#EF025E'},
+                        {offset: 0.7, color: '#EBFF53'},
+                        {offset: 1, color: '#57810D'}
+                    ],
+                    global: false // 缺省为 false
+                }
+            },
+            label: {
+                show: true,
+                position: 'top',
+                distance: 0,
+                formatter: (params) => {
+                    let label2 = beforeData[params.dataIndex].label2
+                    const label2Class = beforeData[params.dataIndex].label2Class
+                    return label2 ? (`{${label2Class?label2Class:'endText'}|${label2}}`) : ''
+                },
+                rich: {
+                    "endText": {
+                        backgroundColor: {
+                            image: imageDomLabel
+                        },
+                        width: 139 / 479 * widthTrue,
+                        height: 81 / 479 * widthTrue,
+                        color: 'white',
+                        align: "center",
+                        verticalAlign: 'top',
+                        fontWeight: 600,
+                        fontSize: 32 / 479 * widthTrue,
+                        padding: [0, 0, 10 / 479 * widthTrue, 0],
+                    },
+                    "centerText": {
+                        backgroundColor: {
+                            image: imageDomLabel2,
+                        },
+                        width: 76 / 479 * widthTrue,
+                        height: 42 / 479 * widthTrue,
+                        color: '#323233',
+                        align: "center",
+                        verticalAlign: 'top',
+                        fontWeight: 700,
+                        fontSize: 17 / 479 * widthTrue,
+                        padding: [0, 0, 6 / 479 * widthTrue, 0],
+                    },
+                    "startText": {
+                        color: 'white',
+                        align: "center",
+                        verticalAlign: 'top',
+                        fontWeight: 600,
+                        fontSize: 18 / 479 * widthTrue,
+                        padding: [0, 0, 10 / 479 * widthTrue, 0],
+                    },
+                }
+            },
+        }
+        // 生成弧线备份
+        option.series.push(curveSeries)
+        myChart.setOption(option);
     }
 
     init()
@@ -423,10 +365,10 @@
     document.getElementById('animation').querySelectorAll('g')[1].querySelector('path').classList.add('linear')
     // dataChange(beforeData)
     window.addEventListener('resize', function () {
-      widthTrue = document.getElementById('animation').offsetWidth
-      myChart.resize();
+        widthTrue = document.getElementById('animation').offsetWidth
+        myChart.resize();
     })
-  </script>
+</script>
 </body>
 
 </html>

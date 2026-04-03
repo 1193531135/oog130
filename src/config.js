@@ -280,7 +280,9 @@ const config = {
     ConfidentReaching: textSelectDefaultConfig,
     EnterEmail: () => import("@/components/EnterEmail.vue"),
     UserName: () => import("@/components/UserName.vue"),
-    CalisthenicsPlan: "",
+    CalisthenicsPlan: {
+        module: () => import("@/components/CalisthenicsPlan.vue"),
+    },
     BodyProfile: () => import("@/components/BodyProfile.vue"),
     MakeCommitment: ()=> import("@/components/MakeCommitment.vue"),
     MealPlanning: () => import("@/components/MealPlanning.vue"),
