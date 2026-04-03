@@ -7,34 +7,30 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const selectValue = ref(pageData[route.name])
-
-const value1 = ref();
 const hopeDate = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 let placeholder_1 = ref("DD/MM/YYYY")
-let placeholder_2 = ref("")
 //提示文本
 const isErrorText = ref('Please enter a valid date of birth')
 function change(val) {
   // 存储数据
-  pageData.set(route.name, val)
+  pageData.set(route.name, hopeDate.value)
   //
   push()
 }
 const validate = () => {
   let val = hopeDate.value.replace(/\D/g, '').length
-
-  // isErrorText.value = "Height must be greater than or equal to 3 ft"
   console.log(val)
   if (val == 8) {
     isFocused.value = true
     isError.value = false
-
+    isDisabled.value = false
   } else {
     isFocused.value = false
     isError.value = true
+    isDisabled.value = true
   }
 }
 const onInput = (e) => {
@@ -125,11 +121,17 @@ const onInput = (e) => {
     }
     e.target.value = hopeDate.value
   }
-
+  validate()
 
 }
 
-
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+  if (inputRef.value) {
+    inputRef.value.focus()
+  }
+}
 </script>
 
 <template>
@@ -137,11 +139,11 @@ const onInput = (e) => {
     <div class="title">{{ pageText.title }}</div>
     <div class="description">{{ pageText.text1 }}</div>
     <div class="inputLable">{{ pageText.inputLable }}</div>
-    <div class="input-wrapper" :class="{
+    <div @click="focusInput" class="input-wrapper" :class="{
       error: isError,
       focus: isFocused
     }">
-      <input @input="onInput" class="input" placeholder="" @focus="isFocused = true" @blur="validate" />
+      <input ref="inputRef" @input="onInput" class="input" placeholder="" @focus="isFocused = true" @blur="validate" />
       <div class="input-text">
         <span>{{ hopeDate }}</span>
         <span class="placeholder">{{ placeholder_1 }}</span>
@@ -168,7 +170,7 @@ const onInput = (e) => {
       </div>
 
       <div class="btn-container">
-        <div class="continue-btn" @click="change">
+        <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
           <div>{{ pageText.continue }}</div>
           <img src="@/assets/select-item-icon.png">
         </div>

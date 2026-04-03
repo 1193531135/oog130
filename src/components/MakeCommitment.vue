@@ -8,10 +8,11 @@ import Select from './module/select.vue'
 const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
-const options = pageText.selectOptions.map((i, index) => ({ label: i.label, value: index }))
+const options = pageText.selectOptions.map((i, index) => ({ label: i, value: index }))
 
 
 function change(val) {
+    pageData.set(route.name, val)
     push()
 }
 

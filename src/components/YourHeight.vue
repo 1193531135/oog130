@@ -2,9 +2,7 @@
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { push } from '@/tool/index.js'
-import { ref, computed } from 'vue'
-
-
+import { ref, computed, watch } from 'vue'
 
 const pageData = new PageData()
 pageData
@@ -14,10 +12,14 @@ console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
 const unit = ref(selectOptions[0])
 function change(val) {
+    pageData.set(route.name, {
+        unit: unit.value,
+        height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
+    })
     push()
 }
 
-
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 const height = ref('')
 const height_cm = ref('')
 const isFocused = ref(false)
@@ -29,19 +31,21 @@ const checked = ref(false)// 复选框状态
 const isErrorText = ref('Height must be greater than or equal to 90 cm')
 
 // ft/in输入框
-// 验证逻辑：失焦时检查是否为空
+// 验证逻辑：实时检查
 const validate = () => {
-    let val = height.value.replace(/\D/g, '').length
+    let val = height.value.replace(/\D/g, '')
 
     isErrorText.value = "Height must be greater than or equal to 3 ft"
     console.log(val)
-    if (val == 3) {
+    if (val.length == 3 && (val - 0) % 100 >= 3) {
         isFocused.value = true
         isError.value = false
+        isDisabled.value = false
 
     } else {
         isFocused.value = false
         isError.value = true
+        isDisabled.value = true
     }
 }
 const onInput = (e) => {
@@ -91,18 +95,21 @@ const onInput = (e) => {
             e.target.value = height.value
         }
     }
-
+    // 实时验证
+    validate()
 }
 // cm输入框
-// 验证逻辑：失焦时检查是否为空
+// 验证逻辑：实时检查
 const validate1 = () => {
     isErrorText.value = "Height must be greater than or equal to 90 cm"
     if (height_cm.value < 90 || height_cm.value === '') {
         isFocused.value = false
         isError.value = true
+        isDisabled.value = true
     } else {
         isFocused.value = true
         isError.value = false
+        isDisabled.value = false
     }
 }
 const onInput1 = (e) => {
@@ -111,10 +118,28 @@ const onInput1 = (e) => {
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
     height_cm.value = val
+    // 实时验证
+    validate1()
 }
 
+// 单位切换时重置所有状态
+watch(unit, () => {
+    isError.value = false
+    isDisabled.value = true
+    isFocused.value = false
+    height.value = ''
+    height_cm.value = ''
+    placeholder_1.value = "_ft"
+    placeholder_2.value = "__in"
+})
 
-
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 </script>
 
 <template>
@@ -135,12 +160,11 @@ const onInput1 = (e) => {
 
         <!-- 输入框容器 -->
         <!-- ft/in -->
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }" v-if="unit === 'ft/in'">
-            <input @keydown.delete="onDelete" @input="onInput" class="input" placeholder="" @focus="isFocused = true"
-                @blur="validate" />
+            <input ref="inputRef" @keydown.delete="onDelete" @input="onInput" class="input" placeholder="" @focus="isFocused = true" />
             <div class="input-text">
                 <span>{{ height }}</span>
                 <span class="placeholder">{{ placeholder_1 }}</span>
@@ -153,12 +177,11 @@ const onInput1 = (e) => {
 
 
         <!-- cm -->
-        <div v-if="unit === 'cm'" class="input-wrapper" :class="{
+        <div @click="focusInput" v-if="unit === 'cm'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate1" />
+            <input ref="inputRef" v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true" />
             <div class="input-text">
                 <span class="unit">{{ height_cm }}</span>
                 <span>cm</span>
@@ -183,7 +206,7 @@ const onInput1 = (e) => {
         </div>
         <div class="btn">
             <div class="btn-container">
-                <div class="continue-btn" @click="change">
+                <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
                     <div>{{ pageText.continue }}</div>
                     <img src="@/assets/select-item-icon.png">
                 </div>

@@ -268,7 +268,9 @@ const config = {
     DateOfBirth: {
         module: () => import("@/components/DateOfBirth.vue"),
     },
-    PersonalSummary: "",
+    PersonalSummary: {
+        module: () => import("@/components/PersonalSummary.vue"),
+    },
     ComingUp: "",
     EventTime: {
         module: () => import("@/components/EventTime.vue"),

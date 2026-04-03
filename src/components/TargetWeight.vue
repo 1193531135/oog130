@@ -2,10 +2,10 @@
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { push } from '@/tool/index.js'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 
-
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 const pageData = new PageData()
 pageData
 const route = useRoute()
@@ -14,6 +14,11 @@ console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
 const unit = ref(selectOptions[0])
 function change(val) {
+    pageData.set(route.name, {
+        unit: unit.value,
+        weight: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
+
+    })
     push()
 }
 
@@ -35,10 +40,12 @@ const validate = () => {
     if (val >= 77) {
         isFocused.value = true
         isError.value = false
+        isDisabled.value = false
 
     } else {
         isFocused.value = false
         isError.value = true
+        isDisabled.value = true
     }
 }
 const onInput = (e) => {
@@ -47,6 +54,7 @@ const onInput = (e) => {
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
     targetWeight_lb.value = val
+    validate()
 
 }
 // cm输入框
@@ -56,9 +64,11 @@ const validate1 = () => {
     if (targetWeight_kg.value < 35 || targetWeight_kg.value === '') {
         isFocused.value = false
         isError.value = true
+        isDisabled.value = true
     } else {
         isFocused.value = true
         isError.value = false
+        isDisabled.value = false
     }
 }
 const onInput1 = (e) => {
@@ -67,9 +77,23 @@ const onInput1 = (e) => {
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
     targetWeight_kg.value = val
+    validate1()
 }
-
-
+// 单位切换时重置所有状态
+watch(unit, () => {
+    isError.value = false
+    isDisabled.value = true
+    isFocused.value = false
+    targetWeight_lb.value = ''
+    targetWeight_kg.value = ''
+})
+//  聚焦
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 
 </script>
 
@@ -91,12 +115,12 @@ const onInput1 = (e) => {
 
         <!-- 输入框容器 -->
         <!-- lb -->
-        <div class="input-wrapper" :class="{
+        <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }" v-if="unit === 'lb'">
-            <input v-model="targetWeight_lb" @input="onInput" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate" />
+            <input ref="inputRef" v-model="targetWeight_lb" @input="onInput" class="input" placeholder="__"
+                @focus="isFocused = true" @blur="validate" />
             <div class="input-text">
                 <span class="unit">{{ targetWeight_lb }}</span>
                 <span>lb</span>
@@ -108,12 +132,12 @@ const onInput1 = (e) => {
 
 
         <!-- cm -->
-        <div v-if="unit === 'kg'" class="input-wrapper" :class="{
+        <div @click="focusInput" v-if="unit === 'kg'" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-            <input v-model="targetWeight_kg" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate1" />
+            <input ref="inputRef" v-model="targetWeight_kg" @input="onInput1" class="input" placeholder="__"
+                @focus="isFocused = true" @blur="validate1" />
             <div class="input-text">
                 <span class="unit">{{ targetWeight_kg }}</span>
                 <span>cm</span>
@@ -138,7 +162,7 @@ const onInput1 = (e) => {
 
         <div class="btn">
             <div class="btn-container">
-                <div class="continue-btn" @click="change">
+                <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
                     <div>{{ pageText.continue }}</div>
                     <img src="@/assets/select-item-icon.png">
                 </div>
@@ -323,7 +347,6 @@ const onInput1 = (e) => {
     }
 
     .btn {
-        position: absolute;
         margin-left: 260px;
         margin-top: 112px;
     }

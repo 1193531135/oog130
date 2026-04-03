@@ -5,23 +5,20 @@ import { push } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 
+
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const selectValue = ref(pageData[route.name])
-
-const value1 = ref();
+const isDisabled = ref(true) // 按钮禁用状态，初始为true
 const dateofBirth = ref('')
 const isFocused = ref(false)
 const isError = ref(false)
 let placeholder_1 = ref("DD/MM/YYYY")
-let placeholder_2 = ref("")
 //提示文本
 const isErrorText = ref('Please enter a valid date of birth')
 function change(val) {
   // 存储数据
-  pageData.set(route.name, val)
-  //
+  pageData.set(route.name, dateofBirth.value)
   push()
 }
 const validate = () => {
@@ -29,13 +26,16 @@ const validate = () => {
 
   // isErrorText.value = "Height must be greater than or equal to 3 ft"
   console.log(val)
-  if (val==8) {
+  if (val == 8) {
     isFocused.value = true
     isError.value = false
+    isDisabled.value = false
 
   } else {
     isFocused.value = false
     isError.value = true
+    isDisabled.value = true
+
   }
 }
 const onInput = (e) => {
@@ -126,11 +126,16 @@ const onInput = (e) => {
     }
     e.target.value = dateofBirth.value
   }
-
+  validate()
 
 }
 
-
+const inputRef = ref(null)
+const focusInput = () => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+    }
+}
 </script>
 
 <template>
@@ -140,8 +145,8 @@ const onInput = (e) => {
     <div class="input-wrapper" :class="{
       error: isError,
       focus: isFocused
-    }">
-      <input @input="onInput" class="input" placeholder="" @focus="isFocused = true" @blur="validate" />
+    }  " @click="focusInput">
+      <input ref="inputRef" @input="onInput" class="input" placeholder="" @focus="isFocused = true" @blur="validate" />
       <div class="input-text">
         <span>{{ dateofBirth }}</span>
         <span class="placeholder">{{ placeholder_1 }}</span>
@@ -161,7 +166,7 @@ const onInput = (e) => {
     </div>
     <div class="btn">
       <div class="btn-container">
-        <div class="continue-btn" @click="change">
+        <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
           <div>{{ pageText.continue }}</div>
           <img src="@/assets/select-item-icon.png">
         </div>

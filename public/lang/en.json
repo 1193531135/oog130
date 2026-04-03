@@ -494,7 +494,7 @@
       "title": "Calculating your body mass index",
       "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
     },
-    "inputLable": "Current Weight（kg）",
+    "inputLable": "Current Weight",
     "continue": "Continue"
   },
   "TargetWeight": {
