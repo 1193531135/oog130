@@ -29,7 +29,7 @@ const autoRegisterList = Object.keys(pageConfig).filter(i => pageConfig[i]).map(
 })
 
 const routes = [
-    { path: '/', redirect: '/ageQuestion' },
+    { path: '/', redirect: '/AgeQuestion' },
     ...autoRegisterList,
 ]
 
