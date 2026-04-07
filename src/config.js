@@ -55,9 +55,6 @@ Object.keys(config).forEach(key => {
     if (config[key].constructor === Function) {
         config[key] = {
             module: config[key],
-            config: {
-                progressHidden: true
-            }
         }
     }
     if (config[key]) {

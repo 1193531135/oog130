@@ -1,7 +1,7 @@
 {
   "TaiChiBeginners": {
     "title": "Tai Chi for Beginners",
-    "subtitle": "align-self: stretch;",
+    "subtitle": "SELECT YOUR AGE",
     "selectOptions": [
       "<50",
       "50-100",
@@ -9,147 +9,78 @@
       "70-79",
       "80+"
     ],
-    "text": "By choosing your age and continuing you agree to our Terms of Service & Privacy Policy. Please review before continuing"
+    "text": [
+      "By choosing your age and continuing you agree to our ",
+      "Terms of Service",
+      " & ",
+      "Privacy Policy",
+      ". Please review before continuing"
+    ]
   },
-  "Over70million": {
-    "title": "Over 70 million",
-    "text1": "Users have chosen us",
-    "continue": "Continue"
+  "ChooserGender": {
+    "title": "Choose your gender",
+    "selectOptions": [
+      "Male",
+      "Female"
+    ]
   },
-  "MilitaryCalisthenicsBefore": {
-    "title": "Have you ever done military calisthenics before?",
+  "TaiChiExperienceCheck": {
+    "title": "Have you ever done Tai Chi before?",
     "selectOptions": [
       "Yes",
       "No"
     ],
     "continue": "Continue"
   },
-  "MilitaryCalisthenicsBeforeSelected": [
-    {
-      "title": "Military Calisthenics is a simple and powerful fitness choice!",
-      "text1": [
-        "It's a workout that relies on ",
-        "your own bodyweight."
-      ],
-      "text2": [
-        "We'll help you ",
-        "get fit ",
-        "at home without any equipment!"
-      ],
-      "continue": "Continue"
-    },
-    {
-      "title": "You've got this!",
-      "text1": [
-        "Our Military Calisthenics is a straightforward and powerful option for all fitness levels."
-      ],
-      "text2": [
-        "We'll help you get in shape at home-",
-        "no equipment needed!"
-      ]
-    }
-  ],
-  "MainGoal": {
-    "title": "What's your main goal?",
-    "selectOptions": [
-      "Lose weight",
-      "Build Muscles and Strength",
-      "Gain Muscle and Lose Weight",
-      "Get Fit and Maintain Weight"
-    ]
+  "TaiChiBeginnerGuide": {
+    "title": "You're in the right place",
+    "subtitle": "You don't need any experience to start",
+    "description": "Tai Chi is a simple, gentle way to move-no equipment, no pressure, just mindful steps you can follow at home.",
+    "continue": "Got it"
   },
-  "MainGoalSelected": [
-    {
-      "title": "We know exactly how to make it happen!",
-      "text1": [
-        "Our Military Calisthenics program is the perfect way ",
-        "to slim down at a pace that suits you, while enjoying the process!"
-      ],
-      "text2": [
-        "Life might have its challenges, but your fitness routine doesn't need to be one of them."
-      ],
-      "text3": [
-        "Our Calisthenics program is the perfect way",
-        "to slim down at a pace that suits you, while enjoying the process!"
-      ]
-    },
-    {
-      "title": "We have just what you need",
-      "text1": [
-        "Our Military Calisthenics program is ideal",
-        "for toning your body at your own pace, while "
-      ],
-      "text2": [
-        "Life might have its challenges, but your fitness routine doesn't need to be one of them."
-      ],
-      "text3": [
-        "Our Calisthenics program is ideal",
-        "for toning your body at your own pace, while enjoying every step!"
-      ]
-    },
-    {
-      "title": "We have just what you need",
-      "text1": [
-        "Our Military Calisthenics program is ideal",
-        "for toning your body at your own pace, while enjoying every step!"
-      ]
-    },
-    {
-      "title": "We have just what you need",
-      "text1": [
-        "Our Military Calisthenics program is ideal",
-        "for toning your body at your own pace, while enjoying every step!"
-      ],
-      "text2": [
-        "Life might have its challenges, but your fitness routine doesn't need to be one of them."
-      ],
-      "text3": [
-        "Our Calisthenics program is ideal",
-        "for toning your body at your own pace, while enjoying every step!"
-      ]
-    }
-  ],
-  "MotivatesYou2Exercise": {
+  "TaiChiMainGoalSelection": {
+    "title": "What is your main goal?",
+    "selectOptions": [
+      "Weight loss",
+      "Wellness and longevity",
+      "Energy and vitality",
+      "Balance and mobility"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiPersonalizationIntro": {
+    "title": "We have just what you need",
+    "subtitle": "Our Tai Chi program adapts to you - a way to move at your own pace and focus on what matters most to you.",
+    "continue": "Got it"
+  },
+  "TaiChiExerciseMotivation": {
     "title": "What else motivates you to exercise?",
     "selectOptions": [
-      "Improve sleep🌛",
-      "Enhance posture",
+      "Support muscle strength",
       "Enhance posture",
       "Reduce Stress",
       "Develop flexibility",
-      "Improve overall health",
       "None of the above"
     ],
     "continue": "Continue"
   },
-  "ChooseBodyType": {
-    "title": "Choose your body type",
+  "TaiChiCurrentBodyType": {
+    "title": "Choose your current body type",
     "selectOptions": [
-      "Slim",
-      "Mid-sized",
-      "Plus-sized",
+      "Skinny",
+      "Average",
       "Overweight"
     ]
   },
-  "ChooseBodyWant": {
-    "title": "Choose the body you want",
+  "TaiChiTargetBodyType": {
+    "title": "Choose a target body type",
     "selectOptions": [
-      "Lean",
-      "Toned",
-      "Athletic",
-      "Strong"
+      "Fit",
+      "Bulk",
+      "Extra bulk"
     ]
   },
-  "WeightTypicallyChange": {
-    "title": "How does your weight typically change?",
-    "selectOptions": [
-      "I gain fast but lose slowly",
-      "I gain and lose weight easily",
-      "I struggle to gain weight or muscle"
-    ],
-    "continue": "Continue"
-  },
-  "BestShapeOfYourLife": {
+  "TaiChiBestShapeCheck": {
     "title": "How long ago were you in the best shape of your life?",
     "selectOptions": [
       "Less than a year ago",
@@ -159,7 +90,7 @@
     ],
     "continue": "Continue"
   },
-  "Flexible": {
+  "TaiChiFlexibilityCheck": {
     "title": "How flexible are you?",
     "selectOptions": [
       "Very flexible",
@@ -169,20 +100,18 @@
     ],
     "continue": "Continue"
   },
-  "SelectAreas": {
-    "title": "Select areas",
-    "subtitle": "that you would like to focus on?",
+  "TaiChiTargetZoneSelection": {
+    "title": "Choose your target zone",
     "selectOptions": [
-      "Fullbody",
-      "Back",
-      "Butt",
-      "Legs",
-      "Belly",
-      "Arms"
+      "Back & Arms",
+      "Arms",
+      "Chest",
+      "Abs",
+      "Legs"
     ],
     "continue": "Continue"
   },
-  "StruggleWithFollowing": {
+  "TaiChiPhysicalDiscomfortCheck": {
     "title": "Do you struggle with any of the following?",
     "selectOptions": [
       "Sensitive back",
@@ -192,80 +121,22 @@
     ],
     "continue": "Continue"
   },
-  "StruggleWithFollowingSelected": [
-    {
-      "title": "We’ve got you covered!",
-      "text1": [
-        "You'll find plenty of ",
-        "exercises designed to strengthen your back."
-      ],
-      "text2": [
-        "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!"
-      ],
-      "continue": "Got it"
-    },
-    {
-      "title": "We’ve got you covered!",
-      "text1": [
-        "You'll find plenty of ",
-        "exercises designed to strengthen your knees."
-      ],
-      "text2": [
-        "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!"
-      ],
-      "continue": "Got it"
-    },
-    {
-      "title": "We’ve got you covered!",
-      "text1": [
-        "You'll find plenty of ",
-        "exercises designed to strengthen your body."
-      ],
-      "text2": [
-        "This means you can enjoy longer walks, feel less tension, and experience more confidence every day!"
-      ],
-      "continue": "Got it"
-    }
-  ],
-  "CurrentlyPerimenopauseOrMenopause": {
-    "title": "Are you currently going through perimenopause or menopause?",
-    "selectOptions": [
-      "Yes, I am",
-      "No, I’m not.",
-      "I’m not sure"
-    ],
+  "TaiChiGentleExerciseIntro": {
+    "title": "We've got you covered!",
+    "subtitle": "These gentle exercises focus on muscle support and balance, helping you feel more stable, relaxed, and confident as you walk and move each day.",
     "continue": "Continue"
   },
-  "symptomsHave": {
-    "title": "Which of these symptoms do you have?",
-    "subtitle": "You may choose several options",
-    "selectOptions": [
-      "Hot flashes",
-      "Sleep problems",
-      "Fatigue",
-      "Mood swings",
-      "Joint Pain",
-      "Weight gain",
-      "None of the above"
-    ],
-    "continue": "Got it"
-  },
-  "ExperienceSimilarSymptoms": {
-    "title": "81% of women in your age group experience similar symptoms.",
-    "subtitle": "YCalisthenics improves your well-being with bodyweight, strength-building exercises.",
-    "continue": "Got it"
-  },
-  "BreathOnStairs": {
+  "TaiChiStairBreathCheck": {
     "title": "Do you get out of breath on stairs?",
     "selectOptions": [
-      "Can't talk,too out of breath",
+      "Can't talk, too out of breath",
       "Slightly out of breath, can talk",
       "Okay after one flight",
       "Can handle a few flights"
     ],
     "continue": "Continue"
   },
-  "Train": {
+  "TaiChiTrainingFrequency": {
     "title": "How often do you train?",
     "selectOptions": [
       "Not at all",
@@ -275,115 +146,80 @@
     ],
     "continue": "Continue"
   },
-  "Walks": {
-    "title": "How often do you go for walks?",
+  "TaiChiWalkingFrequency": {
+    "title": "How often do you Walk?",
     "selectOptions": [
       "Almost every day",
-      "3-4 times per week",
+      "1-3 times per week",
       "1-2 times per week",
       "More like once a month"
     ],
     "continue": "Continue"
   },
-  "WillingWorkout": {
-    "title": "How much time are you willing to spend on a workout?",
+  "TaiChiWorkoutDurationPref": {
+    "title": "How long do you want your workouts to be?",
     "selectOptions": [
-      "15 minutes",
-      "30 minutes",
-      "1 hour",
-      "Let MadMuscles decide"
+      "10-20 mins",
+      "20-30 mins",
+      "30-40 mins",
+      "Let us decide"
     ],
     "continue": "Continue"
   },
-  "WorkScheduleLike": {
+  "TaiChiWorkScheduleType": {
     "title": "What is your work schedule like?",
     "selectOptions": [
-      "9 to 5",
-      "Night shifts",
-      "My hours are flexible",
-      "I’m retired"
+      "9 to 9",
+      "Night shifts"
     ],
     "continue": "Continue"
   },
-  "DescribeTypicalDay": {
+  "TaiChiDailyActivityCheck": {
     "title": "How would you describe your typical day?",
     "selectOptions": [
       "I spend most of the day sitting",
       "I take active breaks",
-      "I’m on my feet all day long",
+      "I'm on my feet all day long",
       "I have physical work"
     ],
     "continue": "Continue"
   },
-  "CurrentEnergyLevels": {
+  "TaiChiEnergyLevelCheck": {
     "title": "How would you rate your current energy levels?",
     "selectOptions": [
       "Low energy",
-      "Moderate energy",
-      "High energy",
-      "It fluctuates"
+      "Medium energy",
+      "High energy"
     ],
     "continue": "Continue"
   },
-  "MilitaryCalisthenics": {
-    "title": "Military Calisthenics will leave you feeling more energized",
-    "text1": [
-      "These workouts will build your strength and ",
-      "improve endurance."
-    ],
-    "text2": [
-      "You'll have the energy to ",
-      "keep up with your daily activities."
-    ],
-    "continue": "Got it"
-  },
-  "DrinkDaily": {
+  "TaiChiDailyWaterIntake": {
     "title": "How much water do you drink daily?",
     "selectOptions": [
       {
-        "label": "Only coffee or tea 🍵",
-        "description": {
-          "title": "Drinking water is essential",
-          "subtitle": "If you're not hydrated, your body can't perform at its highest level. MadMuscles will remind you to drink enough water."
-        }
+        "label": "Only coffee or tea ☕️",
+        "subLabel": ""
       },
       {
-        "label": "Less than 2 glasses💧",
-        "subLabel": "up to 0,5 l/17 oz",
-        "description": {
-          "title": "Drinking water is essential",
-          "subtitle": "If you're not hydrated, your body can't perform at its highest level. MadMuscles will remind you to drink enough water."
-        }
+        "label": "Less than 2 glasses 💧",
+        "subLabel": "up to 0,51/17 oz"
       },
       {
-        "label": "2-6 glasses💧💧",
-        "subLabel": "0-1,5 l/17-50 oz",
-        "description": {
-          "title": "You drink more water than 50% of users*.",
-          "subtitle": "MadMuscles will remind you to drink enough water."
-        }
+        "label": "2-6 glasses 💧💧",
+        "subLabel": "0,5-1,51/17-50 0z"
       },
       {
-        "label": "7-10 glasses💧💧💧",
-        "subLabel": "1,5-2,5 l/50-85 oz",
-        "description": {
-          "title": "Wow! Impressive!",
-          "subtitle": "You drink more water than 75% of users. Keep it up!"
-        }
+        "label": "7-10 glasses 💧💧💧",
+        "subLabel": "1,5-2,51/50-85 oz"
       },
       {
-        "label": "More than 10 glasses🐳",
-        "subLabel": "more than 2,5 l/85 oz",
-        "description": {
-          "title": "Wow! Impressive!",
-          "subtitle": "You drink more water than 92% of users. Keep it up!"
-        }
+        "label": "More than 10 glasses 🐳",
+        "subLabel": "more than 2,51/85 oz"
       }
     ],
-    "subtitle": "*users of MadMuscles who took the quiz",
-    "continue": "Got it"
+    "continue": "Continue"
   },
-  "UsuallyGet": {
+  "TaiChiSleepDurationCheck": {
     "title": "How much sleep do you usually get?",
     "selectOptions": [
       "Less than 5 hours 🙄",
@@ -393,7 +229,7 @@
     ],
     "continue": "Continue"
   },
-  "FollowDiets": {
+  "TaiChiDietTypeSelection": {
     "title": "Do you follow any of these diets?",
     "selectOptions": [
       {
@@ -401,117 +237,114 @@
         "subLabel": "Excludes meat"
       },
       {
-        "label": "Vegan🥕",
+        "label": " Vegan 🥕",
         "subLabel": "Excludes all animal products"
       },
       {
-        "label": "Keto🥑",
+        "label": "Keto 🥑",
         "subLabel": "Low-carb, high-fat"
       },
       {
-        "label": "Mediterranean🌾",
+        "label": "Mediterranean 🌾",
         "subLabel": "Rich in plant-based foods"
       },
       {
-        "label": "None of the above"
+        "label": " None of the above",
+        "subLabel": ""
       }
     ],
     "continue": "Continue"
   },
-  "FollowHabits": {
-    "title": "Do you follow any of these habits?",
+  "TaiChiEatingHabitCheck": {
+    "title": "Do you have any of the following habits?",
     "selectOptions": [
-      "Emotional eating🍫",
-      "Snacking late at nighty",
-      "Overeating🍔",
-      "Skipping meals frequently",
-      "None of the above"
+      "Emotional eating 🍫",
+      "Snacking late at night 🌙",
+      "Overeating 🍔",
+      "Skipping meals frequently 🍴"
     ],
     "continue": "Continue"
   },
-  "FoodCravings": {
+  "TaiChiFoodCravingsCheck": {
     "title": "What are your most common food cravings?",
     "selectOptions": [
-      "weets🍬",
-      "Soda",
-      "Salty snacks 🥛",
-      "Fast food🍟",
+      "Sweets 🍬",
+      "Soda 🥤",
+      "Salty snacks 🧂",
+      "Fast food 🍟",
       "None of the above"
     ],
     "continue": "Continue"
   },
-  "EatingHabits": {
+  "TaiChiEatingHabitImproveCheck": {
     "title": "Are you ready to spend 5 minutes a day improving your eating habits?",
     "selectOptions": [
-      "Yes,I’m ready!",
-      "I’ll give it a try",
+      "Yes, I'm ready!",
+      "I'll give it a try",
       "Not quite yet"
     ],
     "continue": "Continue"
   },
-  "FollowingFew": {
-    "title": "Have any of the following life events led to weight gain in the last few years?",
+  "TaiChiBodyChangeFactorCheck": {
+    "title": "Have any of the following life changes affected your body in recent years?",
     "selectOptions": [
       "Busy work or family life",
-      "peri- or menopausal transitions",
-      "Breakup or divorcet",
       "Stress or mental health issues",
       "Slower metabolism due to aging",
       "Financial struggles",
       "Post-treatment complications",
-      "Difficult family life",
       "None of the above"
     ],
     "continue": "Continue"
   },
   "YourHeight": {
     "title": "What’s your height?",
-    "selectConfig": {
-      "title": "Units",
-      "selectOptions": [
-        "ft/in",
-        "cm"
-      ]
-    },
-    "inputLable": "Height",
-    "checkboxLabel": " consent to MadMuscles processing my health onboarding data tto provide services and enhance my user experience. Privacy Policy.",
-    "text": [
-      "To withdraw consent, ",
-      "contact us",
-      " anytime."
+    "selectOptions": [
+      "ft/in",
+      "cm"
     ],
+    "inputLable": "Height",
+    "checkboxLabel": "☝️ Calculating your body mass index",
+    "text": "BMI is widely used as a risk indicator for the development or prevalence of several health issues.",
     "continue": "Continue"
   },
   "CurrentWeight": {
     "title": "What‘s your current weight?",
-    "selectConfig": {
-      "title": "Units",
-      "selectOptions": [
-        "lb",
-        "kg"
-      ]
-    },
-    "textBox": {
-      "title": "Calculating your body mass index",
-      "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
-    },
+    "selectOptions": [
+      "lb",
+      "kg"
+    ],
     "inputLable": "Current Weight",
+    "textBox": {
+      "title": [
+        "❗",
+        "Your BMI is ",
+        ", considered Underweight"
+      ],
+      "text": "We'll customize your plan to prioritize muscle gain."
+    },
     "continue": "Continue"
   },
   "TargetWeight": {
     "title": "What‘s your target weight?",
-    "selectConfig": {
-      "title": "Units",
-      "selectOptions": [
-        "lb",
-        "kg"
-      ]
-    },
-    "inputLable": "Target Weight（kg）",
+    "selectOptions": [
+      "lb",
+      "kg"
+    ],
+    "inputLable": "Target Weight",
     "textBox": {
-      "title": "Calculating your body mass index",
-      "text": "BMI is widely used as a risk indicator for the developmentor prevalence of several health issues."
+      "title": [
+        "👌",
+        "Realistic target: lose 5.5% of your weight"
+      ],
+      "text": "According to CDC guidelines, losing weight at a steady pace, can significantly reduce the risk of chronic health conditions, including heart disease and type 2 diabetes."
     },
+    "continue": "Continue"
+  },
+  "UserName": {
+    "title": "What‘s your name?",
+    "inputLable": "what should we call you?",
+    "Subheading": "Let's create your 7M account",
     "continue": "Continue"
   },
   "DateOfBirth": {
@@ -523,141 +356,80 @@
     },
     "continue": "Continue"
   },
-  "PersonalSummary": {
-    "title": "Personal summary",
-    "selectOptions": [
-      {
-        "label": "Mid-sized",
-        "subLabel": "Body type"
-      },
-      {
-        "label": "Get Shredded",
-        "subLabel": "Goal"
-      },
-      {
-        "label": "Passive",
-        "subLabel": "Lifestyle"
-      },
-      {
-        "label": "Pro",
-        "subLabel": "Fitness level"
-      }
-    ],
-    "textBox": {
-      "title": "Your BMI",
-      "weightType": [
-        "Underweight",
-        "Normal weight",
-        "Overweight",
-        "Obesity"
-      ],
-      "text": "Your current BMI is within the Under Weight range for this age group.The data are for reference only. Please analyze according to the specific physical examination report."
-    },
-    "continue": "Got it"
-  },
-  "ComingUp": {
-    "title": "Do you have an important event coming up?",
-    "text1": "Having something to look forward to can be a great motivator for reaching your goal",
-    "selectOptions": [
-      "Vacation",
-      "Holiday",
-      "Birthday",
-      "amily occasion",
-      "mportant date",
-      "Reunion",
-      "Wedding",
-      "Competition",
-      "Extreme sports",
-      "Other",
-      "No special events any time soon"
-    ],
-    "continue": "Continue"
-  },
-  "EventTime": {
-    "title": "When is your event?",
-    "text1": "We will keep this important event in mind for your journey",
-    "inputLable": "Your date",
-    "textBox": {
-      "title": "We ask your age to create your personal plan",
-      "text": "Older people tend to have more body fat than younger people with the same BMI."
-    },
-    "text2": "We are not sharing this data with any third parties.",
-    "button": "Skip this step",
-    "continue": "Continue"
-  },
-  "FinallyGet": {
-    "title": [
-      "The last plan you'll ever need to",
-      "finally get",
-      "in shape"
-    ],
-    "text1": "Based on our calculations, we believe you may hit your goal weight of 50 kg 🎉by",
-    "textBox": {
-      "title": "Apr 21, 2026",
-      "timeType": [
-        "Today",
-        "1st week",
-        "Aug 1"
-      ],
-      "text": "This chart is for illustrative purposes only"
-    },
-    "continue": "Continue"
-  },
-  "MotivationShape": {
-    "title": "What's your main motivation for getting in shape?",
-    "selectOptions": [
-      "Feel more confident in my body",
-      "Improve my health and energy levels",
-      "Get back in shape after giving birth",
-      "Relieve menopause symptoms",
-      "Other"
-    ],
-    "continue": "Continue"
-  },
-  "ConfidentReaching": {
-    "title": "How confident are you about reaching 50 kg by Apr 21, 2026?",
-    "selectOptions": [
-      "I'm confident I can do it!",
-      "I'm unsure,but ready to try!",
-      "I'mstill not sure"
-    ],
-    "continue": "Continue"
-  },
   "EnterEmail": {
-    "Subheading": "Let's create your 7M account",
     "title": [
-      "Enter your email to get your 4-week ",
-      " Military Calisthenics Plan"
+      "Your personalized",
+      "Tai Chi",
+      "plan is ready!"
     ],
-    "inputLable": "Email",
     "text": "We respect your privacy and take protecting it very seriously-no spam",
-    "continue": "Continue"
-  },
-  "UserName": {
+    "inputLable": "Email",
+    "prompt": "Email seems to be invalid",
     "Subheading": "Let's create your 7M account",
-    "title": "What‘s your name?",
-    "inputLable": "what should we call you?",
     "continue": "Continue"
   },
-  "CalisthenicsPlan": {
-    "title": [
-      "Hazel,",
-      "Your 4-week Military Calisthenics Plan Workout Plan is ready!"
-    ],
-    "textBox": {
-      "title": "Your weight",
-      "timeType": [
-        "Week 1",
-        "Week 2",
-        "Week 3",
-        "Week 4"
-      ],
-      "text": "This chart is for illustrative purposes only"
-    },
-    "continue": "Continue"
-  },
-  "BodyProfile": {
-    "text": "Measuring body profile"
+  "EndAnimation": {
+    "textList": [
+      {
+        "labelBox": [
+          {
+            "label": "By",
+            "color": "#323233"
+          },
+          {
+            "label": "Mar 24",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "you'll feel it",
+            "color": "#323233"
+          }
+        ],
+        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+      },
+      {
+        "labelBox": [
+          {
+            "label": "By",
+            "color": "#323233"
+          },
+          {
+            "label": "Mar 31",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "you'll see it",
+            "color": "#323233"
+          }
+        ],
+        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+      },
+      {
+        "labelBox": [
+          {
+            "label": "By",
+            "color": "#323233"
+          },
+          {
+            "label": "Apr 14",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "you'll be",
+            "color": "#323233"
+          },
+          {
+            "label": "proud",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "of your body!",
+            "color": "#323233"
+          }
+        ],
+        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+      }
+    ]
   },
   "MakeCommitment": {
     "Subheading": "ALMOST DONE!",
@@ -666,37 +438,15 @@
       "to make the commitment?"
     ],
     "selectOptions": [
-      "Yes, I will do my first workout tomorrow",
-      "Yes! I will do my first workout today!",
+      "Yes, I will do my first workout tomorrow 👌",
+      "Yes! I will do my first workout today! 😎",
       "I'm not ready to make the commitment"
-    ],
-    "continue": "Continue"
+    ]
   },
-  "MealPlanning": {
-    "text": "Meal planning"
-  },
-  "EndAnimation": {
-    "textList": [
-      {
-        "label": "Build strength with military calisthenics",
-        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
-      },
-      {
-        "label": "No equipment needed, just your body",
-        "bg": "conic-gradient(from 180deg at 50% 50%, #1A1033 0deg, #8C72F3 360deg)"
-      },
-      {
-        "label": "Train anywhere, anytime",
-        "bg": "conic-gradient(from 180deg at 50% 50%, #0A152A 0deg, #698CDB 360deg)"
-      },
-      {
-        "label": "Progressively harder workouts for all levels",
-        "bg": "conic-gradient(from 180deg at 50% 50%, #031A10 0deg, #086A4B 360deg)"
-      },
-      {
-        "label": "Get fit like a special forces operator",
-        "bg": "conic-gradient(from 180deg at 50% 50%, #2A1A02 0deg, #F09F14 360deg)"
-      }
+  "ProgressLoading":{
+    "text":[
+      "Meal planning",
+      "Creating your workout plan"
     ]
   }
 }

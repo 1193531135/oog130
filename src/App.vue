@@ -16,12 +16,6 @@ async function loadResources() {
   loaded.value = true;
 }
 
-const back = () => {
-  if(routeIndex.value > 0){
-    window.history.back()
-  }
-}
-
 onMounted(() => {
   loadResources();
 })
@@ -34,11 +28,9 @@ onMounted(() => {
       <div class="head-text">Tai CHi</div>
     </div>
     <div class="progress-bar" v-show="!registerList[routeIndex].config.progressHidden">
-      <img src="@/assets/back.png" class="back-btn" @click="back"/>
       <div class="progress-con">
         <div class="progress" :style="'width:' + (routeIndex / (registerList.length - 1) * 100) + '%'"></div>
       </div>
-      <div class="progress-text">{{ routeIndex }}/{{ registerList.length }}</div>
     </div>
     <router-view></router-view>
   </div>
@@ -52,7 +44,7 @@ onMounted(() => {
   bottom: 0;
   left: 0;
   right: 0;
-  color: white;
+  color: #242424;
   display: flex;
   overflow: auto;
   flex-direction: column;
@@ -79,12 +71,11 @@ onMounted(() => {
     }
   }
   .progress-bar{
-    height: 44px;
     display: flex;
+    margin-top: 4px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0 60px;
     flex-shrink: 0;
     gap: 24px;
     border-radius: 15px;
@@ -92,7 +83,7 @@ onMounted(() => {
     .back-btn{ height: 32px;width: 32px }
     .progress-con{
       flex: 1;
-      height: 4px;
+      height: 5px;
       background-color: rgba(46, 46, 46, 1);
       .progress{
         background-color: var(--style-color);
@@ -110,8 +101,6 @@ onMounted(() => {
       padding: 16px 24px;
     }
     .progress-bar{
-      padding: 0 24px;
-      gap: 5px;
       margin-bottom: 24px;
       .back-btn{ height: 24px;width: 24px }
       .progress-con{

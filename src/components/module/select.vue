@@ -101,17 +101,17 @@ onMounted(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   font-size: 18px;
   font-family: Poppins,serif;
   font-weight: 500;
   .select-item{
-    background-color: #3A3A3A;
+    background-color: #EDF0F3;
     gap: 18px;
     display: flex;
     align-items: center;
-    padding: 0 26px;
-    border: 2px solid rgba(0,0,0,0);
+    padding: 20px 20px 20px 24px;
+    border-radius: 8px;
     cursor: pointer;
     text-align: left;
     .select-item-sign{
@@ -138,7 +138,8 @@ onMounted(() => {
     opacity: 0.7;
   }
   .select-item.active{
-    border-color: var(--style-color);
+    background-color: var(--style-color);
+    color: white;
     .select-item-sign{
       border-color: var(--style-color);
       .sign-circle{

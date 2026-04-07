@@ -6,11 +6,11 @@ import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const pageText = window.languageData.AgeQuestion
+const pageText = window.languageData[route.name]
 const pageData = new PageData()
 const selectValue = ref(pageData[route.name])
 
-const options = ["18-29", "30-39", "40-49", "50+"].map((i, index) => ({label: i, value: index}))
+const options = pageText.selectOptions.map((i, index) => ({label: i, value: index}))
 
 function change(val){
   // 存储数据
@@ -21,86 +21,92 @@ function change(val){
 </script>
 
 <template>
-  <div>
-    <p style="height: 28px"></p>
+  <div class="select-page-con">
     <div class="title">{{ pageText.title }}</div>
+    <div class="subtitle">{{ pageText.subtitle }}</div>
     <div class="content">
       <img src="../assets/start.png">
       <div class="select-con">
-        <div class="selec-title">{{ pageText.text1 }}</div>
         <Select v-model="selectValue" :options="options" class="select" @change="change">
           <template #default="{ itemData }">
             <div>{{ itemData.label }}</div>
             <img src="../assets/select-item-icon.png">
           </template>
         </Select>
-        <div class="end-text">
-          <span>{{ pageText.text2[0] }}</span>
-          <span class="special-text">{{ pageText.text2[1] }}</span>
-          <span>{{ pageText.text2[2] }}</span>
-          <span class="special-text">{{ pageText.text2[3] }}</span>
-        </div>
       </div>
+    </div>
+    <div class="end-text">
+      <span>{{ pageText.text[0] }}</span>
+      <span class="special-text">{{ pageText.text[1] }}</span>
+      <span>{{ pageText.text[2] }}</span>
+      <span class="special-text">{{ pageText.text[3] }}</span>
+      <span>{{ pageText.text[4] }}</span>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.title {
-  font-size: 40px;
-  font-family: Laien;
-  max-width: 498px;
-  font-weight: bold;
+.select-page-con{
+  max-width: 767px;
   text-align: center;
-  margin-bottom: 34px;
-}
-
-.content {
-  display: flex;
-  align-items: center;
-
-  > img {
-    width: 236px;
-    height: 354px;
-    margin-right: -20px;
+  .title {
+    margin-top: 69px;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 16px;
   }
-  .select-con{
-    width: 328px;
-    text-align: center;
-    .selec-title{
-      font-size: 22px;
-      color: var(--style-color);
-      margin-bottom: 16px;
-      font-weight: 600;
+  .subtitle{
+    font-size: 24px;
+    margin-bottom: 44px;
+    color: #959799;
+    font-weight: 500;
+  }
+  .content {
+    display: flex;
+    gap: 32px;
+    > img {
+      width: 377px;
+      height: 470px;
     }
-    .select {
-      /deep/ .select-item {
-        height: 72px;
-        justify-content: space-between;
-        > img {
-          width: 20px;
-          height: 20px;
-        }
-      }
-      margin-bottom: 24px;
-    }
-    .end-text{
-      font-size: 16px;
-      white-space: break-spaces;
-      font-family: Laien, serif;
-      .special-text {
+    .select-con{
+      width: 358px;
+      text-align: center;
+      .selec-title{
+        font-size: 22px;
         color: var(--style-color);
-        text-decoration: underline;
+        margin-bottom: 16px;
+        font-weight: 600;
       }
+      .select {
+        /deep/ .select-item {
+          justify-content: space-between;
+          > img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+        margin-bottom: 24px;
+      }
+    }
+  }
+  .end-text{
+    margin-top: 16px;
+    font-size: 14px;
+    white-space: break-spaces;
+    font-family: Laien, serif;
+    .special-text {
+      color: var(--style-color);
+      text-decoration: underline;
     }
   }
 }
 
 @media (max-width: 768px) {
   .title{
-    font-size: 30px;
+    font-size: 28px;
     max-width: 398px;
   }
+  .subtitle{ font-size: 16px }
   .content {
     position: relative;
     > img{ width: 184px;height: 276px }
@@ -115,15 +121,15 @@ function change(val){
           height: 54px;
         }
       }
-      .end-text{
-        font-size: 12px;
-        position: absolute;
-        width: 100%;
-        bottom: -44px;
-        left: 0;
-        padding: 0 20px;
-        box-sizing: border-box;
-      }
+    }
+    .end-text{
+      font-size: 12px;
+      position: absolute;
+      width: 100%;
+      bottom: -44px;
+      left: 0;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
   }
 }
