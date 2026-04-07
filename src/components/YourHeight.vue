@@ -9,7 +9,7 @@ pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
 console.log('pageText', pageText)
-const selectOptions = pageText.selectConfig.selectOptions
+const selectOptions = pageText.selectOptions
 const unit = ref(selectOptions[0])
 function change(val) {
     pageData.set(route.name, {
@@ -146,14 +146,13 @@ const focusInput = () => {
     <div class="text-page">
         <div class="title">{{ pageText.title }}</div>
         <div class="unit-switch">
-            <span class="description">{{ pageText.selectConfig.title }}</span>
             <div class="buttons">
-                <button :class="{ active: unit === selectOptions[0] }" @click="unit = selectOptions[0]">
-                    {{ selectOptions[0] }}
-                </button>
-                <button :class="{ active: unit === selectOptions[1] }" @click="unit = selectOptions[1]">
-                    {{ selectOptions[1] }}
-                </button>
+                <div class="buttons-icon" @click="unit = selectOptions[0]" :class="{ 'icon_active': unit === 'ft/in' }">
+                    ft
+                </div>
+                <div class="buttons-icon" @click="unit = selectOptions[1]" :class="{ 'icon_active': unit === 'cm' }">cm
+                </div>
+                <div class="buttons-bg" :class="{ 'bg_active': unit === 'cm' }"></div>
             </div>
         </div>
         <div class="inputLable">{{ pageText.inputLable + ' (' + unit + ')' }}</div>
@@ -164,7 +163,8 @@ const focusInput = () => {
             error: isError,
             focus: isFocused
         }" v-if="unit === 'ft/in'">
-            <input ref="inputRef" @keydown.delete="onDelete" @input="onInput" class="input" placeholder="" @focus="isFocused = true" />
+            <input ref="inputRef" @keydown.delete="onDelete" @input="onInput" class="input" placeholder=""
+                @focus="isFocused = true" />
             <div class="input-text">
                 <span>{{ height }}</span>
                 <span class="placeholder">{{ placeholder_1 }}</span>
@@ -181,7 +181,8 @@ const focusInput = () => {
             error: isError,
             focus: isFocused
         }">
-            <input ref="inputRef" v-model="height_cm" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true" />
+            <input ref="inputRef" v-model="height_cm" @input="onInput1" class="input" placeholder="__"
+                @focus="isFocused = true" />
             <div class="input-text">
                 <span class="unit">{{ height_cm }}</span>
                 <span>cm</span>
@@ -193,16 +194,15 @@ const focusInput = () => {
 
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
-        <div class="checkbox-wrap">
-            <div @click="checked = !checked" class="checkbox-custom" :class="{ 'active': checked }">
-
+        <div class="texBox">
+            <div class="texBox-top">
+                <span class="icon">☝️</span>
+                <span class="checkboxLabel">{{ pageText.checkboxLabel }}</span>
             </div>
-            <div class="lable">{{ pageText.checkboxLabel }}</div>
-        </div>
-        <div class="text">
-            <span>{{ pageText.text[0] }}</span>
-            <span class="underline">{{ pageText.text[1] }}</span>
-            <span>{{ pageText.text[2] }}</span>
+            <div class="texBox-top">
+                <span class="icon" style="opacity: 0;">☝️</span>
+                <span class="text">{{ pageText.text }}</span>
+            </div>
         </div>
         <div class="btn">
             <div class="btn-container">
@@ -220,8 +220,12 @@ const focusInput = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 513px;
+    width: 428px;
     box-sizing: border-box;
+
+    .title {
+        margin-top: 69px;
+    }
 
     .unit-switch {
         margin-top: 50px;
@@ -232,24 +236,41 @@ const focusInput = () => {
         height: 56px;
 
         .buttons {
-            display: flex;
-            gap: 8px;
-            height: 100%;
+            width: 136px;
+            height: 44px;
+            box-sizing: border-box;
+            border: 1.5px solid #2E73E0;
+            border-radius: 41px;
+            margin: 0 auto;
+            padding: 4px;
+            position: relative;
 
-            button {
-                padding: 0 24px;
-                border: none;
-                background: #3A3A3A;
-                color: #fff;
-                cursor: pointer;
-                border-radius: 4px;
-                box-sizing: border-box;
-                border: 2px solid #3A3A3A;
-
+            .buttons-icon {
+                float: left;
+                width: 50%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 16px;
+                color: #242424;
             }
 
-            button.active {
-                border: 2px solid #57810D;
+            .buttons-bg {
+                width: 50%;
+                height: 100%;
+                border-radius: 49px;
+                background-color: #2E73E0;
+                transition: margin-left 0.3s;
+            }
+
+            .icon_active {
+                color: #fff;
+            }
+
+            .bg_active {
+                margin-left: 50%;
             }
         }
 
@@ -262,8 +283,8 @@ const focusInput = () => {
         width: 100%;
         font-size: 20px;
         font-weight: 500;
-        color: #fff;
-        margin-top: 71px;
+        color: #242424;
+        margin-top: 66px;
     }
 
 
@@ -277,10 +298,11 @@ const focusInput = () => {
         padding: 0px 11px;
         display: flex;
         align-items: center;
-        background-color: #3A3A3A;
-        border: 1px solid #515151;
+        border-radius: 8px;
+        background-color: #EDF0F3;
+        border: 1.5px solid #E0E3E5;
         transition: border-color 0.2s;
-        margin-top: 29px;
+        margin-top: 8px;
 
         .input {
             position: relative;
@@ -294,14 +316,14 @@ const focusInput = () => {
             /* 防止内容溢出 */
             color: #fff;
             /* 默认白色 */
-            caret-color: #fff;
+            caret-color: #000;
             /* 光标白色 */
         }
 
         .input-text {
             position: absolute;
             font-size: 20px;
-            color: #fff;
+            color: #000;
 
             .unit {
                 display: inline-block;
@@ -346,8 +368,8 @@ const focusInput = () => {
 
     /* 聚焦状态 */
     .input-wrapper.focus {
-        border-color: #57810D;
-        box-shadow: 0 0 0 1px #57810D;
+        border-color: #2E73E0;
+        box-shadow: 0 0 0 1px #2E73E0;
     }
 
     .error-text {
@@ -358,36 +380,33 @@ const focusInput = () => {
         margin-top: 8px;
     }
 
-    // 复选框样式
-    /* 隐藏原生复选框 */
-    .checkbox-wrap {
+    .texBox {
+        margin-top: 24px;
         width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        line-height: 18px;
-        cursor: pointer;
-        margin-top: 16px;
+        box-sizing: border-box;
+        padding: 16px;
+        border-radius: 8px;
+        background: #EDF0F3;
 
-        .lable {
-            max-width: 469px;
-            color: #969696;
-            font-size: 14px;
-            font-family: Laient, sans-serif;
+        .icon {
+            font-size: 32px;
+            margin-right: 8px;
         }
 
-
-    }
-
-    .text {
-        width: 100%;
-        color: #fff;
-        font-size: 14px;
-        font-family: Laient, sans-serif;
-        margin-top: 24px;
-
-        .underline {
-            text-decoration: underline;
+        .texBox-top {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            .checkboxLabel{
+                color: #242424;
+                font-size: 16px;
+                font-weight: 500;
+            }
+            .text{
+                color: #959799;
+                font-weight: 400;
+                font-size: 13px;
+            }
         }
     }
 

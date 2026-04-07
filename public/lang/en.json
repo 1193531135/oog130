@@ -304,7 +304,7 @@
       "cm"
     ],
     "inputLable": "Height",
-    "checkboxLabel": "☝️ Calculating your body mass index",
+    "checkboxLabel": "Calculating your body mass index",
     "text": "BMI is widely used as a risk indicator for the development or prevalence of several health issues.",
     "continue": "Continue"
   },
@@ -315,14 +315,40 @@
       "kg"
     ],
     "inputLable": "Current Weight",
-    "textBox": {
-      "title": [
-        "❗",
-        "Your BMI is ",
-        ", considered Underweight"
-      ],
-      "text": "We'll customize your plan to prioritize muscle gain."
-    },
+    "textBox": [
+      {
+        "title": [
+          "❗",
+          "Your BMI is ",
+          ", considered Underweight"
+        ],
+        "text": "We'll customize your plan to prioritize muscle gain."
+      },
+      {
+        "title": [
+          "❗",
+          "Your BMI is ",
+          ", considered Slightly Overweight"
+        ],
+        "text": "We'll customize your plan to prioritize weight loss."
+      },
+      {
+        "title": [
+          "‼️",
+          "Your BMI is ",
+          ",considered Obese"
+        ],
+        "text": "We'll customize your plan to prioritize weight loss."
+      },
+      {
+        "title": [
+          "‼️",
+          "Your BMI is ",
+          ",considered Normal"
+        ],
+        "text": "We'll use this information to customize your plan to your needs."
+      }
+    ],
     "continue": "Continue"
   },
   "TargetWeight": {
@@ -332,13 +358,74 @@
       "kg"
     ],
     "inputLable": "Target Weight",
-    "textBox": {
-      "title": [
-        "👌",
-        "Realistic target: lose 5.5% of your weight"
-      ],
-      "text": "According to CDC guidelines, losing weight at a steady pace, can significantly reduce the risk of chronic health conditions, including heart disease and type 2 diabetes."
-    },
+    "develop": [
+      {
+        "title": [
+          "🏆",
+          "Easy win: develop",
+          "of muscles"
+        ],
+        "text": "Developing healthy muscle will improve your strength and stability and may boost your confidence and motivate you to try new activities."
+      },
+      {
+        "title": [
+          "👌",
+          "Realistic target: develop ",
+          "of muscles"
+        ],
+        "text": "Adding 10% more muscle can boost your resting metabolism, which helps maintain a healthy weight."
+      },
+      {
+        "title": [
+          "💪",
+          "Hard work: develop ",
+          "of muscles"
+        ],
+        "text": "We'll customize your plan to prioritize weight loss."
+      },
+      {
+        "title": [
+          "🔥",
+          "Challenging goal: develop ",
+          "of muscles"
+        ],
+        "text": "Strength training stimulates testosterone production at any age. Maximize your results by fueling your body with a protein-rich diet."
+      }
+    ],
+    "lose":[
+      {
+        "title": [
+          "🏆",
+          "Easy win: lose ",
+          "of your weight"
+        ],
+        "text": "A study by the University of Queensland found that regular brisk walking for at least 30 minutes can lead to a lower BMI and smaller waistline, even more so than normal exercising."
+      },
+      {
+        "title": [
+          "👌",
+          "Realistic target: lose ",
+          "of your weight2"
+        ],
+        "text": "According to CDC guidelines, losing weight at a steady pace, can significantly reduce the risk of chronic health conditions, including heart disease and type 2 diabetes."
+      },
+      {
+        "title": [
+          "💚",
+          "Health benefits: lose ",
+          "of your weight"
+        ],
+        "text": "Scientific studies show that losing 10-15% of body weight can improve obesity-related conditions, such as lowering the risk of heart attack, reducing blood sugar levels, and decreasing inflammation in blood vessels."
+      },
+      {
+        "title": [
+          "💪",
+          "Challenging goal: lose ",
+          "of your body weight"
+        ],
+        "text": "A Mayo Clinic study found that people who lose over 20% of their body weight are nearly 2.5 times more likely to achieve good metabolic health than those who lose 5-10%."
+      }
+    ],
     "continue": "Continue"
   },
   "UserName": {
@@ -443,8 +530,8 @@
       "I'm not ready to make the commitment"
     ]
   },
-  "ProgressLoading":{
-    "text":[
+  "ProgressLoading": {
+    "text": [
       "Meal planning",
       "Creating your workout plan"
     ]

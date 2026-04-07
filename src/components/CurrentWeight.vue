@@ -10,7 +10,9 @@ const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 console.log('pageText', pageText)
-const selectOptions = pageText.selectConfig.selectOptions
+const selectOptions = pageText.selectOptions
+const textBoxOptions = pageText.textBox
+const textBox = ref(textBoxOptions[0])
 const unit = ref(selectOptions[0])
 function change(val) {
     pageData.set(route.name, {
@@ -99,14 +101,13 @@ const focusInput = () => {
     <div class="text-page">
         <div class="title">{{ pageText.title }}</div>
         <div class="unit-switch">
-            <span class="description">{{ pageText.selectConfig.title }}</span>
             <div class="buttons">
-                <button :class="{ active: unit === selectOptions[0] }" @click="unit = selectOptions[0]">
-                    {{ selectOptions[0] }}
-                </button>
-                <button :class="{ active: unit === selectOptions[1] }" @click="unit = selectOptions[1]">
-                    {{ selectOptions[1] }}
-                </button>
+                <div class="buttons-icon" @click="unit = selectOptions[0]" :class="{ 'icon_active': unit === 'ft/in' }">
+                    ft
+                </div>
+                <div class="buttons-icon" @click="unit = selectOptions[1]" :class="{ 'icon_active': unit === 'cm' }">cm
+                </div>
+                <div class="buttons-bg" :class="{ 'bg_active': unit === 'cm' }"></div>
             </div>
         </div>
         <div class="inputLable">{{ pageText.inputLable + ' (' + unit + ')' }}</div>
@@ -117,8 +118,8 @@ const focusInput = () => {
             error: isError,
             focus: isFocused
         }" v-if="unit === 'lb'">
-            <input ref="inputRef" v-model="CurrentWeight_lb" @input="onInput" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate" />
+            <input ref="inputRef" v-model="CurrentWeight_lb" @input="onInput" class="input" placeholder="__"
+                @focus="isFocused = true" @blur="validate" />
             <div class="input-text">
                 <span class="unit">{{ CurrentWeight_lb }}</span>
                 <span>lb</span>
@@ -134,8 +135,8 @@ const focusInput = () => {
             error: isError,
             focus: isFocused
         }">
-            <input ref="inputRef" v-model="CurrentWeight_kg" @input="onInput1" class="input" placeholder="__" @focus="isFocused = true"
-                @blur="validate1" />
+            <input ref="inputRef" v-model="CurrentWeight_kg" @input="onInput1" class="input" placeholder="__"
+                @focus="isFocused = true" @blur="validate1" />
             <div class="input-text">
                 <span class="unit">{{ CurrentWeight_kg }}</span>
                 <span>cm</span>
@@ -148,14 +149,15 @@ const focusInput = () => {
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
         <!-- 当输入的时候 class:grenn -->
-        <div class="textBox">
-            <p class="textBox-title">{{ pageText.textBox.title }}</p>
-            <p class="textBox-content ">{{ pageText.textBox.text }}</p>
-        </div>
-        <div v-if="ishow" class="textBox bmi">
-            <p class="textBox-title">Your BMI is 21, considered Normal</p>
-            <p class="textBox-content ">We'll use this information to customize your plan to your needs.</p>
-
+        <div class="texBox">
+            <div class="texBox-top">
+                <span class="icon">{{ textBox.title[0] }}</span>
+                <span class="checkboxLabel">{{ textBox.title[1] + 12 + textBox.title[2] }}</span>
+            </div>
+            <div class="texBox-top">
+                <span class="icon" style="opacity: 0;">☝️</span>
+                <span class="text">{{ textBox.text }}</span>
+            </div>
         </div>
         <div class="btn">
             <div class="btn-container">
@@ -177,6 +179,7 @@ const focusInput = () => {
     box-sizing: border-box;
 
     .title {
+        margin-top: 69px;
         text-align: center;
     }
 
@@ -189,24 +192,41 @@ const focusInput = () => {
         height: 56px;
 
         .buttons {
-            display: flex;
-            gap: 8px;
-            height: 100%;
+            width: 136px;
+            height: 44px;
+            box-sizing: border-box;
+            border: 1.5px solid #2E73E0;
+            border-radius: 41px;
+            margin: 0 auto;
+            padding: 4px;
+            position: relative;
 
-            button {
-                padding: 0 24px;
-                border: none;
-                background: #3A3A3A;
-                color: #fff;
-                cursor: pointer;
-                border-radius: 4px;
-                box-sizing: border-box;
-                border: 2px solid #3A3A3A;
-
+            .buttons-icon {
+                float: left;
+                width: 50%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 16px;
+                color: #242424;
             }
 
-            button.active {
-                border: 2px solid #57810D;
+            .buttons-bg {
+                width: 50%;
+                height: 100%;
+                border-radius: 49px;
+                background-color: #2E73E0;
+                transition: margin-left 0.3s;
+            }
+
+            .icon_active {
+                color: #fff;
+            }
+
+            .bg_active {
+                margin-left: 50%;
             }
         }
 
@@ -219,7 +239,7 @@ const focusInput = () => {
         width: 100%;
         font-size: 20px;
         font-weight: 500;
-        color: #fff;
+        color: #242424;
         margin-top: 71px;
     }
 
@@ -234,10 +254,11 @@ const focusInput = () => {
         padding: 0px 11px;
         display: flex;
         align-items: center;
-        background-color: #3A3A3A;
-        border: 1px solid #515151;
+        border-radius: 8px;
+        background-color: #EDF0F3;
+        border: 1.5px solid #E0E3E5;
         transition: border-color 0.2s;
-        margin-top: 29px;
+        margin-top: 8px;
 
         .input {
             position: relative;
@@ -251,14 +272,14 @@ const focusInput = () => {
             /* 防止内容溢出 */
             color: #fff;
             /* 默认白色 */
-            caret-color: #fff;
+            caret-color: #000;
             /* 光标白色 */
         }
 
         .input-text {
             position: absolute;
             font-size: 20px;
-            color: #fff;
+            color: #000;
 
             .unit {
                 display: inline-block;
@@ -298,8 +319,8 @@ const focusInput = () => {
 
     /* 聚焦状态 */
     .input-wrapper.focus {
-        border-color: #57810D;
-        box-shadow: 0 0 0 1px #57810D;
+        border-color: #2E73E0;
+        box-shadow: 0 0 0 1px #2E73E0;
     }
 
     .error-text {
@@ -314,30 +335,35 @@ const focusInput = () => {
         background-color: #202919;
     }
 
-    .textBox {
-        width: 100%;
-        height: auto;
-        padding: 20px 24px;
-        box-sizing: border-box;
-        border: 1px solid #515151;
-        background: #3A3A3A;
+    .texBox {
         margin-top: 24px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 16px;
+        border-radius: 8px;
+        background: #EDF0F3;
 
-
-        .textBox-title {
-            width: 100%;
-            color: #fff;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 500;
+        .icon {
+            font-size: 32px;
+            margin-right: 8px;
         }
 
-        .textBox-content {
+        .texBox-top {
+            display: flex;
             width: 100%;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 500;
-            color: #969696;
+            align-items: center;
+
+            .checkboxLabel {
+                color: #242424;
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            .text {
+                color: #959799;
+                font-weight: 400;
+                font-size: 13px;
+            }
         }
     }
 

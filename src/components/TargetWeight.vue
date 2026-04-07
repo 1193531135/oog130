@@ -10,8 +10,10 @@ const pageData = new PageData()
 pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
-console.log('pageText', pageText)
-const selectOptions = pageText.selectConfig.selectOptions
+const selectOptions = pageText.selectOptions
+const developOptions = pageText.develop
+const loseOptions = pageText.lose
+const textBox = ref(developOptions[0])
 const unit = ref(selectOptions[0])
 function change(val) {
     pageData.set(route.name, {
