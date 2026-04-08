@@ -15,6 +15,9 @@ const currentBg = computed(() => textList.value[currentIndex.value].bg)
 const isLastItem = computed(() => currentIndex.value === textList.value.length - 1)
 let timer = null
 
+const props = defineProps({
+  bgImageList:Array
+})
 function autoNext() {
   currentIndex.value = (currentIndex.value + 1) % textList.value.length
 }
@@ -40,18 +43,15 @@ function handleAnimationEnd() {
   <div class="app">
     <!-- 动态背景 -->
     <Transition mode="out-in" name="bg-fade" @after-leave="handleAnimationEnd">
-      <div 
-        class="text-background"
-        :key="currentIndex"
-        :style="{ background: currentBg }"
-        
-      ></div>
+      <img class="text-background" :key="currentIndex" :src="bgImageList[currentIndex]" alt="">
     </Transition>
 
     <!-- 文案轮播 -->
     <Transition mode="out-in" name="text-fade" @after-leave="handleAnimationEnd">
       <h2 :key="currentIndex" class="text-wrapper">
-        {{ textList[currentIndex].label }}
+        <span v-for="value in textList[currentIndex].labelBox" :style="'color:'+value.color+';'">
+         &nbsp; {{ value.label }}
+        </span>
       </h2>
     </Transition>
   </div>
@@ -66,7 +66,7 @@ function handleAnimationEnd() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a0a0a;
+  background: #F8F8F8;
   color: #fff;
   font-family: system-ui, sans-serif;
   position: relative;
@@ -76,11 +76,9 @@ function handleAnimationEnd() {
 /* 背景：使用 Vue Transition 实现和文字完全同步 */
 .text-background {
   position: absolute;
-  width: 430px;
-  height: 430px;
-  border-radius: 50%;
+  width: 100vw;
+  height: 100vh;
   opacity: 0.5;
-  filter: blur(50px);
   z-index: 1;
 }
 
