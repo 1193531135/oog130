@@ -51,7 +51,9 @@ const config = {
     CurrentWeight: {
         module: () => import('@/components/CurrentWeight.vue')
     },
-    TargetWeight: '',
+    TargetWeight: {
+        module: () => import('@/components/TargetWeight.vue')
+    },
     UserName: '',
     DateOfBirth: '',
     EnterEmail: '',

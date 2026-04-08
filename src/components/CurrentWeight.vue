@@ -102,12 +102,13 @@ const focusInput = () => {
         <div class="title">{{ pageText.title }}</div>
         <div class="unit-switch">
             <div class="buttons">
-                <div class="buttons-icon" @click="unit = selectOptions[0]" :class="{ 'icon_active': unit === 'ft/in' }">
-                    ft
+                <div class="buttons-icon" @click="unit = selectOptions[0]" :class="{ 'icon_active': unit === 'lb' }">
+                    {{ selectOptions[0] }}
                 </div>
-                <div class="buttons-icon" @click="unit = selectOptions[1]" :class="{ 'icon_active': unit === 'cm' }">cm
+                <div class="buttons-icon" @click="unit = selectOptions[1]" :class="{ 'icon_active': unit === 'kg' }">
+                    {{ selectOptions[1] }}
                 </div>
-                <div class="buttons-bg" :class="{ 'bg_active': unit === 'cm' }"></div>
+                <div class="buttons-bg" :class="{ 'bg_active': unit === 'kg' }"></div>
             </div>
         </div>
         <div class="inputLable">{{ pageText.inputLable + ' (' + unit + ')' }}</div>
@@ -139,7 +140,7 @@ const focusInput = () => {
                 @focus="isFocused = true" @blur="validate1" />
             <div class="input-text">
                 <span class="unit">{{ CurrentWeight_kg }}</span>
-                <span>cm</span>
+                <span>kg</span>
             </div>
 
             <!-- 错误提示图标 -->
@@ -148,7 +149,7 @@ const focusInput = () => {
 
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
-        <!-- 当输入的时候 class:grenn -->
+
         <div class="texBox">
             <div class="texBox-top">
                 <span class="icon">{{ textBox.title[0] }}</span>
@@ -270,7 +271,7 @@ const focusInput = () => {
             font-size: 20px;
             // width: 40px;
             /* 防止内容溢出 */
-            color: #fff;
+            color: #000;
             /* 默认白色 */
             caret-color: #000;
             /* 光标白色 */
