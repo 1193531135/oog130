@@ -460,6 +460,22 @@
       {
         "labelBox": [
           {
+            "label": "In just",
+            "color": "#323233"
+          },
+          {
+            "label": "7 minutes",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "a day...",
+            "color": "#323233"
+          }
+        ]
+      },
+      {
+        "labelBox": [
+          {
             "label": "By",
             "color": "#323233"
           },
@@ -471,8 +487,7 @@
             "label": "you'll feel it",
             "color": "#323233"
           }
-        ],
-        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+        ]
       },
       {
         "labelBox": [
@@ -488,8 +503,7 @@
             "label": "you'll see it",
             "color": "#323233"
           }
-        ],
-        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+        ]
       },
       {
         "labelBox": [
@@ -514,7 +528,7 @@
             "color": "#323233"
           }
         ],
-        "bg": "conic-gradient(from 180deg at 50% 50%, #121B03 0deg, #57810D 360deg)"
+        "bg": "../assets/image/EndAnimation_bg4.png"
       }
     ]
   },

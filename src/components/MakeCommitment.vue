@@ -27,7 +27,8 @@ function change(val) {
                 <span>{{ pageText.Subheading }}</span>
             </div>
             <div class="title">
-                <span style="color: #57810D;">{{ pageText.title[0] }}</span>
+                <span style="color: #2E73E0;">{{ pageText.title[0] }}</span>
+                &nbsp;
                 <span>{{ pageText.title[1] }}</span>
             </div>
             <Select v-model="selectValue" :options="options" class="select" @change="change">
@@ -45,30 +46,43 @@ function change(val) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 469px;
+    background-color: #F8F8F8;
+    width: 482px;
     height: 100%;
 
     .box {
+        position: relative;
         margin-top: 135px;
         width: 100%;
-        padding: 39px 19px 26px 19px;
-        background-color: #242424;
+        padding: 64px 40px 60px 40px;
+        background-color: #FFF;
         box-sizing: border-box;
 
         .Subheading-box {
+            position: absolute;
             display: flex;
             align-items: center;
             font-size: 16px;
             font-weight: 500;
+            height: 58px;
+            background-color: #5CB655;
+            border-radius: 8px;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.06);
+            padding: 16px;
+            box-sizing: border-box;
+            transform: rotate(-4.751deg);
+            left: 38px;
+            top: -35px;
+            color: #FFF;
 
             .icon {
-                width: 44px;
-                height: 44px;
+                width: 26px;
+                height: 26px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: #3A3A3A;
-                margin-right: 20px;
+                // background-color: #3A3A3A;
+                margin-right: 8px;
             }
         }
 
@@ -83,7 +97,7 @@ function change(val) {
                 width: 100%;
                 box-sizing: border-box;
                 padding-left: 24px;
-                background-color: #3A3A3A;
+                background-color: #EDF0F3;
                 display: flex;
                 align-items: center;
             }

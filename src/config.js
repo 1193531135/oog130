@@ -61,8 +61,21 @@ const config = {
     EnterEmail: {
         module: () => import('@/components/EnterEmail.vue')
     },
-    EndAnimation: '',
-    MakeCommitment: '',
+    EndAnimation: {
+        module: () => import('@/components/EndAnimation.vue'),
+        props(content){
+            content.bgImageList = [
+                images["/src/assets/image/EndAnimation_bg1.png"]?.default,
+                images["/src/assets/image/EndAnimation_bg2.png"]?.default,
+                images["/src/assets/image/EndAnimation_bg3.png"]?.default,
+                images["/src/assets/image/EndAnimation_bg4.png"]?.default
+            ]
+            return content
+        }
+    },
+    MakeCommitment: {
+        module: () => import('@/components/MakeCommitment.vue')
+    },
     ProgressLoading: ''
 
 }
