@@ -54,9 +54,13 @@ const config = {
     TargetWeight: {
         module: () => import('@/components/TargetWeight.vue')
     },
-    UserName: '',
+    UserName: {
+        module: () => import('@/components/UserName.vue')
+    },
     DateOfBirth: '',
-    EnterEmail: '',
+    EnterEmail: {
+        module: () => import('@/components/EnterEmail.vue')
+    },
     EndAnimation: '',
     MakeCommitment: '',
     ProgressLoading: ''

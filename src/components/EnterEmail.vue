@@ -54,13 +54,15 @@ const focusInput = () => {
 
 <template>
     <div class="text-page">
-        <div class="promptBox">
-            ✅ &nbsp;&nbsp; {{ pageText.Subheading }}
-        </div>
+        
         <div class="title">
             <span>{{ pageText.title[0] }}</span>
-            <span style="color: #57810D;">{{ pageText.title[1] }}</span>
+            &nbsp;
+            <span style="color: #2E73E0;">{{ pageText.title[1] }}</span>
+            &nbsp;
+            <span>{{ pageText.title[2] }}</span>
         </div>
+         <div class="description">{{ pageText.text }}</div>
         <div class="inputLable">{{ pageText.inputLable }}</div>
         <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
@@ -74,7 +76,10 @@ const focusInput = () => {
         </div>
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
-        <div class="description">{{ pageText.text }}</div>
+       
+        <div class="promptBox">
+            ✅ &nbsp;&nbsp; {{ pageText.Subheading }}
+        </div>
         <div class="btn">
             <div class="btn-container">
                 <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
@@ -91,22 +96,24 @@ const focusInput = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 501px;
+    width: 628px;
 
     .promptBox {
 
         display: flex;
-        width: 432px;
+        width: 428px;
         height: 56px;
         padding: 0 24px;
         align-items: center;
         gap: 16px;
         box-sizing: border-box;
-        background: #3A3A3A;
+        background: #E8F5E7;
+        border-radius: 8px;
+        margin-top: 24px;
     }
 
     .title {
-        margin-top: 12px;
+        margin-top: 69px;
         width: 650px;
         text-align: center;
     }
@@ -115,23 +122,24 @@ const focusInput = () => {
         width: 100%;
         font-size: 20px;
         font-weight: 500;
-        color: #fff;
-        margin-top: 23px;
+        color: #242424;
+        margin-top: 14px;
     }
 
     // 输入框样式
     .input-wrapper {
-        width: 100%;
+        width: 428px;
         box-sizing: border-box;
         margin: 0 6px;
         height: 64px;
         padding: 0px 11px;
         display: flex;
         align-items: center;
-        background-color: #3A3A3A;
-        border: 1px solid #515151;
+        background-color: #EDF0F3;
+        border: 1px solid #E0E3E5;
         transition: border-color 0.2s;
         margin-top: 29px;
+        border-radius: 8px;
 
         .input {
             position: relative;
@@ -143,9 +151,9 @@ const focusInput = () => {
             font-size: 20px;
             // width: 40px;
             /* 防止内容溢出 */
-            color: #fff;
+            color: #242424;
             /* 默认白色 */
-            caret-color: #fff;
+            caret-color: #242424;
             /* 光标白色 */
         }
 
@@ -192,21 +200,21 @@ const focusInput = () => {
 
     /* 聚焦状态 */
     .input-wrapper.focus {
-        border-color: #57810D;
-        box-shadow: 0 0 0 1px #57810D;
+        border-color: #2E73E0;
+        box-shadow: 0 0 0 1px #2E73E0;
     }
 
     .error-text {
         color: #ff3b30;
         font-size: 12px;
         line-height: 16px;
-        width: 100%;
+        width: 428px;
         margin-top: 8px;
     }
 
     .description {
-        margin-top: 32px;
-        color: #fff;
+        margin-top: 16px;
+        color: #AAA;
         text-align: center;
     }
 
@@ -228,6 +236,12 @@ const focusInput = () => {
         }
 
         .title {
+            width: 100%;
+        }
+        .input-wrapper{
+            width: 100%;
+        }
+        .error-text{
             width: 100%;
         }
     }
