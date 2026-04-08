@@ -1,20 +1,28 @@
 <script setup>
 import {ref} from 'vue'
-import Select from './module/select.vue'
+import Select from "@/components/module/select.vue";
 import { push } from '@/tool/index.js'
 import {PageData} from "@/tool/index.js";
 import {useRoute} from 'vue-router'
 
 const route = useRoute()
-const pageText = window.languageData[route.name]
 const pageData = new PageData()
+
 const selectValue = ref(pageData[route.name])
 
-const options = pageText.selectOptions.map((i, index) => ({
-  label: i,
-  value: index,
-  imgUrl: new URL("@/assets/image/mainGoal-select-item.png", import.meta.url)
-}))
+const props = defineProps({
+  options: Array,
+  modelValue: null,
+  // 多选
+  multiple: Boolean,
+  title: String,
+  subtitle: String,
+  btnText: {
+    type: String,
+    default: 'Continue'
+  },
+  handleNextStep: Function
+})
 
 function change(val) {
   // 存储数据
@@ -26,7 +34,7 @@ function change(val) {
 
 <template>
   <div class="page-con">
-    <div class="title">{{ pageText.title }}</div>
+    <div class="title">{{ title }}</div>
     <Select v-model="selectValue" :options="options" class="select" @change="change">
       <template #default="{ itemData }">
         <div>{{ itemData.label }}</div>
@@ -38,7 +46,13 @@ function change(val) {
 
 <style lang="less" scoped>
 .page-con {
-  width: 681px;
+  max-width: 530px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .title {
@@ -51,20 +65,30 @@ function change(val) {
 
 .page-con {
   /deep/ .select-item {
-    height: 141px;
-    padding-right: 0;
+    padding: 0 0 0 24px;
     justify-content: space-between;
 
     img {
-      width: 167px
+      width: 172px;
+      height: 151px;
+      object-position: center;
+      object-fit: contain;
     }
   }
 }
 
 @media (max-width: 768px) {
   .page-con {
-    width: auto;
-    padding: 0 24px;
+    padding: 0 16px;
+    /deep/ .select-item {
+      padding: 0 0 0 16px;
+      img {
+        width: 125px;
+        height: 110px;
+        object-position: center;
+        object-fit: contain;
+      }
+    }
   }
   .title {
     font-size: 30px;

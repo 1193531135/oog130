@@ -103,7 +103,7 @@
   "TaiChiTargetZoneSelection": {
     "title": "Choose your target zone",
     "selectOptions": [
-      "Back & Arms",
+      "Back",
       "Arms",
       "Chest",
       "Abs",
@@ -169,8 +169,10 @@
   "TaiChiWorkScheduleType": {
     "title": "What is your work schedule like?",
     "selectOptions": [
-      "9 to 9",
-      "Night shifts"
+      "9 to 5",
+      "Night shifts",
+      "My hours are flexible",
+      "I'm retired"
     ],
     "continue": "Continue"
   },
@@ -189,7 +191,8 @@
     "selectOptions": [
       "Low energy",
       "Medium energy",
-      "High energy"
+      "High energy",
+      "It fluctuates"
     ],
     "continue": "Continue"
   },
@@ -198,23 +201,46 @@
     "selectOptions": [
       {
         "label": "Only coffee or tea ☕️",
-        "subLabel": ""
+        "subLabel": "",
+        "description": {
+          "title": "Drinking water is essential",
+          "subtitle": "If you're not hydrated, your body can't perform at its highest\nlevel. MadMuscles will remind you to drink enough water."
+        }
       },
       {
         "label": "Less than 2 glasses 💧",
-        "subLabel": "up to 0,51/17 oz"
+        "subLabel": "up to 0,51/17 oz",
+        "description": {
+          "title": "Drinking water is essential",
+          "subtitle": "If you're not hydrated, your body can't perform at its highest\nlevel. We will remind you to drink enough water."
+        }
       },
       {
         "label": "2-6 glasses 💧💧",
-        "subLabel": "0,5-1,51/17-50 0z"
+        "subLabel": "0,5-1,51/17-50 0z",
+        "description": {
+          "title": "You drink more water than 50% of users*",
+          "subtitle": "We will remind you to drink enough water.",
+          "endText": "*users who took the quiz"
+        }
       },
       {
         "label": "7-10 glasses 💧💧💧",
-        "subLabel": "1,5-2,51/50-85 oz"
+        "subLabel": "1,5-2,51/50-85 oz",
+        "description": {
+          "title": "Wow! Impressive!",
+          "subtitle": "You drink more water than 75% of users*. Keep it up!",
+          "endText": "*users who took the quiz"
+        }
       },
       {
         "label": "More than 10 glasses 🐳",
-        "subLabel": "more than 2,51/85 oz"
+        "subLabel": "more than 2,51/85 oz",
+        "description": {
+          "title": "Wow! Impressive!",
+          "subtitle": "You drink more water than 92% of users*. Keep it up!",
+          "endText": "*users who took the quiz"
+        }
       }
     ],
     "continue": "Continue"

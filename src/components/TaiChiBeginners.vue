@@ -49,8 +49,9 @@ function change(val){
 .select-page-con{
   max-width: 767px;
   text-align: center;
+  box-sizing: border-box;
+  padding:0 16px;
   .title {
-    margin-top: 69px;
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 16px;
@@ -71,12 +72,6 @@ function change(val){
     .select-con{
       width: 358px;
       text-align: center;
-      .selec-title{
-        font-size: 22px;
-        color: var(--style-color);
-        margin-bottom: 16px;
-        font-weight: 600;
-      }
       .select {
         /deep/ .select-item {
           justify-content: space-between;
@@ -101,33 +96,44 @@ function change(val){
   }
 }
 
-@media (max-width: 768px) {
-  .title{
-    font-size: 28px;
-    max-width: 398px;
-  }
-  .subtitle{ font-size: 16px }
-  .content {
-    position: relative;
-    > img{ width: 184px;height: 276px }
-    .select-con{
-      width: 178px;
-      .selec-title{
-        font-size: 18px
+@media (max-width: 767px) {
+  .select-page-con{
+    width: 100%;
+    margin-bottom: 0;
+    .title{
+      font-size: 28px;
+    }
+    .subtitle{ font-size: 16px }
+    .content {
+      position: relative;
+      gap: 0;
+      width: 100%;
+      justify-content: center;
+
+      > img{
+        height: 392px;
+        width: 100%;
+        object-fit: contain;
+        position: absolute;
+        object-position: center center;
+        left: -70px;
       }
-      .select {
-        font-size: 15px;
-        /deep/ .select-item {
-          height: 54px;
+      .select-con{
+        position: relative;
+        left: 110px;
+        width: auto;
+        .select {
+          font-size: 15px;
+          /deep/ .select-item {
+            padding-left: 16px;
+            padding-right: 12px;
+          }
         }
       }
     }
     .end-text{
       font-size: 12px;
-      position: absolute;
       width: 100%;
-      bottom: -44px;
-      left: 0;
       padding: 0 20px;
       box-sizing: border-box;
     }

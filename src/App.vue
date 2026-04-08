@@ -29,7 +29,7 @@ onMounted(() => {
     </div>
     <div class="progress-bar" v-show="!registerList[routeIndex].config.progressHidden">
       <div class="progress-con">
-        <div class="progress" :style="'width:' + (routeIndex / (registerList.length - 1) * 100) + '%'"></div>
+        <div class="progress" :style="'width:' + ((routeIndex + 1) / (registerList.length) * 100) + '%'"></div>
       </div>
     </div>
     <router-view></router-view>
@@ -72,19 +72,19 @@ onMounted(() => {
   }
   .progress-bar{
     display: flex;
-    margin-top: 4px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     flex-shrink: 0;
     gap: 24px;
     border-radius: 15px;
+    margin-bottom: 50px;
     box-sizing: border-box;
     .back-btn{ height: 32px;width: 32px }
     .progress-con{
       flex: 1;
       height: 5px;
-      background-color: rgba(46, 46, 46, 1);
+      background-color: rgba(46, 46, 46, 0);
       .progress{
         background-color: var(--style-color);
         height: 100%;
@@ -98,15 +98,26 @@ onMounted(() => {
 @media (max-width: 768px) {
   .page-container{
     .head-container{
-      padding: 16px 24px;
+      padding: 10px 16px;
+      .head-logo{
+        height: 24px;
+        width: 24px;
+      }
+      .head-text {
+        font-size: 24px;
+        line-height: 23px;
+        text-transform: uppercase;
+        font-family: Anton;
+        letter-spacing: 1px
+      }
     }
     .progress-bar{
-      margin-bottom: 24px;
+      margin-bottom: 16px;
+      margin-top: -2px;
       .back-btn{ height: 24px;width: 24px }
       .progress-con{
         flex: 1;
-        height: 4px;
-        background-color: rgba(46, 46, 46, 1);
+        height: 2px;
       }
       .progress-text{ font-size: 12px }
     }

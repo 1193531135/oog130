@@ -19,12 +19,10 @@ const props = defineProps({
     type: String,
     default: 'Continue'
   },
-  btnAlign: {
-    type: String,
-    default: 'left'
-  },
   imgUrl: String,
-  handleNextStep: Function
+  handleNextStep: Function,
+  // 图片的偏移量
+  imageOffset: Array
 })
 
 const emit = defineEmits(['update:modelValue', 'change', 'click'])
@@ -54,15 +52,16 @@ function goIt() {
     <div class="content-con">
       <div class="select-con">
         <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
-        <div class="btn-container" :style="'justify-content:' + btnAlign">
+        <div class="btn-container">
           <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
+            <div class="spacer"></div>
             <div>{{ btnText }}</div>
-            <img src="@/assets/select-item-icon.png">
+            <img src="@/assets/continue-icon.png">
           </div>
         </div>
       </div>
       <div class="content-image">
-        <img :src="imgUrl">
+        <img :src="imgUrl" :style="imageOffset ?`transform: translate(${imageOffset[0]},${imageOffset[1]})`:''">
       </div>
     </div>
   </div>
@@ -70,12 +69,14 @@ function goIt() {
 
 <style scoped lang="less">
 .select-page-con {
-  max-width: 498px;
   box-sizing: border-box;
   text-align: center;
-  padding-bottom: 20px;
-
+  padding:0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .title {
+    max-width: 488px;
     font-family: Laien, serif;
     font-size: 40px;
     font-weight: 700;
@@ -84,18 +85,26 @@ function goIt() {
   .content-con{
     display: flex;
     align-items: flex-start;
-    /deep/ .select {
-      width: 328px;
-      margin-bottom: 32px;
-      //预设11px padding
-      .select-item {
-        padding-top: 11px;
-        padding-bottom: 13px;
-      }
+    gap: 32px;
+    .select-con,.content-image{
+      max-width: 376px;
     }
+    .select-con{
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    ///deep/ .select {
+    //  width: 328px;
+    //  margin-bottom: 32px;
+    //  //预设11px padding
+    //  .select-item {
+    //    padding-top: 11px;
+    //    padding-bottom: 13px;
+    //  }
+    //}
     .content-image{
-      width: 280px;
-      margin-left: -60px;
       img{
         object-fit: contain;
         width: 100%;
@@ -104,31 +113,48 @@ function goIt() {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .select-page-con {
     padding: 0 16px;
+    overflow: hidden;
+    flex: 1;
+    width: 100%;
     .title {
-      font-size: 28px
+      font-size: 28px;
+      margin-bottom: 22px;
     }
     .content-con{
+      width: 100%;
+      gap: 0;
+      //为了让图片展示完全，用margin撑高
+      margin-bottom: 24px;
+      .select-con,.content-image{
+        max-width: none;
+        height: auto;
+      }
       .select-con{
-        width: 100%;
         position: relative;
         z-index: 1;
+        width: 256px;
       }
       /deep/ .select {
-        width: calc(100% - 98px);
-        margin-bottom: 32px;
         //预设11px padding
         .select-item {
-          padding-top: 11px;
-          padding-bottom: 13px;
         }
       }
       .content-image{
-        width: 228px;
-        position: absolute;
-        right: 0;
+        flex: 1;
+        min-width: 0;
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+          position: absolute;
+          //height: 398px;
+          width: 297px;
+        }
       }
     }
   }

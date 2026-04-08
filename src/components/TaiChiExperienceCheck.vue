@@ -7,18 +7,23 @@ import { push } from "@/tool/index.js";
 
 const pageData = new PageData()
 const route = useRoute()
+const pageText = window.languageData[route.name]
+
+const title = pageText.title
+const subtitle = pageText.subtitle
+const options = pageText.selectOptions.map((i, index) => ({label: i, value: index}))
+// 男女
+const imgUrl = pageData["ChooserGender"] ? new URL("@/assets/image/taiChiExperienceCheck-1.png", import.meta.url): new URL("@/assets/image/taiChiExperienceCheck-0.png", import.meta.url)
 
 const props = defineProps({
-  options: Array,
   modelValue: null,
   // 多选
   multiple: Boolean,
-  title: String,
-  subtitle: String,
   btnText: {
     type: String,
     default: 'Continue'
   },
+  imgUrl: String,
   handleNextStep: Function
 })
 
@@ -46,19 +51,25 @@ function goIt() {
   <div class="select-page-con">
     <div class="title">{{ title }}</div>
     <div class="subtitle">{{ subtitle }}</div>
-    <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
-    <div class="btn-container">
-      <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
-        <div class="spacer"></div>
-        <div>{{ btnText }}</div>
-        <img src="@/assets/continue-icon.png">
+    <div class="content-con">
+      <div class="select-con">
+        <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
+        <div class="btn-container">
+          <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
+            <div class="spacer"></div>
+            <div>{{ btnText }}</div>
+            <img src="@/assets/continue-icon.png">
+          </div>
+        </div>
+      </div>
+      <div class="content-image">
+        <img :src="imgUrl">
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="less">
-
 .select-page-con {
   box-sizing: border-box;
   text-align: center;
@@ -66,66 +77,73 @@ function goIt() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 570px;
   .title {
+    max-width: 1110px;
     font-family: Laien, serif;
     font-size: 40px;
     font-weight: 700;
     margin-bottom: 24px;
-    height: 112px;
   }
-  .btn-container {
-    position: fixed;
-    height: 100px;
-    bottom: 0;
-    box-sizing: border-box;
+  .content-con{
     display: flex;
-    justify-content: center;
-    padding: 16px 16px 12px;
+    align-items: end;
+    gap: 32px;
+    .select-con,.content-image{
+      max-width: 376px;
+    }
+    .select-con{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    /deep/ .select {
+      margin-bottom: 96px;
+    }
+    .content-image{
+      img{
+        object-fit: contain;
+        width: 100%;
+      }
+    }
   }
 }
 
 @media (max-width: 767px) {
   .select-page-con {
-    padding: 0 16px 100px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    padding: 0 16px;
     .title {
       font-size: 28px;
-      margin-bottom: 22px;
-      height: auto;
+      margin-bottom: 0;
+      height: 106px;
     }
     .content-con{
       width: 100%;
       gap: 0;
-      //为了让图片展示完全，用margin撑高
-      margin-bottom: 24px;
+      position: relative;
       .select-con,.content-image{
         max-width: none;
         height: auto;
       }
       .select-con{
-        position: relative;
+        position: absolute;
         z-index: 1;
-        width: 256px;
-      }
-      /deep/ .select {
-        //预设11px padding
-        .select-item {
+        right: 0;
+        bottom: 0;
+        width: 144px;
+        /deep/ .select {
+          margin-bottom: 0;
         }
       }
       .content-image{
-        flex: 1;
-        min-width: 0;
-        height: 100%;
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        left: -16px;
+        width: 100%;
+        height: 338px;
         img{
-          position: absolute;
-          //height: 398px;
-          width: 297px;
+          height: 100%;
+          object-fit: contain;
+          object-position: left;
         }
       }
     }

@@ -7,18 +7,23 @@ import { push } from "@/tool/index.js";
 
 const pageData = new PageData()
 const route = useRoute()
+const pageText = window.languageData[route.name]
+
+const title = pageText.title
+const subtitle = pageText.subtitle
+const options = pageText.selectOptions.map((i, index) => ({label: i, value: index}))
+// 男女
+const imgUrl = pageData["ChooserGender"] ? new URL("@/assets/image/taiChiMainGoalSelection-1.png", import.meta.url): new URL("@/assets/image/taiChiMainGoalSelection-1.png", import.meta.url)
 
 const props = defineProps({
-  options: Array,
   modelValue: null,
   // 多选
   multiple: Boolean,
-  title: String,
-  subtitle: String,
   btnText: {
     type: String,
     default: 'Continue'
   },
+  imgUrl: String,
   handleNextStep: Function
 })
 
@@ -46,7 +51,19 @@ function goIt() {
   <div class="select-page-con">
     <div class="title">{{ title }}</div>
     <div class="subtitle">{{ subtitle }}</div>
-    <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change"></Select>
+    <div class="content-con">
+      <div class="content-image">
+        <img :src="imgUrl">
+      </div>
+      <div class="select-con">
+        <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change">
+          <template #default="{ itemData }">
+            <div>{{ itemData.label }}</div>
+            <img src="../assets/select-item-icon.png">
+          </template>
+        </Select>
+      </div>
+    </div>
     <div class="btn-container">
       <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
         <div class="spacer"></div>
@@ -58,7 +75,6 @@ function goIt() {
 </template>
 
 <style scoped lang="less">
-
 .select-page-con {
   box-sizing: border-box;
   text-align: center;
@@ -66,13 +82,38 @@ function goIt() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 570px;
   .title {
+    max-width: 1110px;
+    height: 156px;
     font-family: Laien, serif;
     font-size: 40px;
     font-weight: 700;
-    margin-bottom: 24px;
-    height: 112px;
+  }
+  .content-con{
+    display: flex;
+    align-items: end;
+    gap: 32px;
+    .select-con,.content-image{
+      max-width: 376px;
+    }
+    .select-con{
+      width: 358px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      /deep/ .select {
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+    .content-image{
+      img{
+        object-fit: contain;
+        width: 100%;
+      }
+    }
   }
   .btn-container {
     position: fixed;
@@ -87,45 +128,45 @@ function goIt() {
 
 @media (max-width: 767px) {
   .select-page-con {
-    padding: 0 16px 100px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    padding: 0 16px;
     .title {
       font-size: 28px;
-      margin-bottom: 22px;
-      height: auto;
+      margin-bottom: 0;
+      height: 80px;
     }
     .content-con{
       width: 100%;
       gap: 0;
-      //为了让图片展示完全，用margin撑高
-      margin-bottom: 24px;
+      //margin-top: 10vh;
+      position: relative;
       .select-con,.content-image{
         max-width: none;
         height: auto;
       }
       .select-con{
-        position: relative;
+        position: absolute;
         z-index: 1;
+        right: 0;
+        bottom: 0;
         width: 256px;
-      }
-      /deep/ .select {
-        //预设11px padding
-        .select-item {
+        /deep/ .select {
+          margin-bottom: 0;
+          .select-item{
+            height: 72px;
+            box-sizing: border-box;
+          }
         }
       }
       .content-image{
-        flex: 1;
-        min-width: 0;
-        height: 100%;
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        left: -135px;
+        width: 100%;
+        height: 330px;
         img{
-          position: absolute;
-          //height: 398px;
-          width: 297px;
+          height: 100%;
+          object-fit: cover;
+          object-position: left;
         }
       }
     }

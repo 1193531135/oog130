@@ -12,5 +12,8 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src') // 👈 关键
     }
+  },
+  server: {
+    host: true,      // ✅ 关键：true 表示监听所有网络接口，包括局域网IP
   }
 })

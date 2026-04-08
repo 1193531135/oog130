@@ -82,14 +82,12 @@ onMounted(() => {
       </template>
       <!--   圆形选中按钮样式   -->
       <template v-else>
-        <div class="select-item-sign-text" v-if="item.mutex"> ❌</div>
-        <div class="select-item-sign" v-else>
-          <span class="sign-circle"></span>
-        </div>
         <div>
           <div class="select-label">{{ item.label }}</div>
           <div v-if="item.subLabel" class="select-subLabel">{{ item.subLabel }}</div>
         </div>
+        <div class="select-item-sign-text" v-if="item.mutex"> ❌</div>
+        <div :class="['select-item-sign','checkbox-custom',(isActive(item.value) ? ' active' : '')]" v-else></div>
       </template>
     </div>
   </div>
@@ -107,44 +105,49 @@ onMounted(() => {
   font-weight: 500;
   .select-item{
     background-color: #EDF0F3;
-    gap: 18px;
+    gap: 14px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 20px 20px 20px 24px;
     border-radius: 8px;
     cursor: pointer;
     text-align: left;
     .select-item-sign{
-      min-width:20px;
-      height: 20px;
+      font-size: 26px;
       border-radius: 50%;
-      border: 2.5px solid white;
+      border: 2.5px solid #C7C9CC;
+      --aspect-ratio: 10/6;
       box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
-      .sign-circle{
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-      }
+      flex-shrink: 0;
     }
     .select-subLabel{
       font-size: 15px;
       color: #AAA;
     }
   }
-  .select-item:active:not(.active){
-    opacity: 0.7;
-  }
+  //.select-item:active:not(.active){
+  //  opacity: 0.7;
+  //}
   .select-item.active{
     background-color: var(--style-color);
     color: white;
     .select-item-sign{
-      border-color: var(--style-color);
-      .sign-circle{
-        background-color: var(--style-color);
-      }
+      border-color: white;
+      background-color: white;
+      --gou-color: var(--style-color);
+      --check-width: 0.24em;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .select-container{
+    gap: 8px;
+    .select-item{
+      padding: 20px 12px 20px 16px;
     }
   }
 }
