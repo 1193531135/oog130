@@ -1,5 +1,6 @@
 // Function 模式默认隐藏进度条
 import {push} from "@/tool/index.js";
+import {PageData} from "@/tool/index.js";
 
 const images = import.meta.glob('@/assets/image/*', { eager: true })
 
