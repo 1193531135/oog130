@@ -22,7 +22,6 @@ function change(val){
 
 <template>
   <div>
-    <p style="height: 28px"></p>
     <div class="title">{{ pageText.title }}</div>
     <div class="content">
       <img src="../assets/start.png">
@@ -48,6 +47,7 @@ function change(val){
 <style lang="less" scoped>
 .title {
   font-size: 40px;
+  margin-top: 28px;
   font-family: Laien;
   max-width: 498px;
   font-weight: bold;

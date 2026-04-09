@@ -22,7 +22,6 @@ export class PageData  {
 
 //全局跳转判定
 export function push(path){
-  console.log("push", path)
   const route = router.currentRoute.value.fullPath
   const pushUrl = registerList[registerList.findIndex(i=> i.path === route) + 1].path
   // 触发太快延迟触发

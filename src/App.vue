@@ -33,7 +33,7 @@ onMounted(() => {
       <img src="./assets/title-logo.png" class="head-logo">
       <div class="head-text">Military Calisthenics </div>
     </div>
-    <div class="progress-bar" v-show="!registerList[routeIndex].config.progressHidden">
+    <div class="progress-bar" v-show="!registerList[routeIndex]?.config.progressHidden">
       <img src="@/assets/back.png" class="back-btn" @click="back"/>
       <div class="progress-con">
         <div class="progress" :style="'width:' + (routeIndex / (registerList.length - 1) * 100) + '%'"></div>
