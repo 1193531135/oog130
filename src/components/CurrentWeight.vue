@@ -5,7 +5,7 @@ import { push } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 
 
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
+
 const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
@@ -13,7 +13,7 @@ console.log('pageText', pageText)
 const selectOptions = pageText.selectOptions
 const textBoxOptions = pageText.textBox
 const textBox = ref(textBoxOptions[0])
-const unit = ref(selectOptions[0])
+const unit = ref(pageData[route.name]?.unit || selectOptions[0])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
@@ -23,9 +23,9 @@ function change(val) {
     push()
 }
 
-
-const CurrentWeight_lb = ref('')
-const CurrentWeight_kg = ref('')
+const isDisabled = ref(!pageData[route.name])
+const CurrentWeight_lb = ref(pageData[route.name]?.weight || '')
+const CurrentWeight_kg = ref(pageData[route.name]?.weight || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本

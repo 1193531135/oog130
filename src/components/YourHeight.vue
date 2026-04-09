@@ -5,12 +5,14 @@ import { push } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 
 const pageData = new PageData()
-pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
-console.log('pageText', pageText)
 const selectOptions = pageText.selectOptions
-const unit = ref(selectOptions[0])
+const unit = ref(pageData[route.name]?.unit || selectOptions[0])
+const height = ref(pageData[route.name]?.height || '')
+const height_cm = ref(pageData[route.name]?.height || '')
+const checked = ref(pageData[route.name]?.checked || '')
+const isDisabled = ref(!pageData[route.name])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
@@ -19,15 +21,11 @@ function change(val) {
     push()
 }
 
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
-const height = ref('')
-const height_cm = ref('')
+
 const isFocused = ref(false)
 const isError = ref(false)
 let placeholder_1 = ref("_ft")
 let placeholder_2 = ref("__in")
-const checked = ref(false)// 复选框状态
-//提示文本
 const isErrorText = ref('Height must be greater than or equal to 90 cm')
 
 // ft/in输入框

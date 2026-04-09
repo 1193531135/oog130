@@ -14,8 +14,8 @@ function change(val) {
     pageData.set(route.name, email.value)
     push()
 }
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
-const email = ref('')
+const isDisabled = ref(!pageData[route.name])
+const email = ref(pageData[route.name] || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
