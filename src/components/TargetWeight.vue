@@ -5,14 +5,17 @@ import { push } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 
 
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
+
 const pageData = new PageData()
-pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
-console.log('pageText', pageText)
 const selectOptions = pageText.selectConfig.selectOptions
-const unit = ref(selectOptions[0])
+console.log(pageData[route.name], pageData, route.name)
+const unit = ref(pageData[route.name]?.unit || selectOptions[0])
+const targetWeight_lb = ref(pageData[route.name]?.weight || '')
+const targetWeight_kg = ref(pageData[route.name]?.weight || '')
+const isDisabled = ref(!pageData[route.name])
+const isShow = ref(pageData[route.name])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
@@ -23,8 +26,7 @@ function change(val) {
 }
 
 
-const targetWeight_lb = ref('')
-const targetWeight_kg = ref('')
+
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
@@ -41,11 +43,13 @@ const validate = () => {
         isFocused.value = true
         isError.value = false
         isDisabled.value = false
+        isShow.value = true
 
     } else {
         isFocused.value = false
         isError.value = true
         isDisabled.value = true
+        isShow.value = false
     }
 }
 const onInput = (e) => {
@@ -65,10 +69,12 @@ const validate1 = () => {
         isFocused.value = false
         isError.value = true
         isDisabled.value = true
+        isShow.value = false
     } else {
         isFocused.value = true
         isError.value = false
         isDisabled.value = false
+        isShow.value = true
     }
 }
 const onInput1 = (e) => {
@@ -86,6 +92,7 @@ watch(unit, () => {
     isFocused.value = false
     targetWeight_lb.value = ''
     targetWeight_kg.value = ''
+    isShow.value = false
 })
 //  聚焦
 const inputRef = ref(null)
@@ -140,7 +147,7 @@ const focusInput = () => {
                 @focus="isFocused = true" @blur="validate1" />
             <div class="input-text">
                 <span class="unit">{{ targetWeight_kg }}</span>
-                <span>cm</span>
+                <span>kg</span>
             </div>
 
             <!-- 错误提示图标 -->
@@ -150,11 +157,11 @@ const focusInput = () => {
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
         <!-- 当输入的时候 class:grenn -->
-        <div class="textBox">
+        <div v-if="!isShow" class="textBox">
             <p class="textBox-title">{{ pageText.textBox.title }}</p>
             <p class="textBox-content ">{{ pageText.textBox.text }}</p>
         </div>
-        <div v-if="ishow" class="textBox bmi">
+        <div v-if="isShow" class="textBox bmi">
             <p class="textBox-title">Your BMI is 21, considered Normal</p>
             <p class="textBox-content ">We'll use this information to customize your plan to your needs.</p>
 

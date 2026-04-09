@@ -5,49 +5,79 @@ import { push } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 
-
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
-const dateofBirth = ref('')
+const isDisabled = ref(!pageData[route.name])
+const dateofBirth = ref(pageData[route.name] || '')
+let placeholder_1 = ref(pageData[route.name] ? "" : "DD/MM/YYYY")
+
+
 const isFocused = ref(false)
 const isError = ref(false)
-let placeholder_1 = ref("DD/MM/YYYY")
+
 //提示文本
-const isErrorText = ref('Please enter a valid date of birth')
+const isErrorText = ref(pageText.prompt[0])
+
 function change(val) {
   // 存储数据
   pageData.set(route.name, dateofBirth.value)
   push()
 }
+
+// 年龄计算工具函数（新增）
+const calculateAge = (birthDateStr) => {
+  // 拆分 DD/MM/YYYY
+  const [day, month, year] = birthDateStr.split('/')
+  if (!day || !month || !year || day.length !== 2 || month.length !== 2 || year.length !== 4) return 999
+  const birthDate = new Date(year, month - 1, day)
+  const now = new Date()
+  let age = now.getFullYear() - birthDate.getFullYear()
+  const monthDiff = now.getMonth() - birthDate.getMonth()
+  if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+    age--
+  }
+  return age
+}
+
 const validate = () => {
-  let val = dateofBirth.value.replace(/\D/g, '').length
+  // 1. 格式校验：必须是8位纯数字
+  const numericValue = dateofBirth.value.replace(/\D/g, '')
+  const valLength = numericValue.length
 
-  // isErrorText.value = "Height must be greater than or equal to 3 ft"
-  console.log(val)
-  if (val == 8) {
-    isFocused.value = true
-    isError.value = false
-    isDisabled.value = false
-
-  } else {
+  // 2. 格式不满足
+  if (valLength !== 8) {
     isFocused.value = false
     isError.value = true
     isDisabled.value = true
-
+    isErrorText.value = pageText.prompt[0] // 原有提示
+    return
   }
+
+  // 3. 格式满足 → 校验年龄是否 ≤100
+  const age = calculateAge(dateofBirth.value)
+  if (age > 100) {
+    isFocused.value = false
+    isError.value = true
+    isDisabled.value = true
+    isErrorText.value = pageText.prompt[1] // 新提示
+    return
+  }
+
+  // 4. 全部满足
+  isFocused.value = true
+  isError.value = false
+  isDisabled.value = false
 }
+
 const onInput = (e) => {
   const now = new Date()
   const year = now.getFullYear()
   const month = String(now.getMonth() + 1).padStart(2, '0')
   const day = String(now.getDate()).padStart(2, '0')
-  console.log('onInput正在输入：', e.target.value.length, '-------', dateofBirth.value.length)
   // 这里写你要的逻辑：限制数字、格式化、校验等
   let val = e.target.value.replace(/\D/g, '') // 去掉非数字
   let oldVal = dateofBirth.value.replace(/\D/g, '')
-  console.log('onInput去掉非数字：', '新：：' + val, e.target.value, '旧：' + oldVal, dateofBirth.value)
   if (val.length > oldVal.length) {
     if (val.length == 1) {
       if (val > 3) {
@@ -127,7 +157,6 @@ const onInput = (e) => {
     e.target.value = dateofBirth.value
   }
   validate()
-
 }
 
 const inputRef = ref(null)
@@ -150,14 +179,11 @@ const focusInput = () => {
       <div class="input-text">
         <span>{{ dateofBirth }}</span>
         <span class="placeholder">{{ placeholder_1 }}</span>
-        <!-- <span class="placeholder">{{ placeholder_2 }}</span> -->
       </div>
 
-      <!-- 错误提示图标 -->
       <div v-if="isError" class="error-icon">!</div>
     </div>
 
-    <!-- 错误提示文字 -->
     <p v-if="isError" class="error-text">{{ isErrorText }}</p>
 
     <div class="textBox">
@@ -200,7 +226,6 @@ const focusInput = () => {
   margin-top: 71px;
 }
 
-// 输入框样式
 .input-wrapper {
   width: 100%;
   box-sizing: border-box;
@@ -217,17 +242,12 @@ const focusInput = () => {
   .input {
     position: relative;
     z-index: 5;
-    // flex: 1;
     background: transparent;
     border: none;
     outline: none;
     font-size: 20px;
-    // width: 40px;
-    /* 防止内容溢出 */
     color: #fff;
-    /* 默认白色 */
     caret-color: #fff;
-    /* 光标白色 */
   }
 
   .input-text {
@@ -245,7 +265,6 @@ const focusInput = () => {
     }
   }
 
-  /* 输入有内容时，文字透明 */
   .input:not(:placeholder-shown) {
     color: transparent;
   }
@@ -253,8 +272,6 @@ const focusInput = () => {
   .input::placeholder {
     color: #515151;
   }
-
-
 
   .error-icon {
     width: 20px;
@@ -271,12 +288,10 @@ const focusInput = () => {
   }
 }
 
-/* 错误状态 */
 .input-wrapper.error {
   border-color: #ff3b30;
 }
 
-/* 聚焦状态 */
 .input-wrapper.focus {
   border-color: #57810D;
   box-shadow: 0 0 0 1px #57810D;
@@ -299,7 +314,6 @@ const focusInput = () => {
   background: #3A3A3A;
   margin-top: 24px;
 
-
   .textBox-title {
     width: 100%;
     color: #fff;
@@ -318,7 +332,6 @@ const focusInput = () => {
 }
 
 .btn {
-  // position: absolute;
   margin-left: 260px;
   margin-top: 112px;
 }
@@ -328,12 +341,8 @@ const focusInput = () => {
     width: auto;
     padding: 0 24px;
   }
-
   .title {
     font-size: 30px;
   }
 }
-
-/* 0-500px 小屏手机 */
-@media (max-width: 500px) {}
 </style>

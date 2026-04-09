@@ -14,8 +14,8 @@ function change(val) {
     push()
 }
 
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
-const userName = ref('')
+const isDisabled = ref(!pageData[route.name])
+const userName = ref(pageData[route.name] || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本

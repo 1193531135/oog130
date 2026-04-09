@@ -7,42 +7,78 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const hopeDate = ref('')
+const hopeDate = ref(pageData[route.name] || '')
+const isDisabled = ref(!pageData[route.name])
+let placeholder_1 = ref(pageData[route.name] ? "" : "DD/MM/YYYY")
 const isFocused = ref(false)
 const isError = ref(false)
-const isDisabled = ref(true) // 按钮禁用状态，初始为true
-let placeholder_1 = ref("DD/MM/YYYY")
-//提示文本
-const isErrorText = ref('Please enter a valid date of birth')
+// 错误提示（英文）
+const isErrorText = ref('')
+
 function change(val) {
-  // 存储数据
   pageData.set(route.name, hopeDate.value)
-  //
   push()
 }
+
+// 日期格式化：把 DD/MM/YYYY 转成 Date 对象
+const parseDate = (str) => {
+  if (!str || str.split('/').length !== 3) return null
+  const [day, month, year] = str.split('/')
+  return new Date(year, month - 1, day)
+}
+
+// 完整校验逻辑
 const validate = () => {
-  let val = hopeDate.value.replace(/\D/g, '').length
-  console.log(val)
-  if (val == 8) {
-    isFocused.value = true
-    isError.value = false
-    isDisabled.value = false
-  } else {
-    isFocused.value = false
+  // 1. 先校验格式：必须是8位纯数字
+  const val = hopeDate.value.replace(/\D/g, '')
+  if (val.length !== 8) {
     isError.value = true
     isDisabled.value = true
+    isFocused.value = false
+    isErrorText.value = 'Please enter a valid date of birth'
+    return
   }
+
+  // 2. 格式正确 → 解析日期
+  const dateObj = parseDate(hopeDate.value)
+  const now = new Date()
+  now.setHours(0, 0, 0, 0) // 清空时间，只对比日期
+
+  // 3. 日期不能小于当前日期
+  if (dateObj < now) {
+    isError.value = true
+    isDisabled.value = true
+    isFocused.value = false
+    isErrorText.value = 'Date cannot be earlier than today'
+    return
+  }
+
+  // 4. 日期不能超过当前日期 + 100 年
+  const maxDate = new Date(now)
+  maxDate.setFullYear(maxDate.getFullYear() + 100)
+  if (dateObj > maxDate) {
+    isError.value = true
+    isDisabled.value = true
+    isFocused.value = false
+    isErrorText.value = 'Date cannot be more than 100 years from today'
+    return
+  }
+
+  // 5. 全部通过
+  isError.value = false
+  isDisabled.value = false
+  isFocused.value = true
 }
+
 const onInput = (e) => {
   const now = new Date()
   const year = now.getFullYear()
   const month = String(now.getMonth() + 1).padStart(2, '0')
   const day = String(now.getDate()).padStart(2, '0')
-  console.log('onInput正在输入：', e.target.value.length, '-------', hopeDate.value.length)
-  // 这里写你要的逻辑：限制数字、格式化、校验等
-  let val = e.target.value.replace(/\D/g, '') // 去掉非数字
+  
+  let val = e.target.value.replace(/\D/g, '')
   let oldVal = hopeDate.value.replace(/\D/g, '')
-  console.log('onInput去掉非数字：', '新：：' + val, e.target.value, '旧：' + oldVal, hopeDate.value)
+
   if (val.length > oldVal.length) {
     if (val.length == 1) {
       if (val > 3) {
@@ -67,7 +103,6 @@ const onInput = (e) => {
         placeholder_1.value = "M/YYYY"
         hopeDate.value = hopeDate.value + val.slice(2)
       }
-
     } else if (val.length == 4) {
       placeholder_1.value = "YYYY"
       if (val[2] - 0 + val[3] - 0 > 31) {
@@ -86,7 +121,7 @@ const onInput = (e) => {
       hopeDate.value = hopeDate.value + val[6]
     } else if (val.length == 8) {
       placeholder_1.value = ""
-      if (val.slice(4) > year) {
+      if (val.slice(4) > year + 100) {
         hopeDate.value = day + '/' + month + '/' + year
       } else {
         hopeDate.value = hopeDate.value + val[7]
@@ -122,12 +157,11 @@ const onInput = (e) => {
     e.target.value = hopeDate.value
   }
   validate()
-
 }
 
-//  聚焦
 const inputRef = ref(null)
 const focusInput = () => {
+  console.log(inputRef.value)
   if (inputRef.value) {
     inputRef.value.focus()
   }
@@ -147,14 +181,10 @@ const focusInput = () => {
       <div class="input-text">
         <span>{{ hopeDate }}</span>
         <span class="placeholder">{{ placeholder_1 }}</span>
-        <!-- <span class="placeholder">{{ placeholder_2 }}</span> -->
       </div>
-
-      <!-- 错误提示图标 -->
       <div v-if="isError" class="error-icon">!</div>
     </div>
 
-    <!-- 错误提示文字 -->
     <p v-if="isError" class="error-text">{{ isErrorText }}</p>
 
     <div class="textBox">
@@ -208,7 +238,6 @@ const focusInput = () => {
   margin-top: 71px;
 }
 
-// 输入框样式
 .input-wrapper {
   width: 100%;
   box-sizing: border-box;
@@ -225,17 +254,12 @@ const focusInput = () => {
   .input {
     position: relative;
     z-index: 5;
-    // flex: 1;
     background: transparent;
     border: none;
     outline: none;
     font-size: 20px;
-    // width: 40px;
-    /* 防止内容溢出 */
     color: #fff;
-    /* 默认白色 */
     caret-color: #fff;
-    /* 光标白色 */
   }
 
   .input-text {
@@ -253,7 +277,6 @@ const focusInput = () => {
     }
   }
 
-  /* 输入有内容时，文字透明 */
   .input:not(:placeholder-shown) {
     color: transparent;
   }
@@ -261,8 +284,6 @@ const focusInput = () => {
   .input::placeholder {
     color: #515151;
   }
-
-
 
   .error-icon {
     width: 20px;
@@ -279,12 +300,10 @@ const focusInput = () => {
   }
 }
 
-/* 错误状态 */
 .input-wrapper.error {
   border-color: #ff3b30;
 }
 
-/* 聚焦状态 */
 .input-wrapper.focus {
   border-color: #57810D;
   box-shadow: 0 0 0 1px #57810D;
@@ -348,8 +367,6 @@ const focusInput = () => {
         opacity: 0;
       }
     }
-
-
   }
 }
 
@@ -363,7 +380,4 @@ const focusInput = () => {
     font-size: 30px;
   }
 }
-
-/* 0-500px 小屏手机 */
-@media (max-width: 500px) {}
 </style>

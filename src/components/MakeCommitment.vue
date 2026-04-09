@@ -107,6 +107,9 @@ function change(val) {
         width: 100vw;
         padding: 0 20px;
         box-sizing: border-box;
+        .box{
+            margin-top: 1vh;
+        }
     }
 
 }
