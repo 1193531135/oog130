@@ -33,11 +33,14 @@ function handleAnimationEnd() {
   if (isLastItem.value) {
     console.log('最后一条动画结束')
     clearInterval(timer)
+    change()
     // 你要执行的代码写在这里
   }
 }
 
-
+function change(val) {
+    push()
+}
 </script>
 <template>
   <div class="app">

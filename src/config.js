@@ -187,7 +187,9 @@ const config = {
     MakeCommitment: {
         module: () => import('@/components/MakeCommitment.vue')
     },
-    ProgressLoading: ''
+    ProgressLoading: {
+        module: () => import('@/components/ProgressLoading.vue')
+    }
     
 }
 // 做一些统一处理

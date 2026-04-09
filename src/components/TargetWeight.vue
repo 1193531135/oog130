@@ -11,7 +11,7 @@ pageData
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const selectOptions = pageText.selectOptions
-const developOptions = pageText.develop
+const developOptions = pageText.develop 
 const loseOptions = pageText.lose
 const isLose = ref(false)
 const textBox = ref(developOptions[0])
@@ -51,7 +51,7 @@ const weightComparison = () => {
     }
 
     isLose.value = newWeight < oldWeight ? true : false
-    console.log(newWeight, oldWeight )
+    console.log(newWeight, oldWeight)
 
 }
 // ft/in输入框
@@ -195,12 +195,11 @@ const focusInput = () => {
                 <span class="text">{{ textBox.text }}</span>
             </div>
         </div>
-        <div class="btn">
-            <div class="btn-container">
-                <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
-                    <div>{{ pageText.continue }}</div>
-                    <img src="@/assets/select-item-icon.png">
-                </div>
+        <div class="btn-container">
+            <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
+                <div class="spacer"></div>
+                <div>{{ pageText.continue }}</div>
+                <img src="@/assets/continue-icon.png">
             </div>
         </div>
     </div>
@@ -412,9 +411,14 @@ const focusInput = () => {
         background-color: #EBF0F9;
     }
 
-    .btn {
-        margin-left: 260px;
-        margin-top: 112px;
+    .btn-container {
+        position: fixed;
+        height: 100px;
+        bottom: 0;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        padding: 16px 16px 12px;
     }
 
 

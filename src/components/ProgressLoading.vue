@@ -12,8 +12,9 @@ const pageText = window.languageData[route.name]
 function change(val) {
     push()
 }
+const label = ref(pageText.text[0])
 // 进度值（可动态修改，0-100）
-const progress = ref(25)
+const progress = ref(0)
 
 // 圆环半径（和viewBox对应，计算周长用）
 const radius = 45
@@ -26,10 +27,12 @@ const dashOffset = computed(() => {
 
 onMounted(() => {
     const timer = setInterval(() => {
-        if (progress.value >= 100) {
-            change()
+        if (progress.value == 25) {
+            label.value = pageText.text[1]
+            progress.value += 1
+        } else if(progress.value>=100) {
             clearInterval(timer)
-        } else {
+        }else{
             progress.value += 1
         }
     }, 70) // 每10毫秒增加1%，25%需要2500毫秒
@@ -37,20 +40,21 @@ onMounted(() => {
 </script>
 <template>
     <div class="text-page">
+        <img src="../assets/image/EndAnimation_bg1.png" alt="">
         <div class="progress-container">
             <svg class="progress-ring" viewBox="0 0 100 100">
                 <!-- 背景灰色圆环 -->
-                <circle class="progress-ring__bg" cx="50" cy="50" r="45" fill="none" stroke="#444444"
+                <circle class="progress-ring__bg" cx="50" cy="50" r="45" fill="none" stroke="#C7C9CC"
                     stroke-width="8" />
                 <!-- 绿色进度圆环 -->
-                <circle class="progress-ring__bar" cx="50" cy="50" r="45" fill="none" stroke="#6a8a00" stroke-width="8"
+                <circle class="progress-ring__bar" cx="50" cy="50" r="45" fill="none" stroke="#2E73E0" stroke-width="8"
                     stroke-linecap="butt" :stroke-dasharray="circumference" :stroke-dashoffset="dashOffset"
                     transform="rotate(-90 50 50)" />
             </svg>
             <!-- 中间百分比文字 -->
             <div class="progress-text">{{ progress }}%</div>
         </div>
-        <span class="text">{{ pageText.text }}</span>
+        <span class="text">{{ label }}</span>
     </div>
 
 </template>
@@ -64,12 +68,19 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #F8F8F8;
+    img{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+    }
 }
 .progress-container {
     position: relative;
     width: 149px;
     height: 149px;
-    background-color: #222222;
+    /* background-color: #222222; */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -93,11 +104,14 @@ onMounted(() => {
     font-size: 30px;
     font-weight: 700;
     font-family: Laient, sans-serif;
-    color: #ffffff;
+    color: #2E73E0;
     z-index: 1;
     user-select: none;
 }
 .text{
+    position: relative;
+    z-index: 1;
+    color: #242424;
     margin-top: 16px;
     font-size: 20px;
     font-weight: 500;

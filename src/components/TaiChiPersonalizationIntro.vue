@@ -21,13 +21,12 @@ function change(val) {
     <div class="subtitle description">
       <span>{{ pageText.subtitle }}</span>
     </div>
-    <img  class="img" src="../assets/image/TaiChiPersonalizationIntro.png" alt="" srcset="">
-    <div class="btn1">
-      <div class="btn-container">
-        <div class="continue-btn" @click="change">
-          <div>{{ pageText.continue }}</div>
-          <img src="@/assets/select-item-icon.png">
-        </div>
+    <img class="img" src="../assets/image/TaiChiPersonalizationIntro.png" alt="" srcset="">
+    <div class="btn-container">
+      <div class="continue-btn" @click="change">
+        <div class="spacer"></div>
+        <div>{{ pageText.continue }}</div>
+        <img src="@/assets/continue-icon.png">
       </div>
     </div>
   </div>
@@ -59,9 +58,14 @@ function change(val) {
 }
 
 
-.btn1 {
-  margin-top: 56px;
-  margin-left: 450px;
+.btn-container {
+  position: fixed;
+  height: 100px;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 16px 16px 12px;
 }
 
 @media (max-width: 600px) {

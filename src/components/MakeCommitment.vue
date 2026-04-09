@@ -103,7 +103,7 @@ function change(val) {
             }
 
             .select-item :hover {
-                background-color: rgb(79, 79, 79);
+                // background-color: rgb(79, 79, 79);
             }
         }
     }

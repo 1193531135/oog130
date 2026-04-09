@@ -54,7 +54,7 @@ const focusInput = () => {
 
 <template>
     <div class="text-page">
-        
+
         <div class="title">
             {{ pageText.title }}
         </div>
@@ -74,12 +74,11 @@ const focusInput = () => {
         <div class="promptBox">
             ✅ &nbsp;&nbsp; {{ pageText.Subheading }}
         </div>
-        <div class="btn">
-            <div class="btn-container">
-                <div class="continue-btn" @click="change">
-                    <div>{{ pageText.continue }}</div>
-                    <img src="@/assets/select-item-icon.png">
-                </div>
+        <div class="btn-container">
+            <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
+                <div class="spacer"></div>
+                <div>{{ pageText.continue }}</div>
+                <img src="@/assets/continue-icon.png">
             </div>
         </div>
     </div>
@@ -160,12 +159,12 @@ const focusInput = () => {
             }
 
             .placeholder {
-                color: #515151;
-            } 
+                color: #C7C9CC;
+            }
         }
 
         .input::placeholder {
-            color: #515151;
+            color: #C7C9CC;
         }
 
 
@@ -210,10 +209,14 @@ const focusInput = () => {
         text-align: center;
     }
 
-    .btn {
-        // position: absolute;
-        margin-left: 262px;
-        margin-top: 84px;
+    .btn-container {
+        position: fixed;
+        height: 100px;
+        bottom: 0;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        padding: 16px 16px 12px;
     }
 }
 

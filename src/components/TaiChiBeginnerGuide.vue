@@ -25,18 +25,17 @@ console.log(pageText, viewMode)
     <div class="subtitle description">
       <span>{{ pageText.subtitle }}</span>
     </div>
-    <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiBeginnerGuide_female.png" alt="" srcset="">
-    <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiBeginnerGuide_male.png" alt="" srcset="">
+    <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiBeginnerGuide_female.png" alt="" srcset="">
+    <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiBeginnerGuide_male.png" alt="" srcset="">
     <div class="descriptionBox">
       <span>☯️</span>
       <span>{{ pageText.description }}</span>
     </div>
-    <div class="btn1">
-      <div class="btn-container">
-        <div class="continue-btn" @click="change">
-          <div>{{ pageText.continue }}</div>
-          <img src="@/assets/select-item-icon.png">
-        </div>
+    <div class="btn-container">
+      <div class="continue-btn" @click="change">
+        <div class="spacer"></div>
+        <div>{{ pageText.continue }}</div>
+        <img src="@/assets/continue-icon.png">
       </div>
     </div>
   </div>
@@ -71,7 +70,7 @@ console.log(pageText, viewMode)
   width: 100%;
   margin-top: 20px;
   display: flex;
-  
+
   padding: 16px;
   align-items: center;
   gap: 12px;
@@ -82,9 +81,14 @@ console.log(pageText, viewMode)
   box-sizing: border-box;
 }
 
-.btn1 {
-  margin-top: 56px;
-  margin-left: 450px;
+.btn-container {
+  position: fixed;
+  height: 100px;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 16px 16px 12px;
 }
 
 @media (max-width: 600px) {
