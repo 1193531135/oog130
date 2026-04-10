@@ -62,7 +62,7 @@ function goIt() {
 .select-page-con {
   box-sizing: border-box;
   text-align: center;
-  padding:0 20px 20px;
+  padding:0 20px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;

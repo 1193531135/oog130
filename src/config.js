@@ -7,7 +7,7 @@ const images = import.meta.glob('@/assets/image/*', { eager: true })
 const textSelectDefaultConfig = {
     module: () => import("@/components/pageModule/TextSelect.vue"),
     props(content) {
-        content.options = content.selectOptions.map((i, index) => ({ label: i, value: index }))
+        content.options = content.selectOptions.map((i, index) => ({ label: i, value: index,...i }))
         return content
     }
 }
@@ -168,7 +168,9 @@ const config = {
     UserName: {
         module: () => import('@/components/UserName.vue')
     },
-    DateOfBirth: '',
+    DateOfBirth: {
+        module: () => import('@/components/DateOfBirth.vue')
+    },
     EnterEmail: {
         module: () => import('@/components/EnterEmail.vue')
     },
