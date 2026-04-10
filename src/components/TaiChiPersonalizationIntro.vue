@@ -46,7 +46,7 @@ function change(val) {
 }
 
 .title {
-  margin-top: 69px;
+  
   width: 100%;
   text-align: center;
 }

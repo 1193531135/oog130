@@ -55,7 +55,7 @@ console.log(pageText, viewMode)
 }
 
 .title {
-  margin-top: 69px;
+  
   width: 100%;
   text-align: center;
 }

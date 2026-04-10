@@ -221,7 +221,7 @@ const focusInput = () => {
     box-sizing: border-box;
 
     .title {
-        margin-top: 69px;
+        
     }
 
     .unit-switch {

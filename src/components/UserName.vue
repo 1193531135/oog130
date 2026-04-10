@@ -104,7 +104,7 @@ const focusInput = () => {
     }
 
     .title {
-        margin-top: 69px;
+        
         width: 650px;
         text-align: center;
     }

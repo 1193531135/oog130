@@ -179,7 +179,7 @@ const focusInput = () => {
     box-sizing: border-box;
 
     .title {
-        margin-top: 69px;
+        
         text-align: center;
     }
 
