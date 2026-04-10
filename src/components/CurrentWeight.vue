@@ -179,7 +179,7 @@ const focusInput = () => {
     box-sizing: border-box;
 
     .title {
-        
+
         text-align: center;
     }
 
@@ -343,20 +343,24 @@ const focusInput = () => {
         border-radius: 8px;
         background: #EDF0F3;
 
-        .icon {
-            font-size: 32px;
-            margin-right: 8px;
-        }
+
 
         .texBox-top {
             display: flex;
             width: 100%;
-            align-items: center;
+            align-items: top;
+
+            .icon {
+                font-size: 26px;
+                margin-right: 8px;
+                line-height: 26px;
+            }
 
             .checkboxLabel {
                 color: #242424;
                 font-size: 16px;
                 font-weight: 500;
+                line-height: 26px;
             }
 
             .text {
@@ -367,7 +371,7 @@ const focusInput = () => {
         }
     }
 
-     .btn-container {
+    .btn-container {
         position: fixed;
         height: 100px;
         bottom: 0;
@@ -384,12 +388,19 @@ const focusInput = () => {
 @media (max-width: 600px) {
     .text-page {
         width: 100vw;
-        padding: 0 20px;
+        padding: 0 16px;
         box-sizing: border-box;
 
         .lable {
             width: 80vw;
         }
+        .input-wrapper{
+            
+        }
+        .inputLable {
+            font-size: 16px;
+        }
+
     }
 }
 </style>

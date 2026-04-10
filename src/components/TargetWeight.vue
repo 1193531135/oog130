@@ -380,20 +380,21 @@ const focusInput = () => {
         border-radius: 8px;
         background: #EDF0F3;
 
-        .icon {
-            font-size: 32px;
-            margin-right: 8px;
-        }
 
         .texBox-top {
             display: flex;
             width: 100%;
-            align-items: center;
-
+            align-items: top;
+            .icon {
+                font-size: 26px;
+                margin-right: 8px;
+                line-height: 26px;
+            }
             .checkboxLabel {
                 color: #242424;
                 font-size: 16px;
                 font-weight: 500;
+                line-height: 26px;
             }
 
             .text {
@@ -429,11 +430,18 @@ const focusInput = () => {
 @media (max-width: 600px) {
     .text-page {
         width: 100vw;
-        padding: 0 20px;
+        padding: 0 16px;
         box-sizing: border-box;
 
         .lable {
             width: 80vw;
+        }
+        .unit-switch{
+            margin-top: 20px;
+        }
+        .inputLable{
+            margin-top: 32px;
+            font-size: 16px;
         }
     }
 }

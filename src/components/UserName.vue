@@ -233,6 +233,9 @@ const focusInput = () => {
         .title {
             width: 100%;
         }
+         .inputLable{
+            font-size: 16px;
+        }
     }
 
 }

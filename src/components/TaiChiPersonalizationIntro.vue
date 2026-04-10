@@ -73,12 +73,12 @@ function change(val) {
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
-    padding: 0 20px;
+    padding: 0 16px;
     overflow-y: scroll;
   }
 
   .img {
-    width: 180px;
+    width: 100%;
   }
 
 

@@ -22,6 +22,7 @@ function change(val) {
 <template>
     <div class="text-page">
         <div class="box">
+            <img  class="Close" src="../assets/image/Close.png" alt="">
             <div class="Subheading-box">
                 <div class="icon">🎉</div>
                 <span>{{ pageText.Subheading }}</span>
@@ -57,7 +58,13 @@ function change(val) {
         padding: 64px 40px 60px 40px;
         background-color: #FFF;
         box-sizing: border-box;
-
+        .Close{
+            width: 44px;
+            height: 44px;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
         .Subheading-box {
             position: absolute;
             display: flex;
@@ -119,8 +126,17 @@ function change(val) {
 @media (max-width: 600px) {
     .text-page {
         width: 100vw;
-        padding: 0 20px;
+        padding: 0 16px;
         box-sizing: border-box;
+
+        .box {
+            margin-top: 72px;
+            padding: 60px 16px 16px 16px;
+
+            .title {
+                font-size: 24px;
+            }
+        }
     }
 
 }

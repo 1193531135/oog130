@@ -96,12 +96,14 @@ console.log(pageText, viewMode)
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
-    padding: 0 20px;
+    padding: 0 16px;
     overflow-y: scroll;
   }
-
+  .descriptionBox{
+    font-size: 14px;
+  }
   .img {
-    width: 180px;
+    width: 318px;
   }
 
 

@@ -220,9 +220,7 @@ const focusInput = () => {
     width: 428px;
     box-sizing: border-box;
 
-    .title {
-        
-    }
+    .title {}
 
     .unit-switch {
         margin-top: 50px;
@@ -278,7 +276,7 @@ const focusInput = () => {
 
     .inputLable {
         width: 100%;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 500;
         color: #242424;
         margin-top: 66px;
@@ -319,7 +317,7 @@ const focusInput = () => {
 
         .input-text {
             position: absolute;
-            font-size: 20px;
+            font-size: 18px;
             color: #000;
 
             .unit {
@@ -385,20 +383,24 @@ const focusInput = () => {
         border-radius: 8px;
         background: #EDF0F3;
 
-        .icon {
-            font-size: 32px;
-            margin-right: 8px;
-        }
+
 
         .texBox-top {
             display: flex;
             width: 100%;
-            align-items: center;
+            align-items: top;
+
+            .icon {
+                font-size: 26px;
+                margin-right: 8px;
+                line-height: 26px;
+            }
 
             .checkboxLabel {
                 color: #242424;
                 font-size: 16px;
                 font-weight: 500;
+                line-height: 26px;
             }
 
             .text {
@@ -424,12 +426,21 @@ const focusInput = () => {
 @media (max-width: 600px) {
     .text-page {
         width: 100vw;
-        padding: 0 20px;
+        padding: 0 16px;
         box-sizing: border-box;
 
         .lable {
             width: 80vw;
         }
+
+        .inputLable {
+            font-size: 16px;
+        }
+
+        .input-text {
+            font-size: 16px;
+        }
+
     }
 }
 </style>
