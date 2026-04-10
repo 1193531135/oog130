@@ -61,7 +61,7 @@ function goIt() {
         </div>
       </div>
       <div class="content-image">
-        <img :src="imgUrl" :style="imageOffset ?`transform: translate(${imageOffset[0]},${imageOffset[1]})`:''">
+        <img :src="imgUrl" :style="imageOffset ?`--transform:${imageOffset[0]},${imageOffset[1]}`:''">
       </div>
     </div>
   </div>
@@ -137,11 +137,6 @@ function goIt() {
         z-index: 1;
         width: 256px;
       }
-      /deep/ .select {
-        //预设11px padding
-        .select-item {
-        }
-      }
       .content-image{
         flex: 1;
         min-width: 0;
@@ -150,7 +145,9 @@ function goIt() {
         display: flex;
         justify-content: center;
         align-items: center;
+        --transform:0,0;
         img{
+          transform: translate(var(--transform));
           position: absolute;
           //height: 398px;
           width: 297px;

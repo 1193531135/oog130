@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.2.6",
+    "dayjs": "^1.11.20",
     "echarts": "^6.0.0",
     "pinia": "^3.0.4",
     "querystring": "^0.2.1",

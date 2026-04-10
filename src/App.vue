@@ -16,6 +16,12 @@ async function loadResources() {
   loaded.value = true;
 }
 
+const back = () => {
+  if(routeIndex.value > 0){
+    window.history.back()
+  }
+}
+
 onMounted(() => {
   loadResources();
 })
@@ -24,6 +30,7 @@ onMounted(() => {
 <template>
   <div class="page-container" v-if="loaded">
     <div class="head-container">
+      <img src="./assets/back.png" class="back-btn" @click="back" v-show="routeIndex > 0">
       <img src="./assets/title-logo.png" class="head-logo">
       <div class="head-text">Tai CHi</div>
     </div>
@@ -54,20 +61,20 @@ onMounted(() => {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    padding: 1vw 2.2vw;
+    padding: 26px 0 26px 60px;
     box-sizing: border-box;
     width: 100%;
+    .back-btn{ height: 44px;width: 44px; margin-right: 12px;cursor: pointer }
     .head-logo{
       height: 27px;
       width: 27px;
-      margin-right: 16px;
+      margin-right: 7px;
     }
     .head-text {
       color: #2E73E0;
       font-size: 27px;
       text-transform: uppercase;
-      font-family: Anton;
-      letter-spacing: 1px
+      font-family: Fugaz One,serif;
     }
   }
   .progress-bar{
@@ -80,7 +87,6 @@ onMounted(() => {
     border-radius: 15px;
     margin-bottom: 50px;
     box-sizing: border-box;
-    .back-btn{ height: 32px;width: 32px }
     .progress-con{
       flex: 1;
       height: 5px;
@@ -98,7 +104,7 @@ onMounted(() => {
 @media (max-width: 768px) {
   .page-container{
     .head-container{
-      padding: 10px 16px;
+      padding: 0 16px;
       .head-logo{
         height: 24px;
         width: 24px;
@@ -106,9 +112,6 @@ onMounted(() => {
       .head-text {
         font-size: 24px;
         line-height: 23px;
-        text-transform: uppercase;
-        font-family: Anton;
-        letter-spacing: 1px
       }
     }
     .progress-bar{
