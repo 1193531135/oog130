@@ -18,8 +18,8 @@ const displayValue = computed(() => {
 })
 
 function change(val) {
+  console.log(val)
   pageData.set(route.name, val.format('DD/MM/YYYY'))
-  // pageData.set(route.name, dayjs("2024-12-05"))
 }
 
 function goIt() {
@@ -72,12 +72,13 @@ onMounted(() => {
       </div>
     </div>
 
-      <div class="btn-container">
-        <div class="continue-btn" :class="{ 'disabled': !value }" @click="goIt">
-          <div>{{ pageText.continue }}</div>
-          <img src="@/assets/select-item-icon.png">
+     <div class="btn-container">
+            <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="goIt">
+                <div class="spacer"></div>
+                <div>{{ pageText.continue }}</div>
+                <img src="@/assets/continue-icon.png">
+            </div>
         </div>
-      </div>
   </div>
 </template>
 
@@ -201,10 +202,15 @@ onMounted(() => {
     background-color: #EBF0F9;
   }
 
-  .btn {
-    margin-left: 260px;
-    margin-top: 112px;
-  }
+  .btn-container {
+        position: fixed;
+        height: 100px;
+        bottom: 0;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        padding: 16px 16px 12px;
+    }
 
 
 }
