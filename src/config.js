@@ -18,7 +18,7 @@ const config = {
         props(content) {
             content.options = content.selectOptions.map((i, index) => ({
                 label: i, value: index,
-                imgUrl: images[`/src/assets/image/chooserGender-${index}.png`]?.default
+                imgUrl: images[`/src/assets/image/chooserGender-${index}.webp`]?.default
             }))
             return content
         }
@@ -39,7 +39,7 @@ const config = {
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({
                 label: i, value: index,
-                imgUrl: images[`/src/assets/image/taiChiCurrentBodyType-${male}-${index}.png`]?.default
+                imgUrl: images[`/src/assets/image/taiChiCurrentBodyType-${male}-${index}.webp`]?.default
             }))
             return content
         }
@@ -51,7 +51,7 @@ const config = {
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({
                 label: i, value: index,
-                imgUrl: images[`/src/assets/image/taiChiTargetBodyType-${male}-${index}.png`]?.default
+                imgUrl: images[`/src/assets/image/taiChiTargetBodyType-${male}-${index}.webp`]?.default
             }))
             return content
         }
@@ -60,7 +60,7 @@ const config = {
         module: () => import("@/components/pageModule/ImageSelect.vue"),
         props(content) {
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images["/src/assets/image/taiChiBestShapeCheck-bg.png"]?.default
+            content.imgUrl = images["/src/assets/image/taiChiBestShapeCheck-bg.webp"]?.default
             return content
         }
     },
@@ -68,7 +68,7 @@ const config = {
         module: () => import("@/components/pageModule/ImageSelect.vue"),
         props(content) {
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images["/src/assets/image/taiChiFlexibilityCheck-bg.png"]?.default
+            content.imgUrl = images["/src/assets/image/taiChiFlexibilityCheck-bg.webp"]?.default
             return content
         }
     },
@@ -79,7 +79,7 @@ const config = {
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({
                 label: i, value: index,
-                imgUrl: images[`/src/assets/image/taiChiTargetZoneSelection-${male}-${index}.png`]?.default
+                imgUrl: images[`/src/assets/image/taiChiTargetZoneSelection-${male}-${index}.webp`]?.default
             }))
             return content
         }
@@ -90,7 +90,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images[`/src/assets/image/taiChiPhysicalDiscomfortCheck-bg-${male}.png`]?.default
+            content.imgUrl = images[`/src/assets/image/taiChiPhysicalDiscomfortCheck-bg-${male}.webp`]?.default
             return content
         }
     },
@@ -103,7 +103,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images[`/src/assets/image/taiChiStairBreathCheck-bg-${male}.png`]?.default
+            content.imgUrl = images[`/src/assets/image/taiChiStairBreathCheck-bg-${male}.webp`]?.default
             return content
         }
     },
@@ -113,7 +113,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images[`/src/assets/image/taiChiTrainingFrequency-bg-${male}.png`]?.default
+            content.imgUrl = images[`/src/assets/image/taiChiTrainingFrequency-bg-${male}.webp`]?.default
             return content
         }
     },
@@ -123,7 +123,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images[`/src/assets/image/taiChiWalkingFrequency-bg-${male}.png`]?.default
+            content.imgUrl = images[`/src/assets/image/taiChiWalkingFrequency-bg-${male}.webp`]?.default
             return content
         }
     },
@@ -133,7 +133,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images[`/src/assets/image/taiChiWorkoutDurationPref-bg-${male}.png`]?.default
+            content.imgUrl = images[`/src/assets/image/taiChiWorkoutDurationPref-bg-${male}.webp`]?.default
             return content
         }
     },
@@ -151,7 +151,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
-            content.imgUrl = images[`/src/assets/image/taiChiEatingHabitImproveCheck-bg-${male}.png`]?.default
+            content.imgUrl = images[`/src/assets/image/taiChiEatingHabitImproveCheck-bg-${male}.webp`]?.default
             return content
         }
     },
@@ -178,10 +178,10 @@ const config = {
         module: () => import('@/components/EndAnimation.vue'),
         props(content){
             content.bgImageList = [
-                images["/src/assets/image/EndAnimation_bg1.png"]?.default,
-                images["/src/assets/image/EndAnimation_bg2.png"]?.default,
-                images["/src/assets/image/EndAnimation_bg3.png"]?.default,
-                images["/src/assets/image/EndAnimation_bg4.png"]?.default
+                images["/src/assets/image/EndAnimation_bg1.webp"]?.default,
+                images["/src/assets/image/EndAnimation_bg2.webp"]?.default,
+                images["/src/assets/image/EndAnimation_bg3.webp"]?.default,
+                images["/src/assets/image/EndAnimation_bg4.webp"]?.default
             ]
             return content
         }

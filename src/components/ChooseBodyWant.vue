@@ -13,7 +13,7 @@ const selectValue = ref(pageData[route.name])
 const options = pageText.selectOptions.map((i, index) => ({
   label: i,
   value: index,
-  imgUrl: new URL("@/assets/image/choose-body-0.png", import.meta.url)
+  imgUrl: new URL("@/assets/image/choose-body-0.webp", import.meta.url)
 }))
 
 function change(val) {

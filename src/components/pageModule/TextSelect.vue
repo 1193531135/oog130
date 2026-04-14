@@ -51,7 +51,7 @@ function goIt() {
       <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
         <div class="spacer"></div>
         <div>{{ btnText }}</div>
-        <img src="@/assets/continue-icon.png">
+        <img src="@/assets/continue-icon.webp">
       </div>
     </div>
   </div>

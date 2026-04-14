@@ -22,7 +22,7 @@ function change(val) {
 <template>
     <div class="text-page">
         <div class="box">
-            <img  class="Close" src="../assets/image/Close.png" alt="">
+            <img  class="Close" src="../assets/image/Close.webp" alt="">
             <div class="Subheading-box">
                 <div class="icon">🎉</div>
                 <span>{{ pageText.Subheading }}</span>

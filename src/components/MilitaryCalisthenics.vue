@@ -27,12 +27,12 @@ function change(val) {
         <span>{{ pageText.text2[0] }}</span>
         <span class="white">{{ pageText.text2[1] }}</span>
       </div>
-      <img class="img" src="@/assets/MilitaryCalisthenicsImg.png" alt="Military Calisthenics">
+      <img class="img" src="@/assets/MilitaryCalisthenicsImg.webp" alt="Military Calisthenics">
       <div class="btn">
         <div class="btn-container">
           <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
-            <img src="@/assets/select-item-icon.png">
+            <img src="@/assets/select-item-icon.webp">
           </div>
         </div>
       </div>

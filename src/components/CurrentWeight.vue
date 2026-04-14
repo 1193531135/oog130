@@ -164,7 +164,7 @@ const focusInput = () => {
             <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
                 <div class="spacer"></div>
                 <div>{{ pageText.continue }}</div>
-                <img src="@/assets/continue-icon.png">
+                <img src="@/assets/continue-icon.webp">
             </div>
         </div>
     </div>

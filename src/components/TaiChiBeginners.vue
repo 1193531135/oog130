@@ -25,12 +25,12 @@ function change(val){
     <div class="title">{{ pageText.title }}</div>
     <div class="subtitle">{{ pageText.subtitle }}</div>
     <div class="content">
-      <img src="../assets/start.png">
+      <img src="../assets/start.webp">
       <div class="select-con">
         <Select v-model="selectValue" :options="options" class="select" @change="change">
           <template #default="{ itemData }">
             <div>{{ itemData.label }}</div>
-            <img src="../assets/select-item-icon.png">
+            <img src="../assets/select-item-icon.webp">
           </template>
         </Select>
       </div>

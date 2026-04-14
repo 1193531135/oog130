@@ -25,9 +25,9 @@ const myChart = ref(null)
 // const imageDomLine = document.createElement('img')
 const imageDomLabel2 = document.createElement('img')
 const imageDomLabel = document.createElement('img')
-// imageDomLine.src = './assets/img_1.png'
-imageDomLabel2.src = new URL("@/assets/image/line-chart-tag2.png", import.meta.url)
-imageDomLabel.src = new URL("@/assets/image/line-chart-tag.png", import.meta.url)
+// imageDomLine.src = './assets/img_1.webp'
+imageDomLabel2.src = new URL("@/assets/image/line-chart-tag2.webp", import.meta.url)
+imageDomLabel.src = new URL("@/assets/image/line-chart-tag.webp", import.meta.url)
 // 45,170,80
 const startVal = Number(props.lineChartData[0].value.weight)
 const endVal = Number(props.lineChartData[2].value.weight)

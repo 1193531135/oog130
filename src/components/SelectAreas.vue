@@ -7,7 +7,7 @@ const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
 const selectValue = ref(Array.isArray(pageData[route.name]) ? pageData[route.name] : [])
-const modelImage = new URL("@/assets/image/selectAreas-bg.png", import.meta.url).href
+const modelImage = new URL("@/assets/image/selectAreas-bg.webp", import.meta.url).href
 
 const isDisabled = computed(() => !selectValue.value.length)
 
@@ -80,7 +80,7 @@ function goIt() {
     <div class="btn-container">
       <div :class="`continue-btn ${isDisabled ? 'disabled' : ''}`" @click="goIt">
         <div>{{ pageText.continue || "Continue" }}</div>
-        <img src="@/assets/select-item-icon.png" alt="Continue" />
+        <img src="@/assets/select-item-icon.webp" alt="Continue" />
       </div>
     </div>
   </div>

@@ -22,12 +22,12 @@ function change(val) {
       <div class="description">
         <span>{{ pageText.subtitle }}</span>
       </div>
-      <img class="img" src="@/assets/ExperienceSimilarSymptoms.png" alt="Military Calisthenics">
+      <img class="img" src="@/assets/ExperienceSimilarSymptoms.webp" alt="Military Calisthenics">
       <div class="btn">
         <div class="btn-container">
           <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
-            <img src="@/assets/select-item-icon.png">
+            <img src="@/assets/select-item-icon.webp">
           </div>
         </div>
       </div>

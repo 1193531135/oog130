@@ -158,21 +158,21 @@ const focusInput = () => {
     <p v-if="isError" class="error-text">{{ isErrorText }}</p>
 
     <div class="textBox">
-      <img src="@/assets/lock.png" alt="" srcset="">
+      <img src="@/assets/lock.webp" alt="" srcset="">
       <p class="textBox-content ">{{ pageText.text2 }}</p>
     </div>
     <div class="btn">
       <div class="btn-container Skip">
         <div class="continue-btn" @click="change">
           <div>{{ pageText.button }}</div>
-          <img src="@/assets/select-item-icon.png">
+          <img src="@/assets/select-item-icon.webp">
         </div>
       </div>
 
       <div class="btn-container">
         <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
           <div>{{ pageText.continue }}</div>
-          <img src="@/assets/select-item-icon.png">
+          <img src="@/assets/select-item-icon.webp">
         </div>
       </div>
     </div>

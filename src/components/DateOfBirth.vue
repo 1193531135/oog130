@@ -76,7 +76,7 @@ onMounted(() => {
             <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="goIt">
                 <div class="spacer"></div>
                 <div>{{ pageText.continue }}</div>
-                <img src="@/assets/continue-icon.png">
+                <img src="@/assets/continue-icon.webp">
             </div>
         </div>
   </div>

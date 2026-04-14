@@ -25,8 +25,8 @@ console.log(pageText, viewMode)
     <div class="subtitle description">
       <span>{{ pageText.subtitle }}</span>
     </div>
-    <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiBeginnerGuide_female.png" alt="" srcset="">
-    <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiBeginnerGuide_male.png" alt="" srcset="">
+    <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiBeginnerGuide_female.webp" alt="" srcset="">
+    <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiBeginnerGuide_male.webp" alt="" srcset="">
     <div class="descriptionBox">
       <span>☯️</span>
       <span>{{ pageText.description }}</span>
@@ -35,7 +35,7 @@ console.log(pageText, viewMode)
       <div class="continue-btn" @click="change">
         <div class="spacer"></div>
         <div>{{ pageText.continue }}</div>
-        <img src="@/assets/continue-icon.png">
+        <img src="@/assets/continue-icon.webp">
       </div>
     </div>
   </div>

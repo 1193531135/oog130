@@ -40,7 +40,7 @@ onMounted(() => {
 </script>
 <template>
     <div class="text-page">
-        <img src="../assets/image/EndAnimation_bg1.png" alt="">
+        <img src="../assets/image/EndAnimation_bg1.webp" alt="">
         <div class="progress-container">
             <svg class="progress-ring" viewBox="0 0 100 100">
                 <!-- 背景灰色圆环 -->

@@ -13,7 +13,7 @@ const title = pageText.title
 const subtitle = pageText.subtitle
 const options = pageText.selectOptions.map((i, index) => ({label: i, value: index}))
 // 男女
-const imgUrl = pageData["ChooserGender"] ? new URL("@/assets/image/taiChiMainGoalSelection-1.png", import.meta.url): new URL("@/assets/image/taiChiMainGoalSelection-1.png", import.meta.url)
+const imgUrl = pageData["ChooserGender"] ? new URL("@/assets/image/taiChiMainGoalSelection-1.webp", import.meta.url): new URL("@/assets/image/taiChiMainGoalSelection-1.webp", import.meta.url)
 
 const props = defineProps({
   modelValue: null,
@@ -59,7 +59,7 @@ function goIt() {
         <Select class="select" v-model="selectData" :multiple="multiple" :options="options" @change="change">
           <template #default="{ itemData }">
             <div>{{ itemData.label }}</div>
-            <img src="../assets/select-item-icon.png">
+            <img src="../assets/select-item-icon.webp">
           </template>
         </Select>
       </div>
@@ -68,7 +68,7 @@ function goIt() {
       <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
         <div class="spacer"></div>
         <div>{{ btnText }}</div>
-        <img src="@/assets/continue-icon.png">
+        <img src="@/assets/continue-icon.webp">
       </div>
     </div>
   </div>

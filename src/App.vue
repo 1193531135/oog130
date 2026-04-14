@@ -30,8 +30,8 @@ onMounted(() => {
 <template>
   <div class="page-container" v-if="loaded">
     <div class="head-container">
-      <img src="./assets/back.png" class="back-btn" @click="back" v-show="routeIndex > 0">
-      <img src="./assets/title-logo.png" class="head-logo">
+      <img src="./assets/back.webp" class="back-btn" @click="back" v-show="routeIndex > 0">
+      <img src="./assets/title-logo.webp" class="head-logo">
       <div class="head-text">Tai CHi</div>
     </div>
     <div class="progress-bar" v-show="!registerList[routeIndex].config.progressHidden">

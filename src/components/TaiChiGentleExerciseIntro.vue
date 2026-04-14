@@ -25,15 +25,15 @@ console.log(pageText, viewMode)
         <div class="subtitle description">
             <span>{{ pageText.subtitle }}</span>
         </div>
-        <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiGentleExerciseIntro_female.png" alt=""
+        <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiGentleExerciseIntro_female.webp" alt=""
             srcset="">
-        <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiGentleExerciseIntro_male.png" alt=""
+        <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiGentleExerciseIntro_male.webp" alt=""
             srcset="">
         <div class="btn-container">
             <div class="continue-btn" @click="change">
                 <div class="spacer"></div>
                 <div>{{ pageText.continue }}</div>
-                <img src="@/assets/continue-icon.png">
+                <img src="@/assets/continue-icon.webp">
             </div>
         </div>
     </div>

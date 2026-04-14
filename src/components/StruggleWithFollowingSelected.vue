@@ -34,7 +34,7 @@ console.log(pageText, viewMode)
         <div class="btn-container">
           <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
-            <img src="@/assets/select-item-icon.png">
+            <img src="@/assets/select-item-icon.webp">
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@ console.log(pageText, viewMode)
         <div class="btn-container">
           <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
-            <img src="@/assets/select-item-icon.png">
+            <img src="@/assets/select-item-icon.webp">
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ console.log(pageText, viewMode)
         <div class="btn-container">
           <div class="continue-btn" @click="change">
             <div>{{ pageText.continue }}</div>
-            <img src="@/assets/select-item-icon.png">
+            <img src="@/assets/select-item-icon.webp">
           </div>
         </div>
       </div>

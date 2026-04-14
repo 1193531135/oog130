@@ -40,7 +40,7 @@ function change() {
     <div class="btn-container" style="justify-content:right">
       <div class="continue-btn" @click="change">
         <div>{{ pageText.continue }}</div>
-        <img src="@/assets/select-item-icon.png">
+        <img src="@/assets/select-item-icon.webp">
       </div>
     </div>
   </div>

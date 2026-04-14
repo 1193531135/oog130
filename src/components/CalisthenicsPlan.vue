@@ -15,10 +15,10 @@ const startVal = Number(pageData["CurrentWeight"].weight)
 const endVal = Number(pageData["TargetWeight"].weight)
 
 image.value = startVal > endVal ?
-    new URL("@/assets/image/calisthenicsPlan-down.png", import.meta.url) :
-    new URL("@/assets/image/calisthenicsPlan-up.png", import.meta.url);
+    new URL("@/assets/image/calisthenicsPlan-down.webp", import.meta.url) :
+    new URL("@/assets/image/calisthenicsPlan-up.webp", import.meta.url);
 
-startVal === endVal && (image.value =  new URL("@/assets/image/calisthenicsPlan-flat.png", import.meta.url));
+startVal === endVal && (image.value =  new URL("@/assets/image/calisthenicsPlan-flat.webp", import.meta.url));
 
 // data.value[0].value = pageData["CurrentWeight"]
 // data.value[2].value = pageData["TargetWeight"]
@@ -42,7 +42,7 @@ function change() {
     <div class="btn-container" style="justify-content:right">
       <div class="continue-btn" @click="change">
         <div>{{ pageText.continue }}</div>
-        <img src="@/assets/select-item-icon.png">
+        <img src="@/assets/select-item-icon.webp">
       </div>
     </div>
   </div>

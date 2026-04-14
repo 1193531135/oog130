@@ -66,7 +66,7 @@ const currentColor = computed(() => {
                     </template>
                 </Select>
             </div>
-            <img class="img" src="@/assets/PersonalSummary.png" alt="">
+            <img class="img" src="@/assets/PersonalSummary.webp" alt="">
         </div>
         <div class="bmi-card">
             <!-- 标题 -->
@@ -96,7 +96,7 @@ const currentColor = computed(() => {
             <div class="btn-container">
                 <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="push()">
                     <div>{{ pageText.continue }}</div>
-                    <img src="@/assets/select-item-icon.png">
+                    <img src="@/assets/select-item-icon.webp">
                 </div>
             </div>
         </div>

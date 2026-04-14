@@ -24,7 +24,7 @@ const isDisabled = computed(() => selectData.value === null)
 function updateRefs(refs) {
   selectItemRefs.value = refs
   // refs获取后插入dom
-  const iconUrl = new URL('@/assets/glass.png', import.meta.url).href
+  const iconUrl = new URL('@/assets/glass.webp', import.meta.url).href
   const icon = `<img src="${iconUrl}">`
   if (refs.length) {
     refs.forEach((ref, index) => {
@@ -70,7 +70,7 @@ function goIt() {
       <div :class="'continue-btn ' + (isDisabled?'disabled':'')" @click="goIt">
         <div class="spacer"></div>
         <div>{{ pageText.continue }}</div>
-        <img src="@/assets/continue-icon.png">
+        <img src="@/assets/continue-icon.webp">
       </div>
     </div>
   </div>
