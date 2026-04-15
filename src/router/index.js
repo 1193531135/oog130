@@ -5,6 +5,8 @@ import { pageConfig } from "@/config.js"
 // 引入模板
 
 const autoRegisterList = Object.keys(pageConfig).filter(i => pageConfig[i]).map((name) => {
+    // 留一个预加载的口子
+    const loader = pageConfig[name].module
     // 创建模板壳子
     const component = defineComponent({
         setup() {
@@ -24,7 +26,10 @@ const autoRegisterList = Object.keys(pageConfig).filter(i => pageConfig[i]).map(
         path: '/' + name[0].toLowerCase() + name.substring(1),
         name,
         component,
-        config: pageConfig[name].config
+        config: pageConfig[name].config,
+        meta:{
+            preload:loader
+        }
     }
 })
 

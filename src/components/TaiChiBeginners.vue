@@ -1,9 +1,10 @@
 <script setup>
 import {ref} from 'vue'
 import Select from './module/select.vue'
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
+const pushControl = new PushControl()
 
 const route = useRoute()
 const pageText = window.languageData[route.name]
@@ -16,7 +17,7 @@ function change(val){
   // 存储数据
   pageData.set(route.name,val)
   //
-  push()
+  pushControl.push()
 }
 </script>
 

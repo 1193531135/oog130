@@ -1,5 +1,5 @@
 <script setup>
-import { ref,onMounted,computed } from "vue";
+import { ref,onMounted,computed,watch } from "vue";
 import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
@@ -8,6 +8,11 @@ const loaded = ref(false);
 const route = useRoute()
 
 const routeIndex = computed(() => registerList.findIndex(i=> i.path === route.path) )
+
+// watch(routeIndex, (newVal) => {
+//   // 路由变化时预加载下一个页面
+//   registerList[newVal + 1]?.meta.preload()
+// })
 
 // 加载资源
 async function loadResources() {

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   base: './',
   build:{
-    outDir: 'oog130_ad',
+    outDir: 'oog126_ad',
   },
   resolve: {
     alias: {

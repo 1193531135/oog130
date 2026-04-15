@@ -2,8 +2,8 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
-
+import { PushControl } from '@/tool/index.js'
+const pushControl = new PushControl()
 const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
@@ -39,7 +39,7 @@ function handleAnimationEnd() {
 }
 
 function change(val) {
-    push()
+    pushControl.push()
 }
 </script>
 <template>

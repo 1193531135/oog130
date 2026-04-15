@@ -1,8 +1,9 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { ref } from 'vue'
+const pushControl = new PushControl()
 
 const pageData = new PageData()
 pageData
@@ -12,7 +13,7 @@ const pageText = window.languageData[route.name]
 
 function change(val) {
     pageData.set(route.name, email.value)
-    push()
+    pushControl.push()
 }
 const isDisabled = ref(!pageData[route.name])
 const email = ref(pageData[route.name] || '')

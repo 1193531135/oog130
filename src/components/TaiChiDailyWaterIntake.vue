@@ -3,8 +3,8 @@ import {ref, useSlots, onMounted, computed} from "vue";
 import {PageData} from "@/tool/index.js";
 import Select from "@/components/module/select.vue";
 import {useRoute} from "vue-router";
-import {push} from "@/tool/index.js";
-
+import {PushControl} from "@/tool/index.js";
+const pushControl = new PushControl()
 const pageData = new PageData()
 const route = useRoute()
 const selectItemRefs = ref([])
@@ -51,7 +51,7 @@ function change(val) {
 }
 
 function goIt() {
-  push()
+  pushControl.push()
 }
 </script>
 

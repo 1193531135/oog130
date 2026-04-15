@@ -1,9 +1,10 @@
 <script setup>
 import {computed, ref} from 'vue'
 import Select from './module/select.vue'
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import {PageData} from "@/tool/index.js";
 import {useRoute} from 'vue-router'
+const pushControl = new PushControl()
 
 const route = useRoute()
 const pageData = new PageData()
@@ -26,7 +27,7 @@ const props = defineProps({
 const isDisabled = computed(() => props.multiple ? !selectValue.value.length : selectValue.value === null)
 
 function goIt() {
-  props.handleNextStep ? props.handleNextStep(selectData.value) : push()
+  props.handleNextStep ? props.handleNextStep(selectData.value) : pushControl.push()
 }
 
 function change(val) {
@@ -72,7 +73,7 @@ function change(val) {
     font-family: Laien,serif;
     font-weight: 700;
     text-align: center;
-    height: 156px;
+    margin-bottom: 24px;
   }
   :deep(.select){
     flex-direction: row;

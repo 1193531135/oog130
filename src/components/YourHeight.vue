@@ -1,8 +1,9 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
+const pushControl = new PushControl()
 
 const pageData = new PageData()
 const route = useRoute()
@@ -18,7 +19,7 @@ function change(val) {
         unit: unit.value,
         height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
     })
-    push()
+    pushControl.push()
 }
 
 

@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
+const pushControl = new PushControl()
 
 const route = useRoute()
 const pageText = window.languageData[route.name]
@@ -18,7 +19,7 @@ function change(val) {
   // 存储数据
   pageData.set(route.name, hopeDate.value)
   //
-  push()
+  pushControl.push()
 }
 const validate = () => {
   let val = hopeDate.value.replace(/\D/g, '').length

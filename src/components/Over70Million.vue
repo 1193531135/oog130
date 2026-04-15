@@ -1,12 +1,13 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
+const pushControl = new PushControl()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 
 function change(){
   //
-  push()
+  pushControl.push()
 }
 </script>
 

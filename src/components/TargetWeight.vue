@@ -1,8 +1,9 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
+const pushControl = new PushControl()
 
 
 
@@ -24,7 +25,7 @@ function change(val) {
         weight: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
 
     })
-    push()
+    pushControl.push()
 }
 
 

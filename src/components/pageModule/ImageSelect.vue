@@ -3,8 +3,8 @@ import {ref, useSlots, onMounted, computed} from "vue";
 import {PageData} from "@/tool/index.js";
 import Select from "@/components/module/select.vue";
 import {useRoute} from "vue-router";
-import { push } from "@/tool/index.js";
-
+import { PushControl } from "@/tool/index.js";
+const pushControl = new PushControl()
 const pageData = new PageData()
 const route = useRoute()
 
@@ -41,7 +41,7 @@ function change(val) {
 }
 
 function goIt() {
-  props.handleNextStep ? props.handleNextStep(selectData.value) : push()
+  props.handleNextStep ? props.handleNextStep(selectData.value) : pushControl.push()
 }
 </script>
 
@@ -86,8 +86,13 @@ function goIt() {
     display: flex;
     align-items: flex-start;
     gap: 32px;
-    .select-con,.content-image{
+    .select-con{
       max-width: 376px;
+      max-height: 504px;
+    }
+    .content-image{
+      width: 376px;
+      height: 504px;
     }
     .select-con{
       display: flex;
@@ -95,15 +100,6 @@ function goIt() {
       flex-direction: column;
       justify-content: space-between;
     }
-    ///deep/ .select {
-    //  width: 328px;
-    //  margin-bottom: 32px;
-    //  //预设11px padding
-    //  .select-item {
-    //    padding-top: 11px;
-    //    padding-bottom: 13px;
-    //  }
-    //}
     .content-image{
       img{
         object-fit: contain;

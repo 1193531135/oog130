@@ -1,8 +1,8 @@
 <script setup>
 import { computed, ref } from "vue"
 import { useRoute } from "vue-router"
-import { PageData, push } from "@/tool/index.js"
-
+import { PageData, PushControl } from "@/tool/index.js"
+const pushControl = new PushControl()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
@@ -51,7 +51,7 @@ function goIt() {
   if (isDisabled.value) {
     return
   }
-  push()
+  pushControl.push()
 }
 </script>
 

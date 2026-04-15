@@ -1,8 +1,9 @@
 <script setup>
 import LineChart from "@/components/module/LineChart.vue";
 import {ref} from "vue";
-import {PageData, push} from "@/tool/index.js";
+import {PageData, PushControl} from "@/tool/index.js";
 import {useRoute} from "vue-router";
+const pushControl = new PushControl()
 
 const route = useRoute()
 const data = ref([])
@@ -19,7 +20,7 @@ data.value[1].value = pageData["CurrentWeight"]
 data.value[2].value = pageData["TargetWeight"]
 
 function change() {
-  push()
+  pushControl.push()
 }
 
 </script>

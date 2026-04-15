@@ -2,15 +2,15 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
-
+import { PushControl } from '@/tool/index.js'
+const pushControl = new PushControl()
 const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 
 
 function change(val) {
-    push()
+    pushControl.push()
 }
 // 进度值（可动态修改，0-100）
 const progress = ref(0)

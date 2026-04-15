@@ -1,8 +1,13 @@
 // Function 模式默认隐藏进度条
-import {push} from "@/tool/index.js";
 import {PageData} from "@/tool/index.js";
 
 const images = import.meta.glob('@/assets/image/*', { eager: true })
+
+// 预加载图片
+Object.values(images).forEach((src) => {
+    const img = new Image()
+    img.src = src.default
+})
 
 const textSelectDefaultConfig = {
     module: () => import("@/components/pageModule/TextSelect.vue"),

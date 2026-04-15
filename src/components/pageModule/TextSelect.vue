@@ -3,8 +3,8 @@ import {ref, useSlots, onMounted, computed} from "vue";
 import {PageData} from "@/tool/index.js";
 import Select from "@/components/module/select.vue";
 import {useRoute} from "vue-router";
-import { push } from "@/tool/index.js";
-
+import { PushControl } from "@/tool/index.js";
+const pushControl = new PushControl()
 const pageData = new PageData()
 const route = useRoute()
 
@@ -38,7 +38,7 @@ function change(val) {
 }
 
 function goIt() {
-  props.handleNextStep ? props.handleNextStep(selectData.value) : push()
+  props.handleNextStep ? props.handleNextStep(selectData.value) : pushControl.push()
 }
 </script>
 
@@ -72,7 +72,6 @@ function goIt() {
     font-size: 40px;
     font-weight: 700;
     margin-bottom: 24px;
-    height: 112px;
   }
   .btn-container {
     position: fixed;

@@ -1,9 +1,10 @@
 <script setup>
 import {useRoute} from 'vue-router'
 import {PageData} from "@/tool/index.js";
-import {push} from '@/tool/index.js'
+import {PushControl} from '@/tool/index.js'
 import {ref, computed, onMounted, nextTick} from 'vue'
 import dayjs from 'dayjs';
+const pushControl = new PushControl()
 
 const pageData = new PageData()
 const route = useRoute()
@@ -23,7 +24,7 @@ function change(val) {
 }
 
 function goIt() {
-  push()
+  pushControl.push()
 }
 
 const open = ref(false)

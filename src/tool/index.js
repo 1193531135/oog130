@@ -1,6 +1,5 @@
 import queryString from 'querystring';
 import { router,registerList } from "@/router/index.js";
-
 export function readLanguage() {
   const lang = queryString.parse(window.location.search).lang || "en"
   console.log("Language: " + lang)
@@ -21,12 +20,16 @@ export class PageData  {
 }
 
 //全局跳转判定
-export function push(path){
-  console.log("push", path)
-  const route = router.currentRoute.value.fullPath
-  const pushUrl = registerList[registerList.findIndex(i=> i.path === route) + 1].path
-  // 触发太快延迟触发
-  setTimeout(()=>{
-    router.push(path || pushUrl)
-  },100)
+export class PushControl{
+  constructor() {
+    this.isPushing = false
+  }
+  async push(path){
+    console.log("push", path)
+    const route = router.currentRoute.value.fullPath;
+    const nextRoute = registerList[registerList.findIndex(i=> i.path === route) + 1]
+    const pushUrl = nextRoute.path
+    await nextRoute.meta.preload()
+    await router.push(path || pushUrl)
+  }
 }

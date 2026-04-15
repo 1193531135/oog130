@@ -1,9 +1,10 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { ref } from 'vue'
 import Select from './module/select.vue'
+const pushControl = new PushControl()
 
 const pageData = new PageData()
 const route = useRoute()
@@ -13,7 +14,7 @@ const options = pageText.selectOptions.map((i, index) => ({ label: i, value: ind
 
 function change(val) {
     pageData.set(route.name, val)
-    push()
+    pushControl.push()
 }
 
 

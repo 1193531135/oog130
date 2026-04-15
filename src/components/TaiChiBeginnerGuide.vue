@@ -1,8 +1,8 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
-
+import { PushControl } from '@/tool/index.js'
+const pushControl = new PushControl()
 const pageData = new PageData()
 pageData
 const route = useRoute()
@@ -14,7 +14,7 @@ viewMode = viewMode === 0 ? 0 : 1
 
 function change(val) {
   console.log(val)
-  push()
+  pushControl.push()
 }
 console.log(pageText, viewMode)
 </script>

@@ -1,9 +1,10 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
-import { push } from '@/tool/index.js'
+import { PushControl } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 import Select from './module/select.vue'
+const pushControl = new PushControl()
 
 const selectValue = ref(null)
 const isDisabled = ref(true)
@@ -94,7 +95,7 @@ const currentColor = computed(() => {
         </div>
         <div class="btn">
             <div class="btn-container">
-                <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="push()">
+                <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="pushControl.push()">
                     <div>{{ pageText.continue }}</div>
                     <img src="@/assets/select-item-icon.webp">
                 </div>
