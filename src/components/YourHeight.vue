@@ -390,7 +390,7 @@ onMounted(() => {
         box-sizing: border-box;
         padding: 16px;
         border-radius: 8px;
-        background: #EBF0F9;
+        background: #EDF0F3;
 
 
 

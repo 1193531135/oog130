@@ -53,7 +53,7 @@ console.log(pageText, viewMode)
 
 .img {
   margin-top: 20px;
-  width: 410px;
+  width: 100%;
 }
 
 .title {
@@ -90,7 +90,7 @@ console.log(pageText, viewMode)
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  padding: 16px 16px 12px;
+  padding: 16px 16px 32px;
 }
 
 @media (max-width: 600px) {

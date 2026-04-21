@@ -61,7 +61,7 @@ function change(val) {
   font-family: Laien;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 34px;
+  margin-bottom: 96px;
 }
 
 .page-con {
