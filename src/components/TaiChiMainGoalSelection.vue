@@ -117,12 +117,12 @@ function goIt() {
   }
   .btn-container {
     position: fixed;
-    height: 100px;
+    // height: auto;
     bottom: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    padding: 16px 16px 12px;
+    padding: 16px 16px 32px;
   }
 }
 
