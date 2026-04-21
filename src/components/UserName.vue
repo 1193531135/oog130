@@ -230,7 +230,18 @@ const focusInput = () => {
         .promptBox {
             width: 100%;
         }
+              .input-wrapper {
+            .input-text {
+                font-size: 14px;
+                .unit{
+                    min-width: 25px;
+                }
+            }
+            .input{
+                font-size: 14px;
+            }
 
+        }
         .title {
             width: 100%;
         }

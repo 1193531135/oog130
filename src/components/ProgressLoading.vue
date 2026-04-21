@@ -78,8 +78,8 @@ onMounted(() => {
 }
 .progress-container {
     position: relative;
-    width: 149px;
-    height: 149px;
+    width: 200px;
+    height: 200px;
     /* background-color: #222222; */
     border-radius: 50%;
     display: flex;
@@ -115,6 +115,6 @@ onMounted(() => {
     margin-top: 16px;
     font-size: 20px;
     font-weight: 500;
-    font-family: Laient, sans-serif;
+    /* font-family: Laient, sans-serif; */
 }
 </style>

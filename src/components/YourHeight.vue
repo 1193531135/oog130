@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 const pushControl = new PushControl()
 
 const pageData = new PageData()
@@ -92,6 +92,8 @@ const onInput = (e) => {
             placeholder_1.value = ''
             placeholder_2.value = ''
             e.target.value = height.value
+        } else {
+            e.target.value = height.value
         }
     }
     // 实时验证
@@ -112,7 +114,6 @@ const validate1 = () => {
     }
 }
 const onInput1 = (e) => {
-    console.log('正在输入：', e.target.value)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
@@ -120,7 +121,6 @@ const onInput1 = (e) => {
     // 实时验证
     validate1()
 }
-
 // 单位切换时重置所有状态
 watch(unit, () => {
     isError.value = false
@@ -139,6 +139,15 @@ const focusInput = () => {
         inputRef.value.focus()
     }
 }
+onMounted(() => {
+    if (unit.value === 'ft/in') {
+        const inputDom = inputRef.value
+        console.log('inputDom', inputDom)
+        inputDom.value = pageData[route.name]?.height
+        inputRef.value.dispatchEvent(new Event('input'))
+    }
+})
+
 </script>
 
 <template>
@@ -162,8 +171,7 @@ const focusInput = () => {
             error: isError,
             focus: isFocused
         }" v-if="unit === 'ft/in'">
-            <input ref="inputRef" @keydown.delete="onDelete" @input="onInput" class="input" placeholder=""
-                @focus="isFocused = true" />
+            <input ref="inputRef" @input="onInput" class="input" placeholder="" @focus="isFocused = true" />
             <div class="input-text">
                 <span>{{ height }}</span>
                 <span class="placeholder">{{ placeholder_1 }}</span>
@@ -382,7 +390,7 @@ const focusInput = () => {
         box-sizing: border-box;
         padding: 16px;
         border-radius: 8px;
-        background: #EDF0F3;
+        background: #EBF0F9;
 
 
 
@@ -436,6 +444,21 @@ const focusInput = () => {
 
         .inputLable {
             font-size: 16px;
+        }
+
+        .input-wrapper {
+            .input-text {
+                font-size: 14px;
+
+                .unit {
+                    min-width: 25px;
+                }
+            }
+
+            .input {
+                font-size: 14px;
+            }
+
         }
 
         .input-text {

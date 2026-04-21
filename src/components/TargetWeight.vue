@@ -379,7 +379,7 @@ const focusInput = () => {
         box-sizing: border-box;
         padding: 16px;
         border-radius: 8px;
-        background: #EDF0F3;
+        background: #EBF0F9;
 
 
         .texBox-top {
@@ -437,8 +437,17 @@ const focusInput = () => {
         .lable {
             width: 80vw;
         }
-        .unit-switch{
-            margin-top: 20px;
+        .input-wrapper {
+            .input-text {
+                font-size: 14px;
+                .unit{
+                    min-width: 25px;
+                }
+            }
+            .input{
+                font-size: 14px;
+            }
+
         }
         .inputLable{
             margin-top: 32px;
