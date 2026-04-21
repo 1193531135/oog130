@@ -151,7 +151,8 @@ function goIt() {
     padding: 0 16px 100px;
     width: auto;
     .title {
-      font-size: 28px
+      font-size: 28px;
+      margin-bottom: 0px;
     }
   }
 }

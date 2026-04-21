@@ -77,7 +77,7 @@ function goIt() {
   align-items: center;
   .title {
     max-width: 488px;
-    font-family: Laien, serif;
+    // font-family: , serif;
     font-size: 40px;
     font-weight: 700;
     margin-bottom: 24px;
@@ -117,7 +117,7 @@ function goIt() {
     width: 100%;
     .title {
       font-size: 28px;
-      margin-bottom: 22px;
+      margin-bottom: 64px;
     }
     .content-con{
       width: 100%;

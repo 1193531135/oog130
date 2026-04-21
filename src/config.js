@@ -5,7 +5,7 @@ const images = import.meta.glob('@/assets/image/*', { eager: true })
 
 // 预加载图片
 Object.values(images).forEach((src) => {
-    const img = new Image()
+    const img = new Image() 
     img.src = src.default
 })
 
@@ -117,6 +117,7 @@ const config = {
         props(content) {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
+            content.imageOffset = ['-30px',0]
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
             content.imgUrl = images[`/src/assets/image/taiChiTrainingFrequency-bg-${male}.webp`]?.default
             return content
@@ -128,6 +129,7 @@ const config = {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
             content.options = content.selectOptions.map((i, index) => ({label: i, value: index}))
+            
             content.imgUrl = images[`/src/assets/image/taiChiWalkingFrequency-bg-${male}.webp`]?.default
             return content
         }

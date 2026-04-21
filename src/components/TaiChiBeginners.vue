@@ -124,7 +124,7 @@ function change(val){
         left: 110px;
         width: auto;
         .select {
-          font-size: 15px;
+          // font-size: 15px;
           /deep/ .select-item {
             padding-left: 16px;
             padding-right: 12px;

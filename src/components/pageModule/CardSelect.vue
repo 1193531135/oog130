@@ -93,6 +93,7 @@ function change(val) {
   }
   .title {
     font-size: 30px;
+    margin-bottom: 64px;
   }
 }
 
