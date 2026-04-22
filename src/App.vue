@@ -4,11 +4,11 @@ import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
 import { getFirestoreDataByUid, createAnonymousAccount } from "@/utils/firebase"
+import  { getPriceList } from "@/api/system"
 import config from "@/config/index.js";
 
 const loaded = ref(false);
 const route = useRoute()
-
 const routeIndex = computed(() => registerList.findIndex(i=> i.path === route.path) )
 
 // watch(routeIndex, (newVal) => {
@@ -31,6 +31,7 @@ const back = () => {
 
 onMounted(async () => {
   const uid = await createAnonymousAccount();
+  sessionStorage.setItem("uid",uid);
   // const fetchedData = await getFirestoreDataByUid();
   loadResources();
   // if (fetchedData) {
