@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.2.6",
+    "axios": "^1.15.1",
     "dayjs": "^1.11.20",
     "echarts": "^6.0.0",
+    "firebase": "^12.12.1",
+    "mixpanel-browser": "^2.78.0",
     "pinia": "^3.0.4",
     "querystring": "^0.2.1",
+    "sha1": "^1.1.1",
     "vue": "^3.5.30",
     "vue-router": "^4.6.4"
   },
