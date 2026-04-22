@@ -67,17 +67,31 @@
   "TaiChiCurrentBodyType": {
     "title": "Choose your current body type",
     "selectOptions": [
-      "Skinny",
-      "Average",
-      "Overweight"
+      [
+        "Skinny",
+        "Average",
+        "Overweight"
+      ],
+      [
+        "Regular",
+        "Rounded",
+        "Full"
+      ]
     ]
   },
   "TaiChiTargetBodyType": {
     "title": "Choose a target body type",
     "selectOptions": [
-      "Fit",
-      "Bulk",
-      "Extra bulk"
+      [
+        "Fit",
+        "Bulk",
+        "Extra bulk"
+      ],
+      [
+        "Regular",
+        "Fit",
+        "Athletic"
+      ]
     ]
   },
   "TaiChiBestShapeCheck": {
@@ -418,7 +432,7 @@
         "text": "Strength training stimulates testosterone production at any age. Maximize your results by fueling your body with a protein-rich diet."
       }
     ],
-    "lose":[
+    "lose": [
       {
         "title": [
           "🏆",

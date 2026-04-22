@@ -42,7 +42,7 @@ const config = {
         props(content) {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
-            content.options = content.selectOptions.map((i, index) => ({
+            content.options = content.selectOptions[pageData.ChooserGender].map((i, index) => ({
                 label: i, value: index,
                 imgUrl: images[`/src/assets/image/taiChiCurrentBodyType-${male}-${index}.webp`]?.default
             }))
@@ -54,7 +54,7 @@ const config = {
         props(content) {
             const pageData = new PageData()
             const male = pageData["ChooserGender"] || 0
-            content.options = content.selectOptions.map((i, index) => ({
+            content.options = content.selectOptions[pageData.ChooserGender].map((i, index) => ({
                 label: i, value: index,
                 imgUrl: images[`/src/assets/image/taiChiTargetBodyType-${male}-${index}.webp`]?.default
             }))

@@ -44,7 +44,8 @@ console.log(pageText, viewMode)
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 660px;
+    max-width: 900px
+    ;
 }
 
 .img {
@@ -53,7 +54,7 @@ console.log(pageText, viewMode)
 }
 
 .title {
-    
+
     width: 100%;
     text-align: center;
 }
@@ -62,21 +63,25 @@ console.log(pageText, viewMode)
     margin-top: 16px;
     width: 100%;
     text-align: center;
+
+    span {
+        font-size: 24px;
+    }
 }
 
 .descriptionBox {
     width: 100%;
     margin-top: 20px;
     display: flex;
-
     padding: 16px;
     align-items: center;
     gap: 12px;
     background-color: #EDF0F3;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 24px;
     color: #959799;
     box-sizing: border-box;
+
 }
 
 .btn-container {

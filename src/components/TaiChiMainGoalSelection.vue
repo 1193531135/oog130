@@ -90,6 +90,7 @@ function goIt() {
     font-weight: 700;
   }
   .content-con{
+    margin-top: 44px;
     display: flex;
     align-items: end;
     gap: 32px;
