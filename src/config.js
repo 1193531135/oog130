@@ -198,6 +198,17 @@ const config = {
     },
     ProgressLoading: {
         module: () => import('@/components/ProgressLoading.vue')
+    },
+    Superwall: {
+        module: () => import('@/components/Superwall.vue'),
+        props(content){
+            const pageData = new PageData()
+            const male = pageData["ChooserGender"] || 0
+            content.bgImageList = [
+                images[`/src/assets/image/superwall_img1_${male}.png`]?.default
+            ]
+            return content
+        }
     }
     
 }
