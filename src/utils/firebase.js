@@ -1,6 +1,6 @@
 // 参考文档：https://firebase.google.cn/docs/web/setup?hl=zh-cn
 import webConfig from "@/config/index.js"
-import { mergeMixpanelInfo } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import { mergeMixpanelInfo } from "@/utils/mixpanel"
 // import store from "@/store";
 // import utils from "./utils";
