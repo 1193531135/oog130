@@ -6,9 +6,9 @@ import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 import { getSubscriptionList } from '@/api/system/index.js'
 const pushControl = new PushControl()
-getSubscriptionList().then(res => {
-    console.log(res)
-})
+// getSubscriptionList().then(res => {
+//     console.log(res)
+// })
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
@@ -94,6 +94,7 @@ function change(val) {
         <div class="box2">
             <div class="box2-bml"></div>
         </div>
+        <div class="box6"></div>
     </div>
 </template>
 
@@ -245,6 +246,13 @@ function change(val) {
             width: 100%;
             padding: 40px 56px;
         }
+    }
+
+    .box6 {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 40px;
+        background: #fff;
     }
 }
 
