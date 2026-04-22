@@ -3,6 +3,7 @@ import { ref,onMounted,computed,watch } from "vue";
 import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
+import { getFirestoreDataByUid, createAnonymousAccount } from "@/utils/firebase"
 
 const loaded = ref(false);
 const route = useRoute()
@@ -27,8 +28,13 @@ const back = () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   loadResources();
+  await createAnonymousAccount();
+  const fetchedData = await getFirestoreDataByUid(anonymousId);
+  if (fetchedData) {
+    console.log('updateOnBoardingRecordInfo', fetchedData);
+  }
 })
 </script>
 
