@@ -4,6 +4,7 @@ import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
 import { getFirestoreDataByUid, createAnonymousAccount } from "@/utils/firebase"
+import config from "@/config/index.js";
 
 const loaded = ref(false);
 const route = useRoute()
@@ -29,12 +30,12 @@ const back = () => {
 }
 
 onMounted(async () => {
+  const uid = await createAnonymousAccount();
+  // const fetchedData = await getFirestoreDataByUid();
   loadResources();
-  await createAnonymousAccount();
-  const fetchedData = await getFirestoreDataByUid(anonymousId);
-  if (fetchedData) {
-    console.log('updateOnBoardingRecordInfo', fetchedData);
-  }
+  // if (fetchedData) {
+  //   console.log('updateOnBoardingRecordInfo', fetchedData);
+  // }
 })
 </script>
 

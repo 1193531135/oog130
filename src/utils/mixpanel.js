@@ -105,7 +105,7 @@ export function setmMxpanelUserValue(key, value) {
     mixpanel.people.set(info)
 }
 //合并mixpanel数据
-export async function mergeMixpanelinfo(oldDeviceId) {
+export async function mergeMixpanelInfo(oldDeviceId) {
     let deviceId = mixpanel.get_distinct_id();
     window.sessionStorage.setItem('mixpanelDeviceId', deviceId); // 存入缓存
     mixpanel.identify(oldDeviceId)

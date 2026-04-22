@@ -58,7 +58,7 @@ const sdkConfig = {
         stripeKey: "pk_live_51O5L81DOSX8YAb7RgMgytMC7ddW6L3CLBm5FOMAX8xh00VbRiqTvrM4YDdjz2kqZgRjRL528hXMmgMXdzykOTnoZ00ws1Rin9J",
     },
     mixpanelConfig: {
-        token: 'f08461e6397f672c7013ae0cdd367a45',
+        token: '8e421c1766dbac58409eaa3453dbefeb',
         onboardingEventKey: 'OB',
         homePageEventKey: '1st',
         purchaseKey: 'OB',
