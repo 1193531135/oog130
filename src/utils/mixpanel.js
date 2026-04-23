@@ -46,6 +46,7 @@ export default class Mixpanel {
         if (oldDeviceId != deviceId) {
             await mergeMixpanelData(oldDeviceId, deviceId)
         }
+
     }
 }
 
