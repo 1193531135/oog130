@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted,computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
 import { PushControl } from '@/tool/index.js'
@@ -42,6 +42,21 @@ function change(val) {
     pushControl.push()
 }
 
+//BMI计算
+// 基础数据
+const currentBmi = 21.3
+const standardBmi = 21.5
+
+// BMI 区间范围（可按需修改）
+const MIN_BMI = 15
+const MAX_BMI = 40
+
+// 计算滑块百分比位置
+const thumbPosition = computed(() => {
+    const percent = ((currentBmi - MIN_BMI) / (MAX_BMI - MIN_BMI)) * 100
+    // 限制滑块不超出轨道边界
+    return Math.max(0, Math.min(100, percent))
+})
 
 //lottie动画
 // 配置项
@@ -98,11 +113,11 @@ onMounted(() => {
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
     })
-    setTimeout(() => {
-        console.log('显示抽奖弹窗')
-        isShow.value = true
-        anim?.play()
-    }, 5000)
+    // setTimeout(() => {
+    //     console.log('显示抽奖弹窗')
+    //     isShow.value = true
+    //     anim?.play()
+    // }, 5000)
 })
 
 // 销毁时清理
@@ -191,7 +206,38 @@ function ButtonClick() {
         </div>
         <div class="title">{{ pageText.title }}</div>
         <div class="box2">
-            <div class="box2-bml"></div>
+            <div class="box2-bml">
+                <!-- BMI 数值标题 -->
+                <div class="bmi-header">
+                    <p class="label">Current BMI</p>
+                    <div class="value-row">
+                        <p class="bmi-value">{{ currentBmi }} BMI</p>
+                        <p class="normal-mark">Normal <span class="diff">-{{ standardBmi }}</span></p>
+                    </div>
+                </div>
+
+                <!-- 彩色进度条轨道 + 滑块 -->
+                <div class="slider-wrapper">
+                    <div class="slider-track"></div>
+                    <div class="slider-thumb" :style="{ left: thumbPosition + '%' }"></div>
+                </div>
+
+                <!-- 左右两端标签 -->
+                <div class="scale-labels">
+                    <span>Underweight</span>
+                    <span>Obese</span>
+                </div>
+
+                <!-- 底部状态说明卡片 -->
+                <div class="status-card">
+                    <h2 class="status-title">Normal</h2>
+                    <p class="status-desc">
+                        The body mass index (BMI) is a measure that uses your height and weight to work out if your
+                        weight is healthy.
+                    </p>
+                </div>
+
+            </div>
         </div>
         <div class="box6">
             <div class="box6-left">
@@ -509,10 +555,123 @@ function ButtonClick() {
 
     .box2 {
         width: 100%;
+        margin-top: 32px;
 
         .box2-bml {
             width: 100%;
             padding: 40px 56px;
+            border-radius: 8px;
+            background: #fff;
+            box-sizing: border-box;
+
+            .bmi-header .label {
+                text-align: left;
+                font-family: Poppins;
+                font-size: 16px;
+                color: #959799;
+                font-weight: 500;
+            }
+
+            .value-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+            }
+
+            .bmi-value {
+                font-family: Poppins;
+                font-size: 32px;
+                font-weight: 600;
+                color: #242424;
+            }
+
+            .normal-mark {
+                font-family: Poppins;
+                font-size: 15px;
+                font-weight: 500;
+                color: #242424;
+            }
+
+            .normal-mark span {
+                color: #1677ff;
+            }
+
+            /* 彩色渐变轨道 */
+            .slider-wrapper {
+                position: relative;
+                height: 12px;
+                margin: 40px 0 16px;
+            }
+
+            .slider-track {
+                width: 100%;
+                height: 100%;
+                border-radius: 12px;
+                background: linear-gradient(90deg,
+                        #409eff 0%,
+                        #36d399 30%,
+                        #51e85b 45%,
+                        #f9a826 70%,
+                        #ff5549 100%);
+            }
+
+            /* 滑块 */
+            .slider-thumb {
+                position: absolute;
+                top: 50%;
+                width: 32px;
+                height: 32px;
+                transform: translate(-50%, -50%);
+                background: rgba(100, 180, 255, 0.3);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .slider-thumb::after {
+                content: '';
+                width: 20px;
+                height: 20px;
+                background: #2563eb;
+                border-radius: 50%;
+                border: 3px solid #fff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                box-sizing: border-box;
+            }
+
+            /* 刻度文字 */
+            .scale-labels {
+                display: flex;
+                justify-content: space-between;
+                font-family: Poppins;
+                font-size: 14px;
+                font-weight: 500;
+                color: #959799;
+                margin-bottom: 14px;
+            }
+
+            /* 底部状态卡片 */
+            .status-card {
+                background: #f8f8f8;
+                padding: 16px;
+                border-radius: 8px;
+                text-align: left;
+            }
+
+            .status-title {
+                color: #1CB647;
+                font-family: Poppins;
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            .status-desc {
+                color: #959799;
+                font-family: Poppins;
+                font-size: 16px;
+                font-weight: 500;
+            }
         }
     }
 
