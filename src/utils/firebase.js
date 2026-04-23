@@ -1,7 +1,7 @@
 // 参考文档：https://firebase.google.cn/docs/web/setup?hl=zh-cn
 import webConfig from "@/config/index.js"
 import { initializeApp } from 'firebase/app';
-import { mergeMixpanelInfo } from "@/utils/mixpanel"
+// import { mergeMixpanelInfo } from "@/utils/mixpanel"
 // import store from "@/store";
 // import utils from "./utils";
 import {
@@ -38,7 +38,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user && !user.isAnonymous) {
         try {
             // 更新用户信息到 Vuex Store 并处理分析数据
-            mergeMixpanelInfo(user.uid);
+            // mergeMixpanelInfo(user.uid);
             // store.commit("updateuserInfo", user);
             // const userData = await getFirestoreDataByUid(user.uid);
             // if (userData?.isDeletedAccount) {

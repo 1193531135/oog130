@@ -6,6 +6,7 @@ import { registerList } from "@/router/index.js";
 import { getFirestoreDataByUid, createAnonymousAccount } from "@/utils/firebase"
 import  { getPriceList } from "@/api/system"
 import config from "@/config/index.js";
+import Mixpanel from "@/utils/mixpanel"
 
 const loaded = ref(false);
 const route = useRoute()
@@ -30,8 +31,12 @@ const back = () => {
 }
 
 onMounted(async () => {
+  // 创建匿名账号
   const uid = await createAnonymousAccount();
   sessionStorage.setItem("uid",uid);
+  // 初始化mixpanel
+  const mixpanel = new Mixpanel();
+  mixpanel.init();
   // const fetchedData = await getFirestoreDataByUid();
   loadResources();
   // if (fetchedData) {
