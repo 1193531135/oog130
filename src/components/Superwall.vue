@@ -6,7 +6,8 @@ import { PushControl } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 import { getPriceList } from '@/api/system/index.js'
-import superwall_lottie1 from '../assets/json/superwall_lottie1.json'
+import animationData from '../assets/json/superwall_lottie1.json'
+import animationData1 from '../assets/json/superwall_lottie2.json'
 const pushControl = new PushControl()
 const uid = sessionStorage.getItem("uid");
 const route = useRoute()
@@ -22,8 +23,12 @@ const discount = ref(false)
 const productList = ref([])
 // 容器 DOM
 const lottieContainer = ref(null)
+const lottieContainer1 = ref(null)
 // 存储 lottie 实例
 let anim = null
+let anim1 = null
+//控制轮盘显示
+const isShow = ref(false)
 
 
 getPriceList(uid, { uid, lpId: '' }).then(res => {
@@ -44,44 +49,77 @@ const lottieOptions = {
     container: lottieContainer.value,
     renderer: 'svg', // 渲染方式：svg / canvas / html
     loop: false, // 是否循环
-    autoplay: false, // 自动播放
+    autoplay: true, // 自动播放
     // 动画资源：可以是本地JSON / 在线URL
-    path: superwall_lottie1,
+    animationData: animationData,
+}
+const lottieOptions1 = {
+    container: lottieContainer1.value,
+    renderer: 'svg', // 渲染方式：svg / canvas / html
+    loop: false, // 是否循环
+    autoplay: true, // 自动播放
+    // 动画资源：可以是本地JSON / 在线URL
+    animationData: animationData1,
 }
 // 挂载后初始化动画
 onMounted(() => {
-    initLottie()
+    if (!lottieContainer.value) return
+
+    anim = lottie.loadAnimation({
+        container: lottieContainer.value,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false, // 自动播放
+        animationData: animationData // 已经导入的JSON
+    })
+    anim1 = lottie.loadAnimation({
+        container: lottieContainer1.value,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false, // 自动播放
+        animationData: animationData1 // 已经导入的JSON
+    })
+
+    // 监听加载完成
+    anim.addEventListener('DOMLoaded', () => {
+        console.log('✅ Lottie 动画加载成功')
+        // anim.goToAndStop(50, true) // 跳到指定帧
+    })
+
+    // 监听动画开始
+    anim.addEventListener('data_ready', () => {
+        console.log('🎬 动画开始')
+    })
+
+    // 监听动画结束
+    anim.addEventListener('complete', () => {
+        console.log('🏁 动画播放完成')
+        anim1?.play()
+        discount.value = true
+        // 这里可以写关闭弹窗、执行后续逻辑
+    })
+    setTimeout(() => {
+        console.log('显示抽奖弹窗')
+        isShow.value = true
+        anim?.play()
+    }, 5000)
 })
 
 // 销毁时清理
 onUnmounted(() => {
     if (anim) anim.destroy()
 })
-
-// 初始化 Lottie
-const initLottie = () => {
-    anim = lottie.loadAnimation(lottieOptions)
-
-    // ==================== 核心：事件监听 ====================
-    // 动画开始触发
-    anim.addEventListener('data_ready', () => {
-        console.log('动画加载完成，准备开始')
-    })
-
-    // 动画每一次开始播放（包括循环）
-    anim.addEventListener('loopComplete', () => {
-        console.log('一轮动画播放完成')
-    })
-
-    // 动画播放结束（loop: false 时触发）
-    anim.addEventListener('complete', () => {
-        console.log('动画完全结束')
-        // 这里可以写结束后的业务逻辑
-    })
-
-    // ==================== 核心：跳转到指定帧（无动画） ====================
-    // goToFrame(帧数)
+function ButtonClick() {
+    if (discount.value) {
+        // 已经有折扣了，点击按钮应该是去结算或者关闭弹窗
+        isShow.value = false
+        console.log('去结算')
+    } else {
+        anim.goToAndStop(300, true)
+        // anim?.play()
+    }
 }
+
 
 </script>
 
@@ -307,14 +345,23 @@ const initLottie = () => {
         </div>
 
     </div>
-    <div class="mask">
+    <div class="mask" :class="isShow ? 'show' : ''">
         <div class="box">
             <div class="title">
                 <span>Spin & win</span>
                 <span class="blue">Your St. Patrick's Discount</span>
                 <span> - up to - 62% off</span>
             </div>
-            <div ref="lottieContainer" class="lottie-box"></div>
+            <div class="lottie-box">
+                <div ref="lottieContainer" class="lottie1"></div>
+
+            </div>
+            <div class="text" v-if="discount">*The discount will be added automatically to the first billing period
+            </div>
+            <div @click="ButtonClick" class="button">
+                {{ discount ? 'Get my discount' : 'Stop' }}
+            </div>
+            <div ref="lottieContainer1" class="lottie2"></div>
         </div>
     </div>
 </template>
@@ -781,6 +828,9 @@ const initLottie = () => {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: -1;
+    opacity: 0.5;
+    transition: all 0.3s ease;
 
     .box {
         position: absolute;
@@ -798,6 +848,14 @@ const initLottie = () => {
         border: 1.5px solid var(---OOG126-gray01, #EDF0F3);
         background: #FFF;
 
+        .lottie2 {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
         .title {
             color: var(---OOG126-black, #242424);
             text-align: center;
@@ -809,7 +867,43 @@ const initLottie = () => {
         .blue {
             color: #2E73E0;
         }
+
+        .lottie-box {
+            width: 440px;
+            height: 440px;
+            position: relative;
+
+            .lottie1 {
+                width: 100%;
+                height: 100%;
+            }
+
+        }
+
+        .text {
+            color: #959799;
+            text-align: center;
+            font-family: Poppins;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .button {
+            width: 100%;
+            border-radius: 8px;
+            background: #2E73E0;
+            padding: 22.5px 16px;
+            text-align: center;
+            color: #FFF;
+            position: relative;
+            z-index: 5;
+        }
     }
+}
+
+.show {
+    z-index: 999;
+    opacity: 1;
 }
 
 @media (max-width: 767px) {}
