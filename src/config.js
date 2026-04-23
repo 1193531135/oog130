@@ -206,7 +206,7 @@ const config = {
             const male = pageData["ChooserGender"] || 0
             content.bgImageList = [
                 images[`/src/assets/image/superwall_img1_${male}.png`]?.default,
-                '',
+                images[`/src/assets/image/superwall_img2_${male}.png`]?.default,,
                 images[`/src/assets/image/superwall_img5_${male}.png`]?.default,
 
             ]

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted,computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
 import { PushControl } from '@/tool/index.js'
@@ -238,6 +238,77 @@ function ButtonClick() {
                 </div>
 
             </div>
+            <div class="box2-bottom">
+                <div class="box2-bottom-left">
+                    <div class="recommend-tag">Recommended</div>
+                    <div class="card-header">
+                        <div class="icon-box">🍔</div>
+                        <div class="text-group">
+                            <p class="label">Daily calorie intake</p>
+                            <p class="value">1248 kcal</p>
+                        </div>
+                    </div>
+                    <!-- 卡路里进度条 -->
+                    <div class="slider-area">
+                        <div class="slider-track">
+                            <div class="slider-fill" :style="{ width: fillPercent + '%' }"></div>
+                            <div class="slider-thumb" :style="{ left: fillPercent + '%' }"></div>
+                        </div>
+                        <div class="scale">
+                            <span>1000 Kcal</span>
+                            <span>5000 Kcal</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box2-bottom-right">
+                    <div class="recommend-tag">Recommended</div>
+                    <div class="card-header">
+                        <div class="icon-box">💦</div>
+                        <div class="text-group">
+                            <p class="label">Daily water intake</p>
+                            <p class="value">1.8 L</p>
+                        </div>
+                    </div>
+                    <div class="cupBox">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="box3">
+            <div class="title">What you get</div>
+            <div class="box3-ul">
+                <div class="box3-li">
+                    <img class="box3-li-icon" src="../assets/image/suoerwall_icon_1.png" alt="">
+                    <div class="text-group">
+                        <p class="label">Tai Chi program</p>
+                        <p class="value">tailored to your age, body type, and wellness goals.</p>
+                    </div>
+                </div>
+                <div class="box3-li">
+                    <img class="box3-li-icon" src="../assets/image/suoerwall_icon_2.png" alt="">
+                    <div class="text-group">
+                        <p class="label">Beginner-friendly, no-equipment routines</p>
+                        <p class="value">designed to build muscle and shed weight.</p>
+                    </div>
+                </div>
+                <div class="box3-li">
+                    <img class="box3-li-icon" src="../assets/image/suoerwall_icon_3.png" alt="">
+                    <div class="text-group">
+                        <p class="label">Step-by-step</p>
+                        <p class="value">to heal your body, improve mobility, and lose weight.</p>
+                    </div>
+                </div>
+            </div>
+            <img class="box3-img" :src="bgImageList[1]" alt="">
         </div>
         <div class="box6">
             <div class="box6-left">
@@ -672,6 +743,203 @@ function ButtonClick() {
                 font-size: 16px;
                 font-weight: 500;
             }
+        }
+
+        .box2-bottom {
+            width: 100%;
+            margin-top: 24px;
+
+            .box2-bottom-left,
+            .box2-bottom-right {
+                position: relative;
+                float: left;
+                width: 448px;
+                height: 236px;
+                box-sizing: border-box;
+                padding: 40px 56px;
+                background: #fff;
+                font-family: Poppins;
+                border-radius: 8px;
+
+                .cupBox {
+                    width: 100%;
+                    display: flex;
+                    margin-top: 24px;
+                    justify-content: space-between;
+
+                    img {
+                        width: 33.25px;
+                    }
+                }
+            }
+
+            .box2-bottom-right {
+                float: right;
+            }
+
+            .card-header {
+                display: flex;
+                position: relative;
+            }
+
+            .icon-box {
+                width: 68px;
+                height: 68px;
+                background: #F8F8F8;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 40px;
+                margin-right: 24px;
+            }
+
+            .text-group {
+                // width: 100%;
+                text-align: left;
+            }
+
+            .text-group .label {
+                font-size: 16px;
+                color: #959799;
+                font-weight: 500;
+
+            }
+
+            .text-group .value {
+                font-size: 32px;
+                font-weight: 600;
+                color: #242424;
+            }
+
+            .recommend-tag {
+                position: absolute;
+                top: 0px;
+                right: 0;
+                border-radius: 0 8px;
+                background: rgba(255, 73, 73, 0.08);
+                color: #FF4949;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-sizing: border-box;
+            }
+
+            /* 卡路里滑块样式 */
+            .slider-area {
+                width: 100%;
+                margin-top: 34px;
+            }
+
+            .slider-track {
+                width: 100%;
+                height: 12px;
+                background: linear-gradient(90deg, #FFE8E8 0%, #FF4949 100%);
+                border-radius: 12px;
+                position: relative;
+            }
+
+            .slider-fill {
+                height: 100%;
+                // background: #ff4d4d;
+                border-radius: 12px;
+            }
+
+            .slider-thumb {
+                position: absolute;
+                top: 50%;
+                width: 32px;
+                height: 32px;
+                background: #ff4444;
+                border: 6px solid #fff;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                // box-shadow: 0 2px 10px rgba(255, 70, 70, 0.3);
+                box-sizing: border-box;
+            }
+
+            .scale {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                color: #959799;
+                font-weight: 500;
+                margin-top: 14px;
+            }
+
+            /* 水杯样式 */
+            .water-glasses {
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .glass-item {
+                width: 70px;
+                height: 130px;
+                border: 2px solid #ddd;
+                border-radius: 0 0 24px 24px;
+                background: #ffffff;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .glass-item.filled::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 90%;
+                background: linear-gradient(to top, #40a9ff 0%, #b8e1ff 100%);
+                border-radius: 0 0 22px 22px;
+            }
+        }
+    }
+
+    .box3 {
+        width: 100%;
+        font-family: Poppins;
+        text-align: left;
+        margin-top: 96px;
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #323233;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+        .box3-ul{
+            width: 100%;
+            .box3-li{
+                display: flex;
+                align-items: center;
+                margin-bottom: 24px;
+                .box3-li-icon{
+                    width: 68px;
+                    height: 68px;
+                    margin-right: 16px;
+                }
+                .text-group{
+                    text-align: left;
+                    .label{
+                        margin-top: 0;
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #242424;
+                    }
+                    .value{
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: #959799;
+                    }
+                }
+            }
+        }
+        .box3-img{
+            width: 100%;
+            margin-top: -280px;
         }
     }
 
