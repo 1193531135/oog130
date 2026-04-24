@@ -310,6 +310,74 @@ function ButtonClick() {
             </div>
             <img class="box3-img" :src="bgImageList[1]" alt="">
         </div>
+        <div class="box4">
+            <img class="box4-img" src="../assets/image/superwall_img3.png">
+            <div class="main">
+                <img class="main-img" src="../assets/image/superwall_img4.png">
+                <div class="main-title">Printable plan for 2026</div>
+                <div class="main-text">Get a printable bonus in addition to the main program</div>
+            </div>
+        </div>
+        <div class="box5">
+            <div class="box5-top">
+                <div class="box5-title">Goals for your program also include:</div>
+                <div class="box5-ul">
+                    <div class="box5-li">
+                        <img class="box5-li-icon" src="../assets/image/suoerwall_icon1.png" alt="">
+                        <span>Reduce stress</span>
+                    </div>
+                    <div class="box5-li">
+                        <img class="box5-li-icon" src="../assets/image/suoerwall_icon1.png" alt="">
+                        <span>Self-discipline</span>
+                    </div>
+                    <div class="box5-li">
+                        <img class="box5-li-icon" src="../assets/image/suoerwall_icon1.png" alt="">
+                        <span>Improve sleep</span>
+                    </div>
+                    <div class="box5-li">
+                        <img class="box5-li-icon" src="../assets/image/suoerwall_icon1.png" alt="">
+                        <span>Feel healthier</span>
+                    </div>
+                    <div class="box5-li">
+                        <img class="box5-li-icon" src="../assets/image/suoerwall_icon1.png" alt="">
+                        <span>Form a physical habit</span>
+                    </div>
+                </div>
+            </div>
+            <div class="box5-center">
+                <div class="box5-center-box1">
+                    <img src="../assets/image/suoerwall_icon2_0.png" alt="">
+                    <div class="box5-textBox">
+                        <p class="box5-title">15+ Million</p>
+                        <p class="box5-text">started their fitness journey
+                            with us</p>
+                    </div>
+                    <img src="../assets/image/suoerwall_icon2_1.png" alt="">
+                </div>
+                <div class="box5-center-box2">
+                    <img v-for="item in [1, 2, 3, 4, 5]" src="../assets/image/suoerwall_icon3.png" alt="">
+                </div>
+                <div class="box5-center-box3 ">Over 300 000 5-star ratings from happy users</div>
+            </div>
+            <div class="box5-bottom">
+                <div class="box5-title">Full workout plan</div>
+                <div class="box5-ul">
+                    <div class="box5-li">
+                        <img src="../assets/image/suoerwall_icon4.png" alt="" srcset="">
+                        <span>Build a habit and develop the correct exercising techniques</span>
+                    </div>
+                    <div class="box5-li">
+                        <img src="../assets/image/suoerwall_icon4.png" alt="" srcset="">
+                        <span>Lose excessive body fat & improve workout intensity</span>
+                    </div>
+                    <div class="box5-li">
+                        <img src="../assets/image/suoerwall_icon4.png" alt="" srcset="">
+                        <span>Achieve your goal and change your life forever</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="box6">
             <div class="box6-left">
                 <div class="box6-left-title">1103 people bought workout plans in the last hour</div>
@@ -460,7 +528,20 @@ function ButtonClick() {
 
             </div>
         </div>
-
+        <div class="box7">
+            <div class="box7-textBox">
+                <div class="box7-title">
+                    Money-Back Guarantee
+                </div>
+                <div class="box7-text">
+                    <p>We believe that our plan may work for you and you'll get visible results in 4 weeks! We are even
+                        ready to completely refund you within 30 days after purchase if you don't get visible results
+                        and can demonstrate that you have followed our plan. </p>
+                    <p>Find out more about the applicable limitations in our <span>money-back policy</span></p>
+                </div>
+            </div>
+            <img class="box7-img" src="../assets/image/superwall_img6.png" alt="" srcset="">
+        </div>
     </div>
     <div class="mask" :class="isShow ? 'show' : ''">
         <div class="box">
@@ -910,26 +991,32 @@ function ButtonClick() {
             text-align: left;
             margin-bottom: 28px;
         }
-        .box3-ul{
+
+        .box3-ul {
             width: 100%;
-            .box3-li{
+
+            .box3-li {
                 display: flex;
                 align-items: center;
                 margin-bottom: 24px;
-                .box3-li-icon{
+
+                .box3-li-icon {
                     width: 68px;
                     height: 68px;
                     margin-right: 16px;
                 }
-                .text-group{
+
+                .text-group {
                     text-align: left;
-                    .label{
+
+                    .label {
                         margin-top: 0;
                         font-size: 20px;
                         font-weight: 600;
                         color: #242424;
                     }
-                    .value{
+
+                    .value {
                         font-size: 16px;
                         font-weight: 500;
                         color: #959799;
@@ -937,10 +1024,178 @@ function ButtonClick() {
                 }
             }
         }
-        .box3-img{
+
+        .box3-img {
             width: 100%;
             margin-top: -280px;
         }
+    }
+
+    .box4 {
+        margin-top: 113px;
+        width: 100%;
+        position: relative;
+
+        .box4-img {
+            width: 100%;
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-family: Poppins;
+            text-align: center;
+
+            .main-img {
+                width: 88px;
+                margin: 0 auto;
+            }
+
+            .main-title {
+                margin-top: 24px;
+                font-size: 40px;
+                font-weight: 600;
+                color: #242424;
+            }
+
+            .main-text {
+                margin-top: 12px;
+                font-size: 18px;
+                font-weight: 500;
+                color: #959799;
+            }
+
+        }
+    }
+
+    .box5 {
+        width: 100%;
+        margin-top: 64px;
+
+        .box5-top {
+            font-family: Poppins;
+            color: #242424;
+            text-align: left;
+
+            .box5-title {
+                font-size: 28px;
+                font-weight: 600;
+            }
+
+            .box5-ul {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                margin-top: 28px;
+                flex-wrap: wrap;
+
+                .box5-li {
+                    display: flex;
+                    align-items: center;
+                    font-size: 20px;
+                    font-weight: 600;
+
+                    img {
+                        width: 32px;
+                        height: 32px;
+                        margin-right: 16px;
+                    }
+
+                    span {
+                        width: 240px;
+                    }
+                }
+            }
+
+        }
+
+        .box5-center {
+            margin-top: 110px;
+            width: 100%;
+            text-align: center;
+            font-family: Poppins;
+
+            .box5-center-box1 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    height: 191px;
+                }
+
+                .box5-textBox {
+                    .box5-title {
+                        font-size: 48px;
+                        font-weight: 600;
+                        color: #242424;
+                    }
+
+                    .box5-text {
+                        margin-top: 8px;
+                        font-size: 20px;
+                        font-weight: 500;
+                        color: #959799;
+                    }
+                }
+            }
+
+            .box5-center-box2 {
+                margin-top: 20px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                    margin: 0 2px;
+                }
+            }
+
+            .box5-center-box3 {
+                margin-top: 20px;
+                font-size: 24px;
+                font-weight: 500;
+            }
+
+        }
+
+        .box5-bottom {
+            width: 100%;
+            margin-top: 110px;
+            font-family: Poppins;
+            color: #323233;
+
+            .box5-title {
+                font-size: 40px;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .box5-ul {
+                margin: 0 auto;
+                width: 658px;
+                margin-top: 32px;
+                display: flex;
+                flex-wrap: wrap;
+
+                .box5-li {
+                    display: flex;
+                    align-items: left;
+                    font-size: 20px;
+                    font-weight: 500;
+                    margin-bottom: 14px;
+
+                    img {
+                        width: 32px;
+                        height: 32px;
+                        margin-right: 16px;
+                    }
+                }
+            }
+        }
+
     }
 
     .box6 {
@@ -1244,6 +1499,43 @@ function ButtonClick() {
             .underline {
                 text-decoration-line: underline;
             }
+        }
+    }
+
+    .box7 {
+        width: 100%;
+        padding: 47px 68px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 8px;
+        background: #FFF;
+        font-family: Poppins;
+        text-align: left;
+        box-sizing: border-box;
+        margin-top: 96px;
+        .box7-textBox{
+            width: 545px;
+        }
+        .box7-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #242424;
+        }
+
+        .box7-text {
+            font-size: 16px;
+            font-weight: 400;
+            color: #959799;
+
+            span {
+                color: #2E73E0;
+            }
+        }
+
+        .box7-img {
+            width: 200px;
+            height: 200px;
         }
     }
 }
