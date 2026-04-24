@@ -1,4 +1,7 @@
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay } from 'swiper/modules'
+import 'swiper/css';
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
@@ -29,8 +32,21 @@ let anim = null
 let anim1 = null
 //控制轮盘显示
 const isShow = ref(false)
+//变量数据
+const userData = ref({})
+
+userData.value.age = calcAge(pageData['DateOfBirth'])
+userData.value.currentBmi = getBMI(pageData['YourHeight'],pageData['CurrentWeight'])
+userData.value.targetBmi = getBMI(pageData['YourHeight'],pageData['TargetWeight'])
+userData.value.gender = pageData['ChooserGender']
 
 
+const calcBodyFat = (bmi, gender, age) =>
+    Number((gender === 0
+        ? 1.2 * bmi + 0.23 * age - 16.2
+        : 1.2 * bmi + 0.23 * age - 5.4
+    ).toFixed(2));
+console.log(1111, userData.value,pageData['YourHeight'],pageData['CurrentWeight'])
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products
     console.log(res.data.products)
@@ -134,8 +150,81 @@ function ButtonClick() {
         // anim?.play()
     }
 }
+// swiper
+// 注册需要的模块
+const swiperModules = [Autoplay]
 
+// 1:1还原截图里的评价数据
+const reviewList = [
+    {
+        name: 'Andrew',
+        content: `As someone who's not a fitness pro, the customized workout plan in this app is a lifesaver. It caters to my specific needs and fitness level. It's not one-size-fits-all, and that's what makes it stand out.`
+    },
+    {
+        name: 'Richard',
+        content: `I'm loving the customized workouts this app offers. It's like having a tailor-made fitness program in my pocket. It takes my preferences and fitness level into account, making it super effective and enjoyable!`
+    },
+    {
+        name: 'Matthew',
+        content: `I was skeptical at first, but this app surprised me. The workouts are decent, and I appreciate the progress tracking. A good option for those who can't make it to the gym.`
+    },
+    {
+        name: 'Michael',
+        content: `I'm not fitness pro, but this app easy for anyone to get in shape, instructional videos are clear, enjoying my daily workouts. T up!`
+    },
+    {
+        name: '匿名用户',
+        content: `so good! The personalized plan it provided was spot on. It having a personal trainer who exactly what I need. I'm already progress after just a few weeks!`
+    }
+]
 
+// 响应式适配配置
+const responsiveConfig = {
+    0: { slidesPerView: 1, spaceBetween: 16 },   // 手机：1张
+    768: { slidesPerView: 2, spaceBetween: 20 }, // 平板：2张
+    1200: { slidesPerView: 4, spaceBetween: 24 } // 电脑：3张
+}
+//年龄计算
+function calcAge(birthDayStr) {
+    const [day, month, year] = birthDayStr.split('/')
+    const birth = new Date(year, month - 1, day)
+    const now = new Date()
+    let age = now.getFullYear() - birth.getFullYear()
+    if (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate())) {
+        age--
+    }
+    return age
+}
+// BMI计算
+function getBMI(heightObj, weightObj) {
+    console.log(222,heightObj, weightObj)
+    const { unit: hUnit, height: hVal } = heightObj
+    const { unit: wUnit, weight: wVal } = weightObj
+
+    let heightM = 0
+    let weightKg = 0
+
+    // 身高转 米
+    if (hUnit === 'cm') {
+        heightM = hVal / 100
+    } else if (hUnit === 'ft/in') {
+        // 英寸 → 米  1英寸 = 0.0254m
+        heightM = hVal * 0.0254
+    }
+
+    // 体重转 千克
+    if (wUnit === 'kg') {
+        weightKg = wVal
+    } else if (wUnit === 'lb') {
+        // 1磅 = 0.45359237kg
+        weightKg = wVal * 0.45359237
+    }
+
+    // 防错除0
+    if (heightM <= 0) return 0
+    const bmi = weightKg / (heightM ** 2)
+    return Number(bmi.toFixed(2))
+}
 </script>
 
 <template>
@@ -148,7 +237,11 @@ function ButtonClick() {
                     <div class="box1-itam-content">
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
-                            <div class="text2">20%-24%</div>
+                            <div class="text2">
+                                {{Math.floor(calcBodyFat(userData.currentBmi,userData.gender,userData.age)/4)*4}}%
+                                -
+                                {{Math.floor(calcBodyFat(userData.currentBmi,userData.gender,userData.age)/4)*4+4}}%
+                                </div>
                         </div>
                         <div class="textBox2">
                             <div class="text1">Energy Level</div>
@@ -177,7 +270,11 @@ function ButtonClick() {
                     <div class="box1-itam-content">
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
-                            <div class="text2">20%-24%</div>
+                            <div class="text2">
+                                {{Math.floor(calcBodyFat(userData.targetBmi,userData.gender,userData.age)/4)*4}}%
+                                -
+                                {{Math.floor(calcBodyFat(userData.targetBmi,userData.gender,userData.age)/4)*4+4}}%
+                            </div>
                         </div>
                         <div class="textBox2">
                             <div class="text1">Energy Level</div>
@@ -185,17 +282,17 @@ function ButtonClick() {
                                 <div class="bar-li blue"></div>
                                 <div class="bar-li blue"></div>
                                 <div class="bar-li blue"></div>
-                                <div class="bar-li"></div>
-                                <div class="bar-li"></div>
+                                <div class="bar-li blue"></div>
+                                <div class="bar-li blue"></div>
                             </div>
                         </div>
                         <div class="textBox2">
                             <div class="text1">Tai Chi level</div>
                             <div class="bar-ul">
                                 <div class="bar-li blue"></div>
-                                <div class="bar-li"></div>
-                                <div class="bar-li"></div>
-                                <div class="bar-li"></div>
+                                <div class="bar-li blue"></div>
+                                <div class="bar-li blue"></div>
+                                <div class="bar-li blue"></div>
                                 <div class="bar-li"></div>
                             </div>
                         </div>
@@ -541,6 +638,44 @@ function ButtonClick() {
                 </div>
             </div>
             <img class="box7-img" src="../assets/image/superwall_img6.png" alt="" srcset="">
+        </div>
+        <div class="box8">
+            <p class="box8-title1">We helped over</p>
+            <p class="box8-title2">75000 people</p>
+            <p class="box8-title3">to achieve their dream physique</p>
+            <div class="box8-swiper">
+                <Swiper :modules="swiperModules" :slidesPerView="4" :spaceBetween="24" :loop="true"
+                    :breakpoints="responsiveConfig" class="review-swiper">
+                    <SwiperSlide v-for="(item, index) in reviewList" :key="index">
+                        <!-- 单条评价卡片 -->
+                        <div class="review-card">
+                            <div class="review-card-box">
+                                <!-- 用户头像+昵称 -->
+                                <div class="user-header">
+                                    <img class="avatar" src="../assets/image/suoerwall_icon5.png" alt="" srcset="">
+                                    <span class="user-name">{{ item.name }}</span>
+                                </div>
+                                <!-- 五星评分 -->
+                                <div class="stars">
+                                    <img v-for="value in [1, 2, 3, 4, 5]" src="../assets/image/suoerwall_icon6.png"
+                                        alt="" srcset="">
+                                </div>
+                            </div>
+                            <!-- 评价正文 -->
+                            <p class="review-text">{{ item.content }}</p>
+                        </div>
+                    </SwiperSlide>
+                </Swiper>
+            </div>
+            <p class="box8-text">Testimonials are sourced from Google Play. Photos are forillustrative purposes only</p>
+        </div>
+        <div class="bottom">
+            <p class="bottom-title1">Follow us</p>
+            <p class="bottom-title2">to skyrocket your result!</p>
+            <div class="bottom-imgBox">
+                <img style="margin-right: 32px;" src="../assets/image/superwall_img7_0.png" alt="" srcset="">
+                <img src="../assets/image/superwall_img7_1.png" alt="" srcset="">
+            </div>
         </div>
     </div>
     <div class="mask" :class="isShow ? 'show' : ''">
@@ -1514,9 +1649,11 @@ function ButtonClick() {
         text-align: left;
         box-sizing: border-box;
         margin-top: 96px;
-        .box7-textBox{
+
+        .box7-textBox {
             width: 545px;
         }
+
         .box7-title {
             font-size: 28px;
             font-weight: 600;
@@ -1536,6 +1673,132 @@ function ButtonClick() {
         .box7-img {
             width: 200px;
             height: 200px;
+        }
+    }
+
+    .box8 {
+        width: 100vw;
+        text-align: center;
+        font-family: Poppins;
+        margin-top: 96px;
+
+        .box8-title1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #242424;
+        }
+
+        .box8-title2 {
+            margin-top: 8px;
+            font-size: 40px;
+            font-weight: 600;
+            color: #242424;
+        }
+
+        .box8-title3 {
+            margin-top: 12px;
+            font-size: 20px;
+            font-weight: 500;
+            color: #959799;
+        }
+
+        .box8-swiper {
+            margin-top: 32px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Poppins;
+            text-align: left;
+
+            .review-swiper {
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .review-card {
+                background: #ffffff;
+                padding: 16px;
+                height: 189px;
+                box-sizing: border-box;
+
+                .review-card-box {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+
+            .user-header {
+                display: flex;
+                align-items: center;
+            }
+
+            .avatar {
+                width: 24px;
+                height: 24px;
+                margin-right: 8px;
+            }
+
+            .user-name {
+                font-size: 16px;
+                font-weight: 500;
+                color: #242424;
+            }
+
+            .stars {
+                display: flex;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            .review-text {
+                margin-top: 8px;
+                font-size: 14px;
+                line-height: 20.8px;
+                color: #959799;
+                font-weight: 400;
+
+            }
+        }
+
+        .box8-text {
+            margin-top: 16px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #959799;
+        }
+    }
+
+    .bottom {
+        margin-top: 96px;
+        margin-bottom: 200px;
+        width: 100%;
+        color: #242424;
+        font-family: Poppins;
+        text-align: center;
+
+        .bottom-title1 {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .bottom-title2 {
+            font-size: 18px;
+            font-family: Laien;
+            font-weight: 500;
+        }
+
+        .bottom-imgBox {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+
+            img {
+                width: 56px;
+                height: 56px;
+            }
         }
     }
 }
