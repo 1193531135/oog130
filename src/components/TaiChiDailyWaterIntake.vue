@@ -148,7 +148,6 @@ function goIt() {
 @media (max-width: 768px) {
   .select-page-con {
     padding: 0 16px 100px;
-    width: auto;
     .title {
       font-size: 28px;
       margin-bottom: 0px;

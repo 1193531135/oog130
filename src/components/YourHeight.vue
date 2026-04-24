@@ -17,7 +17,7 @@ const isDisabled = ref(!pageData[route.name])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
+        value: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
     })
     pushControl.push()
 }
