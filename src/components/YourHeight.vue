@@ -10,8 +10,8 @@ const route = useRoute()
 const pageText = window.languageData[route.name]
 const selectOptions = pageText.selectOptions
 const unit = ref(pageData[route.name]?.unit || selectOptions[0])
-const height = ref(pageData[route.name]?.height || '')
-const height_cm = ref(pageData[route.name]?.height || '')
+const height = ref(pageData[route.name]?.value || '')
+const height_cm = ref(pageData[route.name]?.value || '')
 const checked = ref(pageData[route.name]?.checked || '')
 const isDisabled = ref(!pageData[route.name])
 function change(val) {
@@ -143,7 +143,7 @@ onMounted(() => {
     if (unit.value === 'ft/in') {
         const inputDom = inputRef.value
         console.log('inputDom', inputDom)
-        inputDom.value = pageData[route.name]?.height
+        inputDom.value = pageData[route.name]?.value
         inputRef.value.dispatchEvent(new Event('input'))
     }
 })

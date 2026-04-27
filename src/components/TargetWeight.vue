@@ -24,8 +24,8 @@ function change(val) {
 }
 
 const isDisabled = ref(!pageData[route.name])
-const targetWeight_lb = ref(pageData[route.name]?.weight || '')
-const targetWeight_kg = ref(pageData[route.name]?.weight || '')
+const targetWeight_lb = ref(pageData[route.name]?.value || '')
+const targetWeight_kg = ref(pageData[route.name]?.value || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
@@ -36,9 +36,9 @@ const weightComparison = () => {
     let CurrentWeight = pageData.CurrentWeight
     let oldWeight, newWeight
     if (CurrentWeight.unit === 'lb') {
-        oldWeight = Number((CurrentWeight.weight * 0.4535).toFixed(2))
+        oldWeight = Number((CurrentWeight.value * 0.4535).toFixed(2))
     } else {
-        oldWeight = Number(CurrentWeight.weight)
+        oldWeight = Number(CurrentWeight.value)
     }
     if (unit === 'lb') {
         newWeight = Number((targetWeight_lb.value * 0.4535).toFixed(2))
