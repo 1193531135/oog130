@@ -24,8 +24,8 @@ function change(val) {
 }
 
 const isDisabled = ref(!pageData[route.name])
-const CurrentWeight_lb = ref(pageData[route.name]?.weight || '')
-const CurrentWeight_kg = ref(pageData[route.name]?.weight || '')
+const CurrentWeight_lb = ref(pageData[route.name]?.value || '')
+const CurrentWeight_kg = ref(pageData[route.name]?.value || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本

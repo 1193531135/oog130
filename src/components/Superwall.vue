@@ -6,7 +6,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
 import { PushControl } from '@/tool/index.js'
-import { PageData } from "@/tool/index.js";
+import { PageData,BMI } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 import { getPriceList } from '@/api/system/index.js'
 import animationData from '../assets/json/superwall_lottie1.json'
@@ -17,7 +17,8 @@ const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
 const props = defineProps({
-    bgImageList: Array
+    bgImageList: Array,
+    promptNum:Object
 })
 const priceClick = ref(0)
 //折扣状态
@@ -35,13 +36,27 @@ const isShow = ref(false)
 //变量数据
 const userData = ref({})
 
+const nowBMI = BMI({
+    height:pageData['YourHeight'].value,
+    weight:pageData['CurrentWeight'].value,
+    isFt:pageData['YourHeight']?.unit=="ft/in",
+    isLb:pageData['CurrentWeight']?.unit=="lb"
+}).toFixed (2) 
+const targetBMI = BMI({
+    height:pageData['YourHeight'].value,
+    weight:pageData['TargetWeight'].value,
+    isFt:pageData['YourHeight']?.unit=="ft/in",
+    isLb:pageData['TargetWeight']?.unit=="lb"
+}).toFixed (2) 
 userData.value.age = calcAge(pageData['DateOfBirth'])
-userData.value.currentBmi = getBMI(pageData['YourHeight'], pageData['CurrentWeight'])
-userData.value.targetBmi = getBMI(pageData['YourHeight'], pageData['TargetWeight'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
+console.log('YourHeight',pageData['YourHeight'])
 
-
+if(pageData['YourHeight']?.unit=="ft/in"){}
+// if(pageData['YourHeight'])
+// bmi = BMI()
+// console.log(bmi)
 // 计算进度百分比
 const fillPercent = computed(() => {
   const pct = ((currentKcal - 1000) / (5000 - 1000)) * 100
@@ -66,8 +81,6 @@ function change(val) {
 
 //BMI计算
 // 基础数据
-const currentBmi = 21.3
-const standardBmi = 21.5
 
 // BMI 区间范围（可按需修改）
 const MIN_BMI = 15
@@ -75,7 +88,7 @@ const MAX_BMI = 40
 
 // 计算滑块百分比位置
 const thumbPosition = computed(() => {
-    const percent = ((currentBmi - MIN_BMI) / (MAX_BMI - MIN_BMI)) * 100
+    const percent = ((nowBMI - MIN_BMI) / (MAX_BMI - MIN_BMI)) * 100
     // 限制滑块不超出轨道边界
     return Math.max(0, Math.min(100, percent))
 })
@@ -135,11 +148,11 @@ onMounted(() => {
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
     })
-    // setTimeout(() => {
-    //     console.log('显示抽奖弹窗')
-    //     isShow.value = true
-    //     anim?.play()
-    // }, 5000)
+    setTimeout(() => {
+        console.log('显示抽奖弹窗')
+        isShow.value = true
+        anim?.play()
+    }, 5000)
 })
 
 // 销毁时清理
@@ -201,49 +214,22 @@ function calcAge(birthDayStr) {
     }
     return age
 }
-// BMI计算（支持 cm / ft/in 身高，kg / lb 体重）
-function getBMI(heightObj, weightObj) {
-  // 解构赋值
-  const { unit: hUnit, height: hVal } = heightObj;
-  const { unit: wUnit, weight: wVal } = weightObj;
-
-  // 转换身高为米（统一处理字符串/数字）
-  let heightM = 0;
-  if (hUnit === 'cm') {
-    heightM = Number(hVal) / 100;
-  } else if (hUnit === 'ft/in') {
-    const hStr = String(hVal);
-    const ft = Number(hStr[0]);
-    const inch = Number(hStr.slice(1));
-    heightM = ft * 0.3048 + inch * 0.0254;
-  }
-
-  // 转换体重为千克（简洁三元表达式）
-  const weightKg = wUnit === 'lb'
-    ? Number(wVal) * 0.45359237
-    : Number(wVal);
-
-  // 安全计算 BMI
-  if (heightM <= 0) return 0;
-  const bmi = weightKg / (heightM ** 2);
-  return Number(bmi.toFixed(2));
-}
 //卡路里计算
 function calcRecommendedCalories(weightObj, heightObj) {
     // 体重转换：lb → kg
     const weight = weightObj.unit === 'lb'
-        ? Number(weightObj.weight) * 0.453592
-        : Number(weightObj.weight);
+        ? Number(weightObj.value) * 0.453592
+        : Number(weightObj.value);
 
     // 身高转换：ft/in 字符串 → cm（规则：123 = 1ft 23in）
     let height;
     if (heightObj.unit === 'ft/in') {
-        const hStr = String(heightObj.height);
+        const hStr = String(heightObj.value);
         const ft = Number(hStr[0]);
         const inch = Number(hStr.slice(1));
         height = ft * 30.48 + inch * 2.54;
     } else {
-        height = Number(heightObj.height);
+        height = Number(heightObj.value);
     }
     console.log(weight,height,55555)
     // 卡路里计算公式
@@ -263,9 +249,9 @@ function calcRecommendedCalories(weightObj, heightObj) {
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
                             <div class="text2">
-                                {{ Math.floor(calcBodyFat(userData.currentBmi, userData.gender, userData.age) / 4) * 4 }}%
+                                {{ Math.floor(calcBodyFat(nowBMI, userData.gender, userData.age) / 4) * 4 }}%
                                 -
-                                {{ Math.floor(calcBodyFat(userData.currentBmi, userData.gender, userData.age) / 4) * 4 + 4 }}%
+                                {{ Math.floor(calcBodyFat(nowBMI, userData.gender, userData.age) / 4) * 4 + 4 }}%
                             </div>
                         </div>
                         <div class="textBox2">
@@ -296,9 +282,9 @@ function calcRecommendedCalories(weightObj, heightObj) {
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
                             <div class="text2">
-                                {{ Math.floor(calcBodyFat(userData.targetBmi, userData.gender, userData.age) / 4) * 4 }}%
+                                {{ Math.floor(calcBodyFat(targetBMI, userData.gender, userData.age) / 4) * 4 }}%
                                 -
-                                {{ Math.floor(calcBodyFat(userData.targetBmi, userData.gender, userData.age) / 4) * 4 + 4 }}%
+                                {{ Math.floor(calcBodyFat(targetBMI, userData.gender, userData.age) / 4) * 4 + 4 }}%
                             </div>
                         </div>
                         <div class="textBox2">
@@ -333,8 +319,8 @@ function calcRecommendedCalories(weightObj, heightObj) {
                 <div class="bmi-header">
                     <p class="label">Current BMI</p>
                     <div class="value-row">
-                        <p class="bmi-value">{{ currentBmi }} BMI</p>
-                        <p class="normal-mark">Normal <span class="diff">-{{ standardBmi }}</span></p>
+                        <p class="bmi-value">{{ nowBMI }} BMI</p>
+                        <p class="normal-mark">{{promptNum.title}} <span class="diff">-{{ nowBMI }}</span></p>
                     </div>
                 </div>
 
@@ -352,10 +338,11 @@ function calcRecommendedCalories(weightObj, heightObj) {
 
                 <!-- 底部状态说明卡片 -->
                 <div class="status-card">
-                    <h2 class="status-title">Normal</h2>
+                    <h2 class="status-title" :style="'color:'+promptNum.color+';'">{{promptNum.title}}</h2>
                     <p class="status-desc">
-                        The body mass index (BMI) is a measure that uses your height and weight to work out if your
-                        weight is healthy.
+                        <span>{{ promptNum.text[0] }}</span>
+                        <span>({{ nowBMI }})</span>
+                        <span>{{ promptNum.text[1] }}</span>
                     </p>
                 </div>
 
