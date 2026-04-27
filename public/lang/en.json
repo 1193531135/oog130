@@ -575,5 +575,75 @@
       "Meal planning",
       "Creating your workout plan"
     ]
+  },
+  "Paywall": {
+    "badge": "SECURE CHECKOUT",
+    "title": "Your Tai Chi plan is ready",
+    "subtitle": "Real Stripe embedded checkout",
+    "description": "This paywall now fetches a real product from the configured backend and creates a real Stripe checkout session. In development it uses Stripe test mode, so you can safely preview the actual flow.",
+    "summary": {
+      "title": "Current order",
+      "planLabel": "Plan",
+      "priceLabel": "Price",
+      "customerLabel": "Customer name",
+      "emailLabel": "Customer email",
+      "notProvided": "Not provided yet",
+      "planPending": "Loading plan from backend...",
+      "pricePending": "Loading price from backend..."
+    },
+    "note": "Tap GET MY PLAN to open the payment drawer. Product data is loaded on the paywall and passed down into the payment component.",
+    "loadingPrice": "Loading current Stripe product pricing...",
+    "cta": "GET MY PLAN",
+    "processing": "Preparing Stripe checkout...",
+    "paymentModal": {
+      "stripe": "Stripe",
+      "paypal": "PayPal",
+      "orderTitle": "Payment order",
+      "paypalTitle": "PayPal",
+      "paypalDescription": "Use the PayPal button below to complete the same subscription flow through PayPal.",
+      "paypalLoading": "Preparing PayPal checkout..."
+    },
+    "errors": {
+      "loadPrice": "Unable to load the current price list from the backend.",
+      "createCheckout": "Unable to create a Stripe checkout session right now.",
+      "createPaypal": "Unable to create a PayPal checkout session right now."
+    }
+  },
+  "PaymentResult": {
+    "success": {
+      "badge": "PAYMENT CALLBACK",
+      "title": "Payment completed",
+      "description": "Stripe redirected back to this page after checkout. The app reads the saved checkout session and tries to verify the payment details with the backend."
+    },
+    "cancelled": {
+      "badge": "PAYMENT CANCELLED",
+      "title": "Payment cancelled",
+      "description": "The checkout flow returned without a successful payment."
+    },
+    "idle": {
+      "badge": "NO PAYMENT RESULT",
+      "title": "No payment callback found",
+      "description": "Open the paywall and start the checkout flow first."
+    },
+    "details": {
+      "title": "Stored payment state",
+      "empty": "There is no saved payment state yet.",
+      "sessionIdLabel": "Session ID",
+      "statusLabel": "Status",
+      "providerLabel": "Provider",
+      "priceLabel": "Price",
+      "productLabel": "Product",
+      "notAvailable": "Not available"
+    },
+    "receipt": {
+      "title": "Verified payment data",
+      "amountLabel": "Amount",
+      "statusLabel": "Payment status",
+      "customerLabel": "Customer email"
+    },
+    "verifying": "Verifying payment details with the backend...",
+    "verificationError": "The checkout returned successfully, but payment details could not be verified yet. This can happen if the payment is still processing.",
+    "note": "This page now serves as the real Stripe return page for the embedded checkout flow.",
+    "cta": "Back to paywall"
   }
 }

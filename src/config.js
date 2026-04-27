@@ -196,6 +196,18 @@ const config = {
     },
     ProgressLoading: {
         module: () => import('@/components/ProgressLoading.vue')
+    },
+    Paywall: {
+        module: () => import("@/components/Paywall.vue"),
+        config: {
+            progressHidden: true
+        }
+    },
+    PaymentResult: {
+        module: () => import("@/components/PaymentResult.vue"),
+        config: {
+            progressHidden: true
+        }
     }
     
 }
