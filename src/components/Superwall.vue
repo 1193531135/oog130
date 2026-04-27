@@ -6,7 +6,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
 import { PushControl } from '@/tool/index.js'
-import { PageData,BMI } from "@/tool/index.js";
+import { PageData, BMI } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
 import { getPriceList } from '@/api/system/index.js'
 import animationData from '../assets/json/superwall_lottie1.json'
@@ -18,7 +18,7 @@ const pageText = window.languageData[route.name]
 const pageData = new PageData()
 const props = defineProps({
     bgImageList: Array,
-    promptNum:Object
+    promptNum: Object
 })
 const priceClick = ref(0)
 //折扣状态
@@ -37,37 +37,37 @@ const isShow = ref(false)
 const userData = ref({})
 
 const nowBMI = BMI({
-    height:pageData['YourHeight'].value,
-    weight:pageData['CurrentWeight'].value,
-    isFt:pageData['YourHeight']?.unit=="ft/in",
-    isLb:pageData['CurrentWeight']?.unit=="lb"
-}).toFixed (2) 
+    height: pageData['YourHeight'].value,
+    weight: pageData['CurrentWeight'].value,
+    isFt: pageData['YourHeight']?.unit == "ft/in",
+    isLb: pageData['CurrentWeight']?.unit == "lb"
+}).toFixed(2)
 const targetBMI = BMI({
-    height:pageData['YourHeight'].value,
-    weight:pageData['TargetWeight'].value,
-    isFt:pageData['YourHeight']?.unit=="ft/in",
-    isLb:pageData['TargetWeight']?.unit=="lb"
-}).toFixed (2) 
+    height: pageData['YourHeight'].value,
+    weight: pageData['TargetWeight'].value,
+    isFt: pageData['YourHeight']?.unit == "ft/in",
+    isLb: pageData['TargetWeight']?.unit == "lb"
+}).toFixed(2)
 userData.value.age = calcAge(pageData['DateOfBirth'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
-console.log('YourHeight',pageData['YourHeight'])
+console.log('YourHeight', pageData['YourHeight'])
 
-if(pageData['YourHeight']?.unit=="ft/in"){}
+if (pageData['YourHeight']?.unit == "ft/in") { }
 // if(pageData['YourHeight'])
 // bmi = BMI()
 // console.log(bmi)
 // 计算进度百分比
 const fillPercent = computed(() => {
-  const pct = ((currentKcal - 1000) / (5000 - 1000)) * 100
-  return Math.max(0, Math.min(100, pct))
+    const pct = ((currentKcal - 1000) / (5000 - 1000)) * 100
+    return Math.max(0, Math.min(100, pct))
 })
-const calcBodyFat = (bmi, gender, age) => 
+const calcBodyFat = (bmi, gender, age) =>
     Number((gender === 0
         ? 1.2 * bmi + 0.23 * age - 16.2
         : 1.2 * bmi + 0.23 * age - 5.4
     ).toFixed(2));
-console.log(1111, userData.value, currentKcal,fillPercent)
+console.log(1111, userData.value, currentKcal, fillPercent)
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products
     console.log(res.data.products)
@@ -148,11 +148,11 @@ onMounted(() => {
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
     })
-    setTimeout(() => {
-        console.log('显示抽奖弹窗')
-        isShow.value = true
-        anim?.play()
-    }, 5000)
+    // setTimeout(() => {
+    //     console.log('显示抽奖弹窗')
+    //     isShow.value = true
+    //     anim?.play()
+    // }, 5000)
 })
 
 // 销毁时清理
@@ -231,7 +231,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
     } else {
         height = Number(heightObj.value);
     }
-    console.log(weight,height,55555)
+    console.log(weight, height, 55555)
     // 卡路里计算公式
     const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
     return Math.round(recommendedCalories);
@@ -277,7 +277,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                     </div>
                 </div>
                 <div class="box1-itam right">
-                    <div class="box1-itam-title">Now</div>
+                    <div class="box1-itam-title">Your Goal</div>
                     <div class="box1-itam-content">
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
@@ -320,7 +320,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                     <p class="label">Current BMI</p>
                     <div class="value-row">
                         <p class="bmi-value">{{ nowBMI }} BMI</p>
-                        <p class="normal-mark">{{promptNum.title}} <span class="diff">-{{ nowBMI }}</span></p>
+                        <p class="normal-mark">{{ promptNum.title }} <span class="diff">-{{ nowBMI }}</span></p>
                     </div>
                 </div>
 
@@ -338,7 +338,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
 
                 <!-- 底部状态说明卡片 -->
                 <div class="status-card">
-                    <h2 class="status-title" :style="'color:'+promptNum.color+';'">{{promptNum.title}}</h2>
+                    <h2 class="status-title" :style="'color:' + promptNum.color + ';'">{{ promptNum.title }}</h2>
                     <p class="status-desc">
                         <span>{{ promptNum.text[0] }}</span>
                         <span>({{ nowBMI }})</span>
@@ -354,7 +354,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                         <div class="icon-box">🍔</div>
                         <div class="text-group">
                             <p class="label">Daily calorie intake</p>
-                            <p class="value">{{currentKcal}}kcal</p>
+                            <p class="value">{{ currentKcal }}kcal</p>
                         </div>
                     </div>
                     <!-- 卡路里进度条 -->
@@ -418,11 +418,13 @@ function calcRecommendedCalories(weightObj, heightObj) {
                 </div>
             </div>
             <img class="box3-img" :src="bgImageList[1]" alt="">
+            <img class="box3-img390" :src="bgImageList[3]" alt="">
         </div>
         <div class="box4">
             <img class="box4-img" src="../assets/image/superwall_img3.png">
+            <img class="box4-img-390" src="../assets/image/superwall_img3_390.png">
             <div class="main">
-                <img class="main-img" src="../assets/image/superwall_img4.png">
+                <img class="main-img" src="../assets/image/superwall_img4_390.png">
                 <div class="main-title">Printable plan for 2026</div>
                 <div class="main-text">Get a printable bonus in addition to the main program</div>
             </div>
@@ -638,18 +640,22 @@ function calcRecommendedCalories(weightObj, heightObj) {
             </div>
         </div>
         <div class="box7">
-            <div class="box7-textBox">
-                <div class="box7-title">
-                    Money-Back Guarantee
+            <div class="box7-cont">
+                <div class="box7-textBox">
+                    <div class="box7-title">
+                        Money-Back Guarantee
+                    </div>
+                    <div class="box7-text">
+                        <p>We believe that our plan may work for you and you'll get visible results in 4 weeks! We are
+                            even
+                            ready to completely refund you within 30 days after purchase if you don't get visible
+                            results
+                            and can demonstrate that you have followed our plan. </p>
+                        <p>Find out more about the applicable limitations in our <span>money-back policy</span></p>
+                    </div>
                 </div>
-                <div class="box7-text">
-                    <p>We believe that our plan may work for you and you'll get visible results in 4 weeks! We are even
-                        ready to completely refund you within 30 days after purchase if you don't get visible results
-                        and can demonstrate that you have followed our plan. </p>
-                    <p>Find out more about the applicable limitations in our <span>money-back policy</span></p>
-                </div>
+                <img class="box7-img" src="../assets/image/superwall_img6.png" alt="" srcset="">
             </div>
-            <img class="box7-img" src="../assets/image/superwall_img6.png" alt="" srcset="">
         </div>
         <div class="box8">
             <p class="box8-title1">We helped over</p>
@@ -1176,6 +1182,11 @@ function calcRecommendedCalories(weightObj, heightObj) {
             width: 100%;
             margin-top: -280px;
         }
+
+        .box3-img390 {
+            display: none;
+            width: 100%;
+        }
     }
 
     .box4 {
@@ -1185,6 +1196,11 @@ function calcRecommendedCalories(weightObj, heightObj) {
 
         .box4-img {
             width: 100%;
+        }
+
+        .box4-img-390 {
+            width: 100%;
+            display: none;
         }
 
         .main {
@@ -1197,7 +1213,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
             text-align: center;
 
             .main-img {
-                width: 88px;
+                width: 138px;
                 margin: 0 auto;
             }
 
@@ -1651,16 +1667,21 @@ function calcRecommendedCalories(weightObj, heightObj) {
 
     .box7 {
         width: 100%;
-        padding: 47px 68px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 8px;
-        background: #FFF;
-        font-family: Poppins;
-        text-align: left;
-        box-sizing: border-box;
         margin-top: 96px;
+
+        .box7-cont {
+            width: 100%;
+            padding: 47px 68px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+            background: #FFF;
+            font-family: Poppins;
+            text-align: left;
+            box-sizing: border-box;
+
+        }
 
         .box7-textBox {
             width: 545px;
@@ -1900,7 +1921,303 @@ function calcRecommendedCalories(weightObj, heightObj) {
     opacity: 1;
 }
 
-@media (max-width: 767px) {}
+@media (max-width: 768px) {
+    .text-page {
+        width: 100%;
+
+        .box1 {
+            .box1-content {
+                height: auto;
+
+                .box1-itam {
+                    .box1-itam-content {
+                        box-sizing: border-box;
+                        padding: 24px 0 24px 24px !important;
+
+                        .textBox1 {
+                            margin-top: 0;
+
+                            .text2 {
+                                font-size: 18px;
+                            }
+                        }
+
+                        .textBox2 {
+                            .bar-ul {
+                                width: 151px;
+
+                                .bar-li {
+                                    width: 27px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .text {
+            padding: 0 16px;
+            box-sizing: border-box;
+            font-size: 13px;
+        }
+
+        .title {
+            padding: 0 16px;
+            box-sizing: border-box;
+            margin-top: 26px;
+            font-size: 24px;
+            line-height: 36px;
+        }
+
+        .box2 {
+            margin-top: 16px;
+            box-sizing: border-box;
+            padding: 0 16px;
+
+            .box2-bml {
+                padding: 16px;
+
+                .bmi-header {
+                    .value-row {
+                        .bmi-value {
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+
+            .box2-bottom {
+                .box2-bottom-left {
+                    padding: 16px;
+                    padding-top: 40px;
+
+                    .card-header {
+
+                        .text-group {
+                            .value {
+                                font-size: 24px;
+                            }
+                        }
+                    }
+                }
+
+                .box2-bottom-right {
+                    padding: 16px;
+                    padding-top: 40px;
+                }
+            }
+
+            .box2-bottom-left {
+                width: 100% !important;
+            }
+
+            .box2-bottom-right {
+                margin-top: 12px;
+                width: 100% !important;
+            }
+        }
+
+        .box3 {
+            margin-top: 36px;
+
+            .title {
+                margin-top: 0;
+                margin-bottom: 16px;
+            }
+
+            .box3-ul {
+                .box3-li {
+                    align-items: flex-start;
+
+                    .box3-li-icon {
+                        width: 52px;
+                        height: 52px;
+                    }
+
+                    .text-group {
+                        .label {
+                            font-size: 16px;
+                        }
+
+                        .value {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        .box3 {
+            box-sizing: border-box;
+            padding: 0 16px;
+
+            .box3-img {
+                display: none;
+            }
+
+            .box3-img390 {
+                display: block;
+            }
+        }
+
+        .box4 {
+            margin-top: 40px;
+            padding: 0 16px;
+            box-sizing: border-box;
+
+            .box4-img {
+                display: none;
+            }
+
+            .box4-img-390 {
+                display: block;
+            }
+
+            .main {
+                padding: 0 16px;
+                box-sizing: border-box;
+
+                .main-img {
+                    width: 104px;
+                }
+
+                .main-title {
+                    font-size: 24px;
+                    margin-top: 10px;
+                }
+            }
+        }
+
+        .box5 {
+            margin-top: 36px;
+            padding: 0 16px;
+            box-sizing: border-box;
+
+            .box5-top {
+                .box5-title {
+                    font-size: 20px;
+                }
+
+                .box5-ul {
+                    margin-top: 16px;
+
+                    .box5-li {
+                        width: 165px;
+                        font-size: 16px;
+                        margin-bottom: 12px;
+
+                        .box5-li-icon {
+                            width: 24px;
+                            height: 24px;
+                        }
+                    }
+
+                    .box5-li:last-child {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .box5-center {
+                margin-top: 52px;
+
+                .box5-center-box1 {
+                    img {
+                        height: 129px;
+                    }
+
+                    .box5-textBox {
+                        .box5-title {
+                            font-size: 32px;
+                        }
+                    }
+                }
+
+                .box5-center-box3 {
+                    font-size: 16px;
+                }
+            }
+
+            .box5-bottom {
+                margin-top: 52px;
+                width: 100%;
+
+                .box5-title {
+                    font-size: 24px;
+                }
+
+                .box5-ul {
+                    width: 100%;
+
+                    .box5-li {
+                        align-items: center;
+                        font-size: 16px;
+                        text-align: left;
+
+                        img {
+                            margin-right: 8px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .box6 {
+            display: block;
+            margin-top: 52px;
+            padding: 16px;
+
+            .box6-left {
+                width: 100%;
+
+                .box6-left-ul {
+                    .box6-left-li {
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            .box6-right {
+                margin-top: 24px;
+                width: 100%;
+
+                .box6-right-title {
+                    margin-top: 24px;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .box7 {
+            width: 100vw;
+            box-sizing: border-box;
+            margin-top: 36px;
+            padding: 0 16px;
+            .box7-cont{
+                width: 100%;
+                padding: 16px;
+                display: block;
+                .box7-textBox{
+                    width: 100%;
+                }
+              .box7-img{
+                margin-top: 16px;
+                width: 120px;
+                height: 120px;
+                margin-left: calc(100% - 120px);
+              }
+                
+            }
+        }
+        .box8{
+            padding: 16px;
+            box-sizing: border-box;
+        }
+    }
+}
 
 /* 0-500px 小屏手机 */
 @media (max-width: 500px) {}
