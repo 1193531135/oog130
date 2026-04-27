@@ -3,10 +3,10 @@ import { ref,onMounted,computed,watch } from "vue";
 import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
-import { getFirestoreDataByUid, createAnonymousAccount } from "@/utils/firebase"
+import { getFirestoreDataByUid, createAnonymousAccount } from "@/config/firebase.js"
 import  { getPriceList } from "@/api/system"
 import config from "@/config/index.js";
-import Mixpanel from "@/utils/mixpanel"
+import { Mixpanel } from "@/config/mixpanel.js"
 
 const loaded = ref(false);
 const route = useRoute()

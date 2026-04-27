@@ -4,11 +4,8 @@ import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 const pushControl = new PushControl()
-
-
-
 const pageData = new PageData()
-pageData
+
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const selectOptions = pageText.selectOptions
@@ -18,16 +15,13 @@ const isLose = ref(false)
 const textBox = ref(developOptions[0])
 const unit = ref(pageData[route.name]?.unit || selectOptions[0])
 
-
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        weight: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
-
+        value: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
     })
     pushControl.push()
 }
-
 
 const isDisabled = ref(!pageData[route.name])
 const targetWeight_lb = ref(pageData[route.name]?.weight || '')

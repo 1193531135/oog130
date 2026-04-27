@@ -1,0 +1,598 @@
+{
+  "??????????????": "en 作为事件埋点的唯一提示词，必须单独读取一份，避免多语言的问题",
+  "TaiChiBeginners": {
+    "title": "Tai Chi for Beginners",
+    "subtitle": "SELECT YOUR AGE",
+    "selectOptions": [
+      "<50",
+      "50-59",
+      "60-69",
+      "70-79",
+      "80+"
+    ],
+    "text": [
+      "By choosing your age and continuing you agree to our ",
+      "Terms of Service",
+      " & ",
+      "Privacy Policy",
+      ". Please review before continuing"
+    ]
+  },
+  "ChooserGender": {
+    "title": "Choose your gender",
+    "selectOptions": [
+      "Male",
+      "Female"
+    ]
+  },
+  "TaiChiExperienceCheck": {
+    "title": "Have you ever done Tai Chi before?",
+    "selectOptions": [
+      "Yes",
+      "No"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiBeginnerGuide": {
+    "title": "You're in the right place",
+    "subtitle": "You don't need any experience to start",
+    "description": "Tai Chi is a simple, gentle way to move-no equipment, no pressure, just mindful steps you can follow at home.",
+    "continue": "Got it"
+  },
+  "TaiChiMainGoalSelection": {
+    "title": "What is your main goal?",
+    "selectOptions": [
+      "Weight loss",
+      "Wellness and longevity",
+      "Energy and vitality",
+      "Balance and mobility"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiPersonalizationIntro": {
+    "title": "We have just what you need",
+    "subtitle": "Our Tai Chi program adapts to you - a way to move at your own pace and focus on what matters most to you.",
+    "continue": "Got it"
+  },
+  "TaiChiExerciseMotivation": {
+    "title": "What else motivates you to exercise?",
+    "selectOptions": [
+      "Support muscle strength",
+      "Enhance posture",
+      "Reduce Stress",
+      "Develop flexibility",
+      "None of the above"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiCurrentBodyType": {
+    "title": "Choose your current body type",
+    "selectOptions": [
+      [
+        "Skinny",
+        "Average",
+        "Overweight"
+      ],
+      [
+        "Regular",
+        "Rounded",
+        "Full"
+      ]
+    ]
+  },
+  "TaiChiTargetBodyType": {
+    "title": "Choose a target body type",
+    "selectOptions": [
+      [
+        "Fit",
+        "Bulk",
+        "Extra bulk"
+      ],
+      [
+        "Regular",
+        "Fit",
+        "Athletic"
+      ]
+    ]
+  },
+  "TaiChiBestShapeCheck": {
+    "title": "How long ago were you in the best shape of your life?",
+    "selectOptions": [
+      "Less than a year ago",
+      "1-3 years ago",
+      "More than 3 years ago",
+      "Never"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiFlexibilityCheck": {
+    "title": "How flexible are you?",
+    "selectOptions": [
+      "Very flexible",
+      "Pretty flexible",
+      "Not that good",
+      "I'm not sure"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiTargetZoneSelection": {
+    "title": "Choose your target zone",
+    "selectOptions": [
+      "Back",
+      "Arms",
+      "Chest",
+      "Abs",
+      "Legs"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiPhysicalDiscomfortCheck": {
+    "title": "Do you struggle with any of the following?",
+    "selectOptions": [
+      "Sensitive back",
+      "Sensitive knees",
+      "All of this",
+      "None of the above"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiGentleExerciseIntro": {
+    "title": "We've got you covered!",
+    "subtitle": "These gentle exercises focus on muscle support and balance, helping you feel more stable, relaxed, and confident as you walk and move each day.",
+    "continue": "Continue"
+  },
+  "TaiChiStairBreathCheck": {
+    "title": "Do you get out of breath on stairs?",
+    "selectOptions": [
+      "Can't talk, too out of breath",
+      "Slightly out of breath, can talk",
+      "Okay after one flight",
+      "Can handle a few flights"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiTrainingFrequency": {
+    "title": "How often do you train?",
+    "selectOptions": [
+      "Not at all",
+      "1-2 times a week",
+      "3 times a week",
+      "More than 3 times a week"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiWalkingFrequency": {
+    "title": "How often do you Walk?",
+    "selectOptions": [
+      "Almost every day",
+      "1-3 times per week",
+      "1-2 times per week",
+      "More like once a month"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiWorkoutDurationPref": {
+    "title": "How long do you want your workouts to be?",
+    "selectOptions": [
+      "10-20 mins",
+      "20-30 mins",
+      "30-40 mins",
+      "Let us decide"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiWorkScheduleType": {
+    "title": "What is your work schedule like?",
+    "selectOptions": [
+      "9 to 5",
+      "Night shifts",
+      "My hours are flexible",
+      "I'm retired"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiDailyActivityCheck": {
+    "title": "How would you describe your typical day?",
+    "selectOptions": [
+      "I spend most of the day sitting",
+      "I take active breaks",
+      "I'm on my feet all day long",
+      "I have physical work"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiEnergyLevelCheck": {
+    "title": "How would you rate your current energy levels?",
+    "selectOptions": [
+      "Low energy",
+      "Medium energy",
+      "High energy",
+      "It fluctuates"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiDailyWaterIntake": {
+    "title": "How much water do you drink daily?",
+    "selectOptions": [
+      {
+        "label": "Only coffee or tea ☕️",
+        "subLabel": "",
+        "description": {
+          "title": "Drinking water is essential",
+          "subtitle": "If you're not hydrated, your body can't perform at its highest\nlevel. MadMuscles will remind you to drink enough water."
+        }
+      },
+      {
+        "label": "Less than 2 glasses 💧",
+        "subLabel": "up to 0,51/17 oz",
+        "description": {
+          "title": "Drinking water is essential",
+          "subtitle": "If you're not hydrated, your body can't perform at its highest\nlevel. We will remind you to drink enough water."
+        }
+      },
+      {
+        "label": "2-6 glasses 💧💧",
+        "subLabel": "0,5-1,51/17-50 0z",
+        "description": {
+          "title": "You drink more water than 50% of users*",
+          "subtitle": "We will remind you to drink enough water.",
+          "endText": "*users who took the quiz"
+        }
+      },
+      {
+        "label": "7-10 glasses 💧💧💧",
+        "subLabel": "1,5-2,51/50-85 oz",
+        "description": {
+          "title": "Wow! Impressive!",
+          "subtitle": "You drink more water than 75% of users*. Keep it up!",
+          "endText": "*users who took the quiz"
+        }
+      },
+      {
+        "label": "More than 10 glasses 🐳",
+        "subLabel": "more than 2,51/85 oz",
+        "description": {
+          "title": "Wow! Impressive!",
+          "subtitle": "You drink more water than 92% of users*. Keep it up!",
+          "endText": "*users who took the quiz"
+        }
+      }
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiSleepDurationCheck": {
+    "title": "How much sleep do you usually get?",
+    "selectOptions": [
+      "Less than 5 hours 🙄",
+      "5-6 hours 🥱",
+      "7-8 hours 🌛",
+      "More than 8 hours 😴"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiDietTypeSelection": {
+    "title": "Do you follow any of these diets?",
+    "selectOptions": [
+      {
+        "label": "Vegetarian 🍆",
+        "subLabel": "Excludes meat"
+      },
+      {
+        "label": " Vegan 🥕",
+        "subLabel": "Excludes all animal products"
+      },
+      {
+        "label": "Keto 🥑",
+        "subLabel": "Low-carb, high-fat"
+      },
+      {
+        "label": "Mediterranean 🌾",
+        "subLabel": "Rich in plant-based foods"
+      },
+      {
+        "label": " None of the above",
+        "subLabel": ""
+      }
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiEatingHabitCheck": {
+    "title": "Do you have any of the following habits?",
+    "selectOptions": [
+      "Emotional eating 🍫",
+      "Snacking late at night 🌙",
+      "Overeating 🍔",
+      "Skipping meals frequently 🍴"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiFoodCravingsCheck": {
+    "title": "What are your most common food cravings?",
+    "selectOptions": [
+      "Sweets 🍬",
+      "Soda 🥤",
+      "Salty snacks 🧂",
+      "Fast food 🍟",
+      "None of the above"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiEatingHabitImproveCheck": {
+    "title": "Are you ready to spend 5 minutes a day improving your eating habits?",
+    "selectOptions": [
+      "Yes, I'm ready!",
+      "I'll give it a try",
+      "Not quite yet"
+    ],
+    "continue": "Continue"
+  },
+  "TaiChiBodyChangeFactorCheck": {
+    "title": "Have any of the following life changes affected your body in recent years?",
+    "selectOptions": [
+      "Busy work or family life",
+      "Stress or mental health issues",
+      "Slower metabolism due to aging",
+      "Financial struggles",
+      "Post-treatment complications",
+      "None of the above"
+    ],
+    "continue": "Continue"
+  },
+  "YourHeight": {
+    "title": "What’s your height?",
+    "selectOptions": [
+      "ft/in",
+      "cm"
+    ],
+    "inputLable": "Height",
+    "checkboxLabel": "Calculating your body mass index",
+    "text": "BMI is widely used as a risk indicator for the development or prevalence of several health issues.",
+    "continue": "Continue"
+  },
+  "CurrentWeight": {
+    "title": "What‘s your current weight?",
+    "selectOptions": [
+      "lb",
+      "kg"
+    ],
+    "inputLable": "Current Weight",
+    "textBox": [
+      {
+        "title": [
+          "❗",
+          "Your BMI is ",
+          ", considered Underweight"
+        ],
+        "text": "We'll customize your plan to prioritize muscle gain."
+      },
+      {
+        "title": [
+          "❗",
+          "Your BMI is ",
+          ", considered Slightly Overweight"
+        ],
+        "text": "We'll customize your plan to prioritize weight loss."
+      },
+      {
+        "title": [
+          "‼️",
+          "Your BMI is ",
+          ",considered Obese"
+        ],
+        "text": "We'll customize your plan to prioritize weight loss."
+      },
+      {
+        "title": [
+          "‼️",
+          "Your BMI is ",
+          ",considered Normal"
+        ],
+        "text": "We'll use this information to customize your plan to your needs."
+      }
+    ],
+    "continue": "Continue"
+  },
+  "TargetWeight": {
+    "title": "What‘s your target weight?",
+    "selectOptions": [
+      "lb",
+      "kg"
+    ],
+    "inputLable": "Target Weight",
+    "develop": [
+      {
+        "title": [
+          "🏆",
+          "Easy win: develop",
+          "of muscles"
+        ],
+        "text": "Developing healthy muscle will improve your strength and stability and may boost your confidence and motivate you to try new activities."
+      },
+      {
+        "title": [
+          "👌",
+          "Realistic target: develop ",
+          "of muscles"
+        ],
+        "text": "Adding 10% more muscle can boost your resting metabolism, which helps maintain a healthy weight."
+      },
+      {
+        "title": [
+          "💪",
+          "Hard work: develop ",
+          "of muscles"
+        ],
+        "text": "We'll customize your plan to prioritize weight loss."
+      },
+      {
+        "title": [
+          "🔥",
+          "Challenging goal: develop ",
+          "of muscles"
+        ],
+        "text": "Strength training stimulates testosterone production at any age. Maximize your results by fueling your body with a protein-rich diet."
+      }
+    ],
+    "lose": [
+      {
+        "title": [
+          "🏆",
+          "Easy win: lose ",
+          "of your weight"
+        ],
+        "text": "A study by the University of Queensland found that regular brisk walking for at least 30 minutes can lead to a lower BMI and smaller waistline, even more so than normal exercising."
+      },
+      {
+        "title": [
+          "👌",
+          "Realistic target: lose ",
+          "of your weight2"
+        ],
+        "text": "According to CDC guidelines, losing weight at a steady pace, can significantly reduce the risk of chronic health conditions, including heart disease and type 2 diabetes."
+      },
+      {
+        "title": [
+          "💚",
+          "Health benefits: lose ",
+          "of your weight"
+        ],
+        "text": "Scientific studies show that losing 10-15% of body weight can improve obesity-related conditions, such as lowering the risk of heart attack, reducing blood sugar levels, and decreasing inflammation in blood vessels."
+      },
+      {
+        "title": [
+          "💪",
+          "Challenging goal: lose ",
+          "of your body weight"
+        ],
+        "text": "A Mayo Clinic study found that people who lose over 20% of their body weight are nearly 2.5 times more likely to achieve good metabolic health than those who lose 5-10%."
+      }
+    ],
+    "continue": "Continue"
+  },
+  "UserName": {
+    "title": "What‘s your name?",
+    "inputLable": "what should we call you?",
+    "Subheading": "Let's create your 7M account",
+    "continue": "Continue"
+  },
+  "DateOfBirth": {
+    "title": "What‘s your date of birth?",
+    "inputLable": "Date of birth",
+    "textBox": {
+      "title": "We ask your age to create your personal plan",
+      "text": "Older people tend to have more body fat than younger people with the same BMI."
+    },
+    "continue": "Continue"
+  },
+  "EnterEmail": {
+    "title": [
+      "Your personalized",
+      "Tai Chi",
+      "plan is ready!"
+    ],
+    "text": "We respect your privacy and take protecting it very seriously-no spam",
+    "inputLable": "Email",
+    "prompt": "Email seems to be invalid",
+    "Subheading": "Let's create your 7M account",
+    "continue": "Continue"
+  },
+  "EndAnimation": {
+    "textList": [
+      {
+        "labelBox": [
+          {
+            "label": "In just",
+            "color": "#323233"
+          },
+          {
+            "label": "7 minutes",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "a day...",
+            "color": "#323233"
+          }
+        ]
+      },
+      {
+        "labelBox": [
+          {
+            "label": "By",
+            "color": "#323233"
+          },
+          {
+            "label": "Mar 24",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "you'll feel it",
+            "color": "#323233"
+          }
+        ]
+      },
+      {
+        "labelBox": [
+          {
+            "label": "By",
+            "color": "#323233"
+          },
+          {
+            "label": "Mar 31",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "you'll see it",
+            "color": "#323233"
+          }
+        ]
+      },
+      {
+        "labelBox": [
+          {
+            "label": "By",
+            "color": "#323233"
+          },
+          {
+            "label": "Apr 14",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "you'll be",
+            "color": "#323233"
+          },
+          {
+            "label": "proud",
+            "color": "#2E73E0"
+          },
+          {
+            "label": "of your body!",
+            "color": "#323233"
+          }
+        ],
+        "bg": "../assets/image/EndAnimation_bg4.png"
+      }
+    ]
+  },
+  "MakeCommitment": {
+    "Subheading": "ALMOST DONE!",
+    "title": [
+      "Are you ready",
+      "to make the commitment?"
+    ],
+    "selectOptions": [
+      "Yes, I will do my first workout tomorrow 👌",
+      "Yes! I will do my first workout today! 😎",
+      "I'm not ready to make the commitment"
+    ]
+  },
+  "ProgressLoading": {
+    "text": [
+      "Meal planning",
+      "Creating your workout plan"
+    ]
+  },
+  "Superwall":{
+    "text1":"*The image is not intended to represent the user. Results vary peer person and are not guaranteed.",
+    "title":"Personal summary based on your answers"
+  }
+}

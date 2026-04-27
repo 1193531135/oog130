@@ -18,8 +18,7 @@ const unit = ref(pageData[route.name]?.unit || selectOptions[0])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        weight: unit.value === 'lb' ? CurrentWeight_lb.value.replace(/\D/g, '') : CurrentWeight_kg.value.replace(/\D/g, '')
-
+        value: unit.value === 'lb' ? CurrentWeight_lb.value.replace(/\D/g, '') : CurrentWeight_kg.value.replace(/\D/g, '')
     })
     pushControl.push()
 }
