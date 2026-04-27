@@ -590,9 +590,42 @@
       "Creating your workout plan"
     ]
   },
-  "Superwall":{
-    "text1":"*The image is not intended to represent the user. Results vary peer person and are not guaranteed.",
-    "title":"Personal summary based on your answers"
-
+  "Superwall": {
+    "text1": "*The image is not intended to represent the user. Results vary peer person and are not guaranteed.",
+    "title": "Personal summary based on your answers",
+    "promptNum": [
+      {
+        "color": "#2E73E0",
+        "title": "Underweight",
+        "text": [
+          "The body mass index",
+          " is a measure that uses your height and weight to work out if your weight is healthy."
+        ]
+      },
+      {
+        "color": "#1CB647",
+        "title": "Normal",
+        "text": [
+          "The body mass index",
+          "is a measure that uses your height and weight to work out if your weight is healthy."
+        ]
+      },
+      {
+        "color": "#FF863F",
+        "title": "Overweight",
+        "text": [
+          "The body mass index",
+          "is a measure that uses your height and weight to work out if your weight is healthy."
+        ]
+      },
+      {
+        "color": "#FF4949",
+        "title": "Obese",
+        "text": [
+          "The body mass index",
+          "is a measure that uses your height and weight to work out if your weight is healthy."
+        ]
+      }
+    ]
   }
 }

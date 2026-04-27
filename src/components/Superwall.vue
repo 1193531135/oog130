@@ -36,17 +36,23 @@ const isShow = ref(false)
 const userData = ref({})
 
 userData.value.age = calcAge(pageData['DateOfBirth'])
-userData.value.currentBmi = getBMI(pageData['YourHeight'],pageData['CurrentWeight'])
-userData.value.targetBmi = getBMI(pageData['YourHeight'],pageData['TargetWeight'])
+userData.value.currentBmi = getBMI(pageData['YourHeight'], pageData['CurrentWeight'])
+userData.value.targetBmi = getBMI(pageData['YourHeight'], pageData['TargetWeight'])
 userData.value.gender = pageData['ChooserGender']
+const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
 
 
-const calcBodyFat = (bmi, gender, age) =>
+// 计算进度百分比
+const fillPercent = computed(() => {
+  const pct = ((currentKcal - 1000) / (5000 - 1000)) * 100
+  return Math.max(0, Math.min(100, pct))
+})
+const calcBodyFat = (bmi, gender, age) => 
     Number((gender === 0
         ? 1.2 * bmi + 0.23 * age - 16.2
         : 1.2 * bmi + 0.23 * age - 5.4
     ).toFixed(2));
-console.log(1111, userData.value,pageData['YourHeight'],pageData['CurrentWeight'])
+console.log(1111, userData.value, currentKcal,fillPercent)
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products
     console.log(res.data.products)
@@ -195,35 +201,54 @@ function calcAge(birthDayStr) {
     }
     return age
 }
-// BMI计算
+// BMI计算（支持 cm / ft/in 身高，kg / lb 体重）
 function getBMI(heightObj, weightObj) {
-    console.log(222,heightObj, weightObj)
-    const { unit: hUnit, height: hVal } = heightObj
-    const { unit: wUnit, weight: wVal } = weightObj
+  // 解构赋值
+  const { unit: hUnit, height: hVal } = heightObj;
+  const { unit: wUnit, weight: wVal } = weightObj;
 
-    let heightM = 0
-    let weightKg = 0
+  // 转换身高为米（统一处理字符串/数字）
+  let heightM = 0;
+  if (hUnit === 'cm') {
+    heightM = Number(hVal) / 100;
+  } else if (hUnit === 'ft/in') {
+    const hStr = String(hVal);
+    const ft = Number(hStr[0]);
+    const inch = Number(hStr.slice(1));
+    heightM = ft * 0.3048 + inch * 0.0254;
+  }
 
-    // 身高转 米
-    if (hUnit === 'cm') {
-        heightM = hVal / 100
-    } else if (hUnit === 'ft/in') {
-        // 英寸 → 米  1英寸 = 0.0254m
-        heightM = hVal * 0.0254
+  // 转换体重为千克（简洁三元表达式）
+  const weightKg = wUnit === 'lb'
+    ? Number(wVal) * 0.45359237
+    : Number(wVal);
+
+  // 安全计算 BMI
+  if (heightM <= 0) return 0;
+  const bmi = weightKg / (heightM ** 2);
+  return Number(bmi.toFixed(2));
+}
+//卡路里计算
+function calcRecommendedCalories(weightObj, heightObj) {
+    // 体重转换：lb → kg
+    const weight = weightObj.unit === 'lb'
+        ? Number(weightObj.weight) * 0.453592
+        : Number(weightObj.weight);
+
+    // 身高转换：ft/in 字符串 → cm（规则：123 = 1ft 23in）
+    let height;
+    if (heightObj.unit === 'ft/in') {
+        const hStr = String(heightObj.height);
+        const ft = Number(hStr[0]);
+        const inch = Number(hStr.slice(1));
+        height = ft * 30.48 + inch * 2.54;
+    } else {
+        height = Number(heightObj.height);
     }
-
-    // 体重转 千克
-    if (wUnit === 'kg') {
-        weightKg = wVal
-    } else if (wUnit === 'lb') {
-        // 1磅 = 0.45359237kg
-        weightKg = wVal * 0.45359237
-    }
-
-    // 防错除0
-    if (heightM <= 0) return 0
-    const bmi = weightKg / (heightM ** 2)
-    return Number(bmi.toFixed(2))
+    console.log(weight,height,55555)
+    // 卡路里计算公式
+    const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
+    return Math.round(recommendedCalories);
 }
 </script>
 
@@ -238,10 +263,10 @@ function getBMI(heightObj, weightObj) {
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
                             <div class="text2">
-                                {{Math.floor(calcBodyFat(userData.currentBmi,userData.gender,userData.age)/4)*4}}%
+                                {{ Math.floor(calcBodyFat(userData.currentBmi, userData.gender, userData.age) / 4) * 4 }}%
                                 -
-                                {{Math.floor(calcBodyFat(userData.currentBmi,userData.gender,userData.age)/4)*4+4}}%
-                                </div>
+                                {{ Math.floor(calcBodyFat(userData.currentBmi, userData.gender, userData.age) / 4) * 4 + 4 }}%
+                            </div>
                         </div>
                         <div class="textBox2">
                             <div class="text1">Energy Level</div>
@@ -271,9 +296,9 @@ function getBMI(heightObj, weightObj) {
                         <div class="textBox1">
                             <div class="text1">Body fat</div>
                             <div class="text2">
-                                {{Math.floor(calcBodyFat(userData.targetBmi,userData.gender,userData.age)/4)*4}}%
+                                {{ Math.floor(calcBodyFat(userData.targetBmi, userData.gender, userData.age) / 4) * 4 }}%
                                 -
-                                {{Math.floor(calcBodyFat(userData.targetBmi,userData.gender,userData.age)/4)*4+4}}%
+                                {{ Math.floor(calcBodyFat(userData.targetBmi, userData.gender, userData.age) / 4) * 4 + 4 }}%
                             </div>
                         </div>
                         <div class="textBox2">
@@ -342,7 +367,7 @@ function getBMI(heightObj, weightObj) {
                         <div class="icon-box">🍔</div>
                         <div class="text-group">
                             <p class="label">Daily calorie intake</p>
-                            <p class="value">1248 kcal</p>
+                            <p class="value">{{currentKcal}}kcal</p>
                         </div>
                     </div>
                     <!-- 卡路里进度条 -->
@@ -367,12 +392,12 @@ function getBMI(heightObj, weightObj) {
                         </div>
                     </div>
                     <div class="cupBox">
-                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
-                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
-                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
-                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
-                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
-                        <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_1.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_1.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_1.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_1.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_1.png">
+                        <img class="cup" src="../assets/image/suoerwall_bg4_1.png">
                         <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
                         <img class="cup" src="../assets/image/suoerwall_bg4_0.png">
                     </div>
