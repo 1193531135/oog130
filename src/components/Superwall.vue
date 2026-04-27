@@ -148,11 +148,11 @@ onMounted(() => {
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
     })
-    // setTimeout(() => {
-    //     console.log('显示抽奖弹窗')
-    //     isShow.value = true
-    //     anim?.play()
-    // }, 5000)
+    setTimeout(() => {
+        console.log('显示抽奖弹窗')
+        isShow.value = true
+        anim?.play()
+    }, 5000)
 })
 
 // 销毁时清理
