@@ -1,7 +1,7 @@
 // 参考文档：https://firebase.google.cn/docs/web/setup?hl=zh-cn
 import webConfig from "@/config/index.js"
 import { initializeApp } from 'firebase/app';
-import { mergeMixpanelinfo } from "@/utils/mixpanel"
+// import { mergeMixpanelInfo } from "@/utils/mixpanel"
 // import store from "@/store";
 // import utils from "./utils";
 import {
@@ -16,6 +16,7 @@ let auth
 
 //项目配置
 const firebaseConfig = webConfig.firebaseConfig;
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 auth = getAuth();
@@ -28,9 +29,7 @@ let redirectPath = '/get-start-page';
 //侦听器 监听用户登陆状态
 onAuthStateChanged(auth, async (user) => {
     console.log("Auth state changed:", user);
-
-    currentPath = window.location.pathname;
-    currentPathUid = getUrlParams(window.location).get("uid");
+    // 更新uid
     if (user && user.uid) {
         window.sessionStorage.setItem('uid', user.uid);
         userOnAuthInfo = user;
@@ -39,7 +38,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user && !user.isAnonymous) {
         try {
             // 更新用户信息到 Vuex Store 并处理分析数据
-            mergeMixpanelinfo(user.uid);
+            // mergeMixpanelInfo(user.uid);
             // store.commit("updateuserInfo", user);
             // const userData = await getFirestoreDataByUid(user.uid);
             // if (userData?.isDeletedAccount) {
@@ -48,7 +47,7 @@ onAuthStateChanged(auth, async (user) => {
             //     await signOutWithEmail();
             // } else {
             //     // 更新用户信息到 Vuex Store 并处理分析数据
-            //     mergeMixpanelinfo(user.uid);
+            //     mergeMixpanelInfo(user.uid);
             //     store.commit("updateuserInfo", user);
             // }
         } catch (error) {

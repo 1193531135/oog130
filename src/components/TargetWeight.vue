@@ -4,11 +4,8 @@ import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 const pushControl = new PushControl()
-
-
-
 const pageData = new PageData()
-pageData
+
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const selectOptions = pageText.selectOptions
@@ -18,20 +15,17 @@ const isLose = ref(false)
 const textBox = ref(developOptions[0])
 const unit = ref(pageData[route.name]?.unit || selectOptions[0])
 
-
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        weight: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
-
+        value: unit.value === 'lb' ? targetWeight_lb.value.replace(/\D/g, '') : targetWeight_kg.value.replace(/\D/g, '')
     })
     pushControl.push()
 }
 
-
 const isDisabled = ref(!pageData[route.name])
-const targetWeight_lb = ref(pageData[route.name]?.weight || '')
-const targetWeight_kg = ref(pageData[route.name]?.weight || '')
+const targetWeight_lb = ref(pageData[route.name]?.value || '')
+const targetWeight_kg = ref(pageData[route.name]?.value || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
@@ -42,9 +36,9 @@ const weightComparison = () => {
     let CurrentWeight = pageData.CurrentWeight
     let oldWeight, newWeight
     if (CurrentWeight.unit === 'lb') {
-        oldWeight = Number((CurrentWeight.weight * 0.4535).toFixed(2))
+        oldWeight = Number((CurrentWeight.value * 0.4535).toFixed(2))
     } else {
-        oldWeight = Number(CurrentWeight.weight)
+        oldWeight = Number(CurrentWeight.value)
     }
     if (unit === 'lb') {
         newWeight = Number((targetWeight_lb.value * 0.4535).toFixed(2))
@@ -379,7 +373,7 @@ const focusInput = () => {
         box-sizing: border-box;
         padding: 16px;
         border-radius: 8px;
-        background: #EDF0F3;
+        background: #EBF0F9;
 
 
         .texBox-top {
@@ -416,12 +410,11 @@ const focusInput = () => {
 
     .btn-container {
         position: fixed;
-        height: 100px;
         bottom: 0;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
-        padding: 16px 16px 12px;
+        padding: 16px 16px 32px;
     }
 
 
@@ -437,8 +430,17 @@ const focusInput = () => {
         .lable {
             width: 80vw;
         }
-        .unit-switch{
-            margin-top: 20px;
+        .input-wrapper {
+            .input-text {
+                font-size: 14px;
+                .unit{
+                    min-width: 25px;
+                }
+            }
+            .input{
+                font-size: 14px;
+            }
+
         }
         .inputLable{
             margin-top: 32px;

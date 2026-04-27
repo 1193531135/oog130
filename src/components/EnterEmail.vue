@@ -58,9 +58,9 @@ const focusInput = () => {
 
         <div class="title">
             <span>{{ pageText.title[0] }}</span>
-            &nbsp;
-            <span style="color: #2E73E0;">{{ pageText.title[1] }}</span>
-            &nbsp;
+            
+            <span style="color: #2E73E0;">&nbsp;{{ pageText.title[1] }}&nbsp;</span>
+
             <span>{{ pageText.title[2] }}</span>
         </div>
         <div class="description">{{ pageText.text }}</div>
@@ -113,7 +113,7 @@ const focusInput = () => {
     }
 
     .title {
-        
+
         width: 650px;
         text-align: center;
     }
@@ -220,12 +220,11 @@ const focusInput = () => {
 
     .btn-container {
         position: fixed;
-        height: 100px;
         bottom: 0;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
-        padding: 16px 16px 12px;
+        padding: 16px 16px 32px;
     }
 }
 
@@ -241,6 +240,25 @@ const focusInput = () => {
 
         .title {
             width: 100%;
+        }
+
+        .input-wrapper {
+            margin-top: 8px;
+            .input-text {
+                font-size: 14px;
+
+                .unit {
+                    min-width: 25px;
+                }
+            }
+
+            .input {
+                font-size: 14px;
+            }
+
+        }
+        .promptBox{
+            margin-top: 16px;
         }
 
         .input-wrapper {

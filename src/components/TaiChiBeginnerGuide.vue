@@ -25,11 +25,13 @@ console.log(pageText, viewMode)
     <div class="subtitle description">
       <span>{{ pageText.subtitle }}</span>
     </div>
-    <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiBeginnerGuide_female.webp" alt="" srcset="">
-    <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiBeginnerGuide_male.webp" alt="" srcset="">
-    <div class="descriptionBox">
-      <span>☯️</span>
-      <span>{{ pageText.description }}</span>
+    <div class="box">
+      <img v-if="viewMode === 1" class="img" src="../assets/image/TaiChiBeginnerGuide_female.webp" alt="" srcset="">
+      <img v-if="viewMode === 0" class="img" src="../assets/image/TaiChiBeginnerGuide_male.webp" alt="" srcset="">
+      <div class="descriptionBox">
+        <span>☯️</span>
+        <span>{{ pageText.description }}</span>
+      </div>
     </div>
     <div class="btn-container">
       <div class="continue-btn" @click="change">
@@ -51,11 +53,11 @@ console.log(pageText, viewMode)
 
 .img {
   margin-top: 20px;
-  width: 410px;
+  width: 100%;
 }
 
 .title {
-  
+
   width: 100%;
   text-align: center;
 }
@@ -88,22 +90,33 @@ console.log(pageText, viewMode)
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  padding: 16px 16px 12px;
+  padding: 16px 16px 32px;
 }
 
 @media (max-width: 600px) {
   .text-page {
+    position: relative;
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
     padding: 0 16px;
     overflow-y: scroll;
+
+    .box {
+      position: absolute;
+      top: 50%;
+      box-sizing: border-box;
+      margin: 0 16px;
+      transform: translateY(-50%);
+    }
   }
-  .descriptionBox{
+
+  .descriptionBox {
     font-size: 14px;
   }
+
   .img {
-    width: 318px;
+    width: 100%;
   }
 
 

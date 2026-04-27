@@ -3,11 +3,13 @@ import { ref,onMounted,computed,watch } from "vue";
 import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
-import { getFirestoreDataByUid, createAnonymousAccount } from "@/utils/firebase"
+import { getFirestoreDataByUid, createAnonymousAccount } from "@/config/firebase.js"
+import  { getPriceList } from "@/api/system"
+import config from "@/config/index.js";
+import { Mixpanel } from "@/config/mixpanel.js"
 
 const loaded = ref(false);
 const route = useRoute()
-
 const routeIndex = computed(() => registerList.findIndex(i=> i.path === route.path) )
 
 function getFallbackUid() {
@@ -40,19 +42,17 @@ const back = () => {
 }
 
 onMounted(async () => {
+  // 创建匿名账号
+  const uid = await createAnonymousAccount();
+  sessionStorage.setItem("uid",uid);
+  // 初始化mixpanel
+  const mixpanel = new Mixpanel();
+  mixpanel.init();
+  // const fetchedData = await getFirestoreDataByUid();
   loadResources();
-  try {
-    const anonymousId = await createAnonymousAccount() || getFallbackUid();
-    if (anonymousId) {
-      const fetchedData = await getFirestoreDataByUid(anonymousId);
-      if (fetchedData) {
-        console.log('updateOnBoardingRecordInfo', fetchedData);
-      }
-    }
-  } catch (error) {
-    console.error('Anonymous bootstrap failed', error);
-    getFallbackUid();
-  }
+  // if (fetchedData) {
+  //   console.log('updateOnBoardingRecordInfo', fetchedData);
+  // }
 })
 </script>
 

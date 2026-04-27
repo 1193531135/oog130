@@ -18,15 +18,14 @@ const unit = ref(pageData[route.name]?.unit || selectOptions[0])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        weight: unit.value === 'lb' ? CurrentWeight_lb.value.replace(/\D/g, '') : CurrentWeight_kg.value.replace(/\D/g, '')
-
+        value: unit.value === 'lb' ? CurrentWeight_lb.value.replace(/\D/g, '') : CurrentWeight_kg.value.replace(/\D/g, '')
     })
     pushControl.push()
 }
 
 const isDisabled = ref(!pageData[route.name])
-const CurrentWeight_lb = ref(pageData[route.name]?.weight || '')
-const CurrentWeight_kg = ref(pageData[route.name]?.weight || '')
+const CurrentWeight_lb = ref(pageData[route.name]?.value || '')
+const CurrentWeight_kg = ref(pageData[route.name]?.value || '')
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
@@ -342,7 +341,7 @@ const focusInput = () => {
         box-sizing: border-box;
         padding: 16px;
         border-radius: 8px;
-        background: #EDF0F3;
+        background: #EBF0F9;
 
 
 
@@ -374,12 +373,11 @@ const focusInput = () => {
 
     .btn-container {
         position: fixed;
-        height: 100px;
         bottom: 0;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
-        padding: 16px 16px 12px;
+        padding: 16px 16px 32px;
     }
 
 
@@ -395,9 +393,25 @@ const focusInput = () => {
         .lable {
             width: 80vw;
         }
-        .input-wrapper{
-            
+
+        .input-wrapper {
+            .input-text {
+                font-size: 14px;
+                .unit{
+                    min-width: 25px;
+                }
+            }
+            .input{
+                font-size: 14px;
+            }
+
         }
+
+
+        .unit-switch {
+            margin-top: 17px;
+        }
+
         .inputLable {
             font-size: 16px;
         }

@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 const pushControl = new PushControl()
 
 const pageData = new PageData()
@@ -10,14 +10,14 @@ const route = useRoute()
 const pageText = window.languageData[route.name]
 const selectOptions = pageText.selectOptions
 const unit = ref(pageData[route.name]?.unit || selectOptions[0])
-const height = ref(pageData[route.name]?.height || '')
-const height_cm = ref(pageData[route.name]?.height || '')
+const height = ref(pageData[route.name]?.value || '')
+const height_cm = ref(pageData[route.name]?.value || '')
 const checked = ref(pageData[route.name]?.checked || '')
 const isDisabled = ref(!pageData[route.name])
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
-        height: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
+        value: unit.value === 'ft/in' ? height.value.replace(/\D/g, '') : height_cm.value.replace(/\D/g, '')
     })
     pushControl.push()
 }
@@ -92,6 +92,8 @@ const onInput = (e) => {
             placeholder_1.value = ''
             placeholder_2.value = ''
             e.target.value = height.value
+        } else {
+            e.target.value = height.value
         }
     }
     // 实时验证
@@ -112,7 +114,6 @@ const validate1 = () => {
     }
 }
 const onInput1 = (e) => {
-    console.log('正在输入：', e.target.value)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
@@ -120,7 +121,6 @@ const onInput1 = (e) => {
     // 实时验证
     validate1()
 }
-
 // 单位切换时重置所有状态
 watch(unit, () => {
     isError.value = false
@@ -139,6 +139,15 @@ const focusInput = () => {
         inputRef.value.focus()
     }
 }
+onMounted(() => {
+    if (unit.value === 'ft/in') {
+        const inputDom = inputRef.value
+        console.log('inputDom', inputDom)
+        inputDom.value = pageData[route.name]?.value
+        inputRef.value.dispatchEvent(new Event('input'))
+    }
+})
+
 </script>
 
 <template>
@@ -162,8 +171,7 @@ const focusInput = () => {
             error: isError,
             focus: isFocused
         }" v-if="unit === 'ft/in'">
-            <input ref="inputRef" @keydown.delete="onDelete" @input="onInput" class="input" placeholder=""
-                @focus="isFocused = true" />
+            <input ref="inputRef" @input="onInput" class="input" placeholder="" @focus="isFocused = true" />
             <div class="input-text">
                 <span>{{ height }}</span>
                 <span class="placeholder">{{ placeholder_1 }}</span>
@@ -414,12 +422,11 @@ const focusInput = () => {
 
     .btn-container {
         position: fixed;
-        height: 100px;
         bottom: 0;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
-        padding: 16px 16px 12px;
+        padding: 16px 16px 32px;
     }
 
 }
@@ -436,6 +443,21 @@ const focusInput = () => {
 
         .inputLable {
             font-size: 16px;
+        }
+
+        .input-wrapper {
+            .input-text {
+                font-size: 14px;
+
+                .unit {
+                    min-width: 25px;
+                }
+            }
+
+            .input {
+                font-size: 14px;
+            }
+
         }
 
         .input-text {

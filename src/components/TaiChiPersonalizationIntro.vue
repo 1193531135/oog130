@@ -4,7 +4,7 @@ import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
 const pushControl = new PushControl()
 const pageData = new PageData()
-pageData
+
 const route = useRoute()
 const pageText = window.languageData[route.name]
 
@@ -60,12 +60,11 @@ function change(val) {
 
 .btn-container {
   position: fixed;
-  height: 100px;
   bottom: 0;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  padding: 16px 16px 12px;
+  padding: 16px 16px 32px;
 }
 
 @media (max-width: 600px) {

@@ -41,15 +41,14 @@ const sdkConfig = {
         tier: 'development', // development ,production
     },
     firebaseConfig: {
-        apiKey: "AIzaSyCezn0g-bk8v8WEtfRp09EM20d83WVt1U8",
+        apiKey: "AIzaSyASpCyzRmmwVlQUqG7G-ArJ31iogpM5auI",
         authDomain: "test-project-33489.firebaseapp.com",
         databaseURL: "https://test-project-33489.firebaseio.com",
         projectId: "test-project-33489",
         storageBucket: "test-project-33489.appspot.com",
-        messagingSenderId: "767436901681",
-        appId: "493620055150:web:65dd314c86d30329532a7f",
-        measurementId: "G-3G1Q65HZ1T",
-        defaultCollectionPath: 'web2app'
+        messagingSenderId: "493620055150",
+        appId: "1:493620055150:web:38d916d82f3d07bb532a7f",
+        measurementId: "G-HZ5M6LL56P"
     },
     apiConfig: {
         systemBaseUrl: 'https://backend-dev.7mfitness.com',
@@ -60,7 +59,7 @@ const sdkConfig = {
         stripeKey: "pk_test_51O5L81DOSX8YAb7RBP6pbsCt2Nyh9WJgmarDuYY7i25D9EXZQYc1s39FkSq3TOWUyFnKAaS0x1zM8BiVozEdsho300CTYNpxNj",
     },
     mixpanelConfig: {
-        token: '049187f132ce757f3046a0bb43469f56',
+        token: '905c2315470093926e258d9937dd60dd',
         onboardingEventKey: 'test_OB',
         homePageEventKey: 'test_1st',
         purchaseKey: 'test_OB'

@@ -90,6 +90,7 @@ function goIt() {
     font-weight: 700;
   }
   .content-con{
+    margin-top: 44px;
     display: flex;
     align-items: end;
     gap: 32px;
@@ -117,12 +118,12 @@ function goIt() {
   }
   .btn-container {
     position: fixed;
-    height: 100px;
+    // height: auto;
     bottom: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    padding: 16px 16px 12px;
+    padding: 16px 16px 32px;
   }
 }
 

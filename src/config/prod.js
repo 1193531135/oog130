@@ -45,22 +45,20 @@ const sdkConfig = {
         stripeBaseUrl: 'https://api.revenuecat.com/v1',
     },
     firebaseConfig: {
-        apiKey: "AIzaSyATM2q_vpk_7W-dGt7TBbzOQYYTtvf1j2M",
-        authDomain: "oog104-65d2f.firebaseapp.com",
-        databaseURL: "https://oog104-65d2f.firebaseio.com",
-        projectId: "oog104-65d2f",
-        storageBucket: "oog104-65d2f.appspot.com",
-        messagingSenderId: "754781355622",
-        appId: "1:754781355622:web:455a70139f2ce3759037a7",
-        measurementId: "G-HDXWJXPQCM",
-        defaultCollectionPath: 'web2app'
+        apiKey: "AIzaSyDyZmiTUp5d71LfN4Hbyo0lKzh0t0H-dUg",
+        authDomain: "oog126---tai-chi-for-beginners.firebaseapp.com",
+        projectId: "oog126---tai-chi-for-beginners",
+        storageBucket: "oog126---tai-chi-for-beginners.firebasestorage.app",
+        messagingSenderId: "985747364944",
+        appId: "1:985747364944:web:0b080adb0934029f238555",
+        measurementId: "G-HXZHP15BS4"
     },
     stripeConfig: {
         revenuecatStripeAppPublicApiKey: "strp_BfIdOSUqjdxNacFnNCUoVCzJKIt",
         stripeKey: "pk_live_51O5L81DOSX8YAb7RgMgytMC7ddW6L3CLBm5FOMAX8xh00VbRiqTvrM4YDdjz2kqZgRjRL528hXMmgMXdzykOTnoZ00ws1Rin9J",
     },
     mixpanelConfig: {
-        token: 'f08461e6397f672c7013ae0cdd367a45',
+        token: '8e421c1766dbac58409eaa3453dbefeb',
         onboardingEventKey: 'OB',
         homePageEventKey: '1st',
         purchaseKey: 'OB',
