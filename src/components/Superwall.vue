@@ -166,7 +166,7 @@ function ButtonClick() {
         console.log('去结算')
     } else {
         anim.goToAndStop(300, true)
-        // anim?.play()
+        anim?.play()
     }
 }
 // swiper
