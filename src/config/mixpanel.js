@@ -99,29 +99,33 @@ export class Mixpanel {
         const pageName = path[1].toUpperCase() + path.substring(2)
         const info = {};
         if(config){
+            // 如果配置了dataKey，说明需要从页面数据中获取对应的值进行埋点
             if(config.dataKey) {
+                // 用于埋点事件传参
                 const dataKey = "ob_" + config.dataKey
+                // 用于用户携带传参
+                const userKey = "user_" + config.dataKey
                 let dataValue = ""
                 const pageData = new PageData();
                 const value = pageData[pageName]
                 if(value === undefined) throw `${pageName}数据不存在`;
                 const options = getPageOptions(pageName)
                 // 特殊处理
-                if(path === "/yourHeight"){
+                if(path === "/yourHeight" || path === "/targetWeight" || path === "/currentWeight"){
                     info[dataKey] = value.value + value.unit
+                    if(path === "/currentWeight"){
+                        // 添加bmi参数
+                        info["ob_bmi"] = BMI({
+                            weight: pageData["CurrentWeight"].value,
+                            height: pageData["YourHeight"].value,
+                            isFt: pageData["YourHeight"].unit === "ft/in",
+                            isLb: pageData["CurrentWeight"].unit === "lb"
+                        })
+                    }
                 }
-                else if(path === "/targetWeight"){
-                    info[dataKey] = value.value + value.unit
-                }
-                else if(path === "/currentWeight"){
-                    info[dataKey] = value.value + value.unit
-                    // 添加bmi参数
-                    info["ob_bmi"] = BMI({
-                        weight: pageData["CurrentWeight"].value,
-                        height: pageData["YourHeight"].value,
-                        isFt: pageData["YourHeight"].unit === "ft/in",
-                        isLb: pageData["CurrentWeight"].unit === "lb"
-                    })
+                else if(path === "/taiChiCurrentBodyType" || path === "/taiChiTargetBodyType"){
+                    // 因为男女选项不同，所以需要根据性别区分处理
+                    info[dataKey] = options[pageData["ChooserGender"]][value]
                 }
                 // 默认处理
                 else {
