@@ -76,7 +76,7 @@ if (nowBMI < 18) {
 } else {
     promptNum.value = 3
 }
-console.log('promptNum',promptNum.value,pageText.promptNum)
+console.log('promptNum', promptNum.value, pageText.promptNum)
 userData.value.age = calcAge(pageData['DateOfBirth'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
@@ -614,10 +614,10 @@ function change(val) {
                                 <div class="priceItam-right-box2-text1" :class="priceClick == 0 ? 'blueColor' : ''">
                                     <span class="span1">$</span>
                                     <span class="span2">
-                                        {{ discount ? (productList[0]?.priceDiscountUnitAmount / 100 / 7
-                                            * productList[0]?.intervalCount).toFixed(2) :
-                                            (productList[0]?.priceUnitAmount / 100 / 7
-                                                * productList[0]?.intervalCount).toFixed(2) }}
+                                        {{ (productList[0][discount ? 'priceDiscountUnitAmount' : 'priceUnitAmount'] /
+                                            100 / (7 * productList[0]
+                                                ?.intervalCount)).toFixed(2)
+                                        }}
                                     </span>
                                 </div>
                                 <div class="priceItam-right-box2-text2">per day</div>
@@ -651,11 +651,10 @@ function change(val) {
                                     <div class="priceItam-right-box2-text1" :class="priceClick == 1 ? 'blueColor' : ''">
                                         <span class="span1">$</span>
                                         <span class="span2">
-                                            {{ discount ? (productList[1]?.priceDiscountUnitAmount / 100 /
-                                                7 * productList[0]?.intervalCount).toFixed(2)
-                                                :
-                                                (productList[1]?.priceUnitAmount / 100 /
-                                                    7 * productList[0]?.intervalCount).toFixed(2) }}
+                                            {{ (productList[1][discount ? 'priceDiscountUnitAmount' : 'priceUnitAmount'] /
+                                            100 / (7 * productList[1]
+                                                ?.intervalCount)).toFixed(2)
+                                        }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -692,11 +691,10 @@ function change(val) {
                                     <div class="priceItam-right-box2-text1" :class="priceClick == 2 ? 'blueColor' : ''">
                                         <span class="span1">$</span>
                                         <span class="span2">
-                                            {{ discount ? (productList[2]?.priceDiscountUnitAmount / 100 /
-                                                7 * productList[0]?.intervalCount).toFixed(2)
-                                                :
-                                                (productList[2]?.priceUnitAmount / 100 /
-                                                    7 * productList[0]?.intervalCount).toFixed(2) }}
+                                            {{ (productList[2][discount ? 'priceDiscountUnitAmount' : 'priceUnitAmount'] /
+                                            100 / (7 * productList[2]
+                                                ?.intervalCount)).toFixed(2)
+                                        }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
