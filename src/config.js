@@ -204,8 +204,8 @@ const config = {
         props(content) {
             const pageData = new PageData()
             const nowBMI = BMI({
-                height: pageData['YourHeight'].value,
-                weight: pageData['CurrentWeight'].value,
+                height: pageData['YourHeight']?.value,
+                weight: pageData['CurrentWeight']?.value,
                 isFt: pageData['YourHeight']?.unit == "ft/in",
                 isLb: pageData['CurrentWeight']?.unit == "lb"
             }).toFixed(2)

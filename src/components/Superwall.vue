@@ -40,6 +40,8 @@ let anim1 = null
 const isShow = ref(false)
 //变量数据
 const userData = ref({})
+//控制按钮
+const isDisabled = ref(false)
 
 const nowBMI = BMI({
     height: pageData['YourHeight'].value,
@@ -82,45 +84,45 @@ design_id：paywall-page页面id，命名规则  Web-Paywall-(随机8位数字�
 const design_id = ""
 const product_id = computed(() => productList.value[priceClick.value]?.id || '')
 const mixpanelConfig = () => {
-  return {
-    design_id,
-    product_id:product_id.value,
-    paywall_source:"onboarding",
-    paywall_type:"onboarding",
-  }
+    return {
+        design_id,
+        product_id: product_id.value,
+        paywall_source: "onboarding",
+        paywall_type: "onboarding",
+    }
 }
 const mixpanelConfigOB = () => {
-  return {
-    design_id,
-    product_id:product_id.value,
-  }
+    return {
+        design_id,
+        product_id: product_id.value,
+    }
 }
 const eventTracker = {
-  // 初始化触发
-  view(){
-    mixpanel.setmMxpanelValue("OB Paywall Viewed Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Viewed Web",mixpanelConfig())
-  },
-  // 点击支付触发
-  clickPay(){
-    mixpanel.setmMxpanelValue("OB Paywall Continued Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Continued Web",mixpanelConfig())
-  },
-  // 免费试用支付成功触发
-  payFree(){
-    mixpanel.setmMxpanelValue("OB Paywall Trialed Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Trialed Web",mixpanelConfig())
-  },
-  // 正常付费成功触发
-  paySuccess(){
-    mixpanel.setmMxpanelValue("OB Paywall Purchased Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Purchased Web",mixpanelConfig())
-  }
+    // 初始化触发
+    view() {
+        mixpanel.setmMxpanelValue("OB Paywall Viewed Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Viewed Web", mixpanelConfig())
+    },
+    // 点击支付触发
+    clickPay() {
+        mixpanel.setmMxpanelValue("OB Paywall Continued Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Continued Web", mixpanelConfig())
+    },
+    // 免费试用支付成功触发
+    payFree() {
+        mixpanel.setmMxpanelValue("OB Paywall Trialed Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Trialed Web", mixpanelConfig())
+    },
+    // 正常付费成功触发
+    paySuccess() {
+        mixpanel.setmMxpanelValue("OB Paywall Purchased Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Purchased Web", mixpanelConfig())
+    }
 }
 
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products
-    console.log(res.data.products)
+    console.log('products', res.data.products)
     // 进入页面触发加载埋点，因为要传入价格，所以放在获取价格列表之后
     eventTracker.view()
 })
@@ -194,9 +196,13 @@ onMounted(() => {
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
     })
+    anim1.addEventListener("complete", () => {
+        isDisabled.value = false
+    })
     setTimeout(() => {
         console.log('显示抽奖弹窗')
         isShow.value = true
+        isDisabled.value = false
         anim?.play()
     }, 5000)
 })
@@ -211,6 +217,7 @@ function ButtonClick() {
         isShow.value = false
         console.log('去结算')
     } else {
+        isDisabled.value = true
         anim.goToAndStop(300, true)
         anim?.play()
     }
@@ -285,7 +292,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
 
 // change
 function change(val) {
-  priceClick.value = val;
+    priceClick.value = val;
 }
 </script>
 
@@ -391,9 +398,9 @@ function change(val) {
                 <div class="status-card">
                     <h2 class="status-title" :style="'color:' + promptNum.color + ';'">{{ promptNum.title }}</h2>
                     <p class="status-desc">
-                        <span>{{ promptNum.text[0] }}</span>
+                        <span>{{ promptNum?.text[0] }}</span>
                         <span>({{ nowBMI }})</span>
-                        <span>{{ promptNum.text[1] }}</span>
+                        <span>{{ promptNum?.text[1] }}</span>
                     </p>
                 </div>
 
@@ -584,8 +591,10 @@ function change(val) {
                                 <div class="priceItam-right-box2-text1" :class="priceClick == 0 ? 'blueColor' : ''">
                                     <span class="span1">$</span>
                                     <span class="span2">
-                                        {{ discount ? (productList[0]?.priceDiscountUnitAmount / 100 / 7).toFixed(2) :
-                                            (productList[0]?.priceUnitAmount / 100 / 7).toFixed(2) }}
+                                        {{ discount ? (productList[0]?.priceDiscountUnitAmount / 100 / 7
+                                            * productList[0]?.intervalCount).toFixed(2) :
+                                            (productList[0]?.priceUnitAmount / 100 / 7
+                                                * productList[0]?.intervalCount).toFixed(2) }}
                                     </span>
                                 </div>
                                 <div class="priceItam-right-box2-text2">per day</div>
@@ -619,9 +628,11 @@ function change(val) {
                                     <div class="priceItam-right-box2-text1" :class="priceClick == 1 ? 'blueColor' : ''">
                                         <span class="span1">$</span>
                                         <span class="span2">
-                                            {{ discount ? (productList[1]?.priceDiscountUnitAmount / 100 / 7).toFixed(2)
+                                            {{ discount ? (productList[1]?.priceDiscountUnitAmount / 100 /
+                                                7 * productList[0]?.intervalCount).toFixed(2)
                                                 :
-                                                (productList[1]?.priceUnitAmount / 100 / 7).toFixed(2) }}
+                                                (productList[1]?.priceUnitAmount / 100 /
+                                            7*productList[0]?.intervalCount).toFixed(2) }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -658,9 +669,11 @@ function change(val) {
                                     <div class="priceItam-right-box2-text1" :class="priceClick == 2 ? 'blueColor' : ''">
                                         <span class="span1">$</span>
                                         <span class="span2">
-                                            {{ discount ? (productList[2]?.priceDiscountUnitAmount / 100 / 7).toFixed(2)
+                                            {{ discount ? (productList[2]?.priceDiscountUnitAmount / 100 /
+                                                7 * productList[0]?.intervalCount).toFixed(2)
                                                 :
-                                                (productList[2]?.priceUnitAmount / 100 / 7).toFixed(2) }}
+                                                (productList[2]?.priceUnitAmount / 100 /
+                                            7*productList[0]?.intervalCount).toFixed(2) }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -760,7 +773,7 @@ function change(val) {
             </div>
             <div class="text" v-if="discount">*The discount will be added automatically to the first billing period
             </div>
-            <div @click="ButtonClick" class="button">
+            <div @click="ButtonClick" class="button" :class="{ 'disabled': isDisabled }">
                 {{ discount ? 'Get my discount' : 'Stop' }}
             </div>
             <div ref="lottieContainer1" class="lottie2"></div>
@@ -1693,11 +1706,7 @@ function change(val) {
                     }
                 }
 
-                .continue-btn.disabled {
-                    background-color: #C7C9CC;
-                    cursor: not-allowed;
-                    pointer-events: none;
-                }
+
             }
 
             .price-right-text {
@@ -1897,12 +1906,12 @@ function change(val) {
     z-index: -1;
     opacity: 0.5;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .box {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        position: relative;
         display: flex;
         width: 544px;
         padding: 40px;
@@ -1964,6 +1973,12 @@ function change(val) {
             position: relative;
             z-index: 5;
         }
+
+        .button.disabled {
+            background-color: #C7C9CC;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
     }
 }
 
@@ -1973,6 +1988,41 @@ function change(val) {
 }
 
 @media (max-width: 768px) {
+    .mask {
+        padding: 0 16px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+
+        .box {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            padding: 16px;
+
+            .title {
+                font-size: 24px;
+            }
+
+            .lottie-box {
+                width: 100%;
+                height: auto;
+            }
+
+            .text {
+                font-size: 14px;
+            }
+
+            .button {
+                margin-top: 12px;
+                box-sizing: border-box;
+            }
+
+        }
+    }
+
     .text-page {
         width: 100%;
 
@@ -2229,6 +2279,10 @@ function change(val) {
                         font-size: 13px;
                     }
                 }
+
+                .box6-left-img {
+                    width: 240px;
+                }
             }
 
             .box6-right {
@@ -2239,6 +2293,34 @@ function change(val) {
                     margin-top: 24px;
                     font-size: 20px;
                 }
+
+                .priceItam {
+                    padding: ;
+                    .priceItam-left {}
+
+                    .priceItam-right {
+                        .priceItam-right-box1 {
+                            .priceItam-right-text1 {
+                                font-size: 18px;
+                            }
+
+                        }
+
+                        .priceItam-right-text2 {
+                            font-size: 16px;
+                            .line-through{
+                                font-size: 16px;
+                            }
+                        }
+                        .priceItam-right-box2{
+                            width: 106px;
+                            height: 58px;
+                            .priceItam-right-box2-text1{
+                                margin-top: 0;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -2247,23 +2329,27 @@ function change(val) {
             box-sizing: border-box;
             margin-top: 36px;
             padding: 0 16px;
-            .box7-cont{
+
+            .box7-cont {
                 width: 100%;
                 padding: 16px;
                 display: block;
-                .box7-textBox{
+
+                .box7-textBox {
                     width: 100%;
                 }
-              .box7-img{
-                margin-top: 16px;
-                width: 120px;
-                height: 120px;
-                margin-left: calc(100% - 120px);
-              }
-                
+
+                .box7-img {
+                    margin-top: 16px;
+                    width: 120px;
+                    height: 120px;
+                    margin-left: calc(100% - 120px);
+                }
+
             }
         }
-        .box8{
+
+        .box8 {
             padding: 16px;
             box-sizing: border-box;
         }
