@@ -1485,6 +1485,8 @@ function calcRecommendedCalories(weightObj, heightObj) {
 
         .box6-right {
             width: 396px;
+            display: flex;
+            flex-direction: column;
 
             .box6-right-textBox {
                 width: 100%;
@@ -1723,6 +1725,14 @@ function calcRecommendedCalories(weightObj, heightObj) {
             .payment-drawer-inline-wrap {
                 width: 100%;
                 margin-top: 24px;
+                flex: 1;
+                min-height: 0;
+                display: flex;
+
+                :deep(.drawer-root) {
+                    width: 100%;
+                    height: 100%;
+                }
             }
 
             .price-right-text {
@@ -2299,10 +2309,17 @@ function calcRecommendedCalories(weightObj, heightObj) {
             .box6-right {
                 margin-top: 24px;
                 width: 100%;
+                display: block;
 
                 .box6-right-title {
                     margin-top: 24px;
                     font-size: 20px;
+                }
+
+                .payment-drawer-inline-wrap {
+                    flex: none;
+                    min-height: auto;
+                    display: block;
                 }
 
                 .priceItam {

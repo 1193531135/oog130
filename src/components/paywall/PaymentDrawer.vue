@@ -56,7 +56,6 @@ let stripeInstancePromise = null;
 let paypalInstancePromise = null;
 
 const productTitle = computed(() => props.productInfo?.name || "");
-const stripeText = computed(() => pageText?.stripeText || "");
 const productPrice = computed(() => formatDisplayPrice(props.productInfo));
 const privacyText1 = computed(() => pageText?.privacyText1 || "");
 const privacyText2 = computed(() => pageText?.privacyText2 || "");
@@ -422,7 +421,58 @@ onUnmounted(() => {
               :disabled="!productInfo || isCreatingStripeCheckout"
               @click="openPaymentPopup('stripe')"
             >
-              <span class="wallet-brand apple-brand">{{ stripeText }}</span>
+              <span class="wallet-brand apple-brand">
+                <img class="apple-pay-icon" src="@/assets/image/payment_apple_logo.png" alt="" aria-hidden="true" />
+                <span>Pay</span>
+              </span>
+            </button>
+
+            <button
+              class="payment-entry wallet-entry"
+              :disabled="!productInfo || isCreatingStripeCheckout"
+              @click="openPaymentPopup('stripe')"
+            >
+              <span class="wallet-brand google-brand">
+                <span>Buy with</span>
+                <img class="google-pay-icon" src="@/assets/image/payment_google_g_logo.png" alt="" aria-hidden="true" />
+                <span>Pay</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="card-toggle" @click="openPaymentPopup('stripe')">
+            <span>Pay by credit card</span>
+          </div>
+
+          <div class="card-form-shell" @click="openPaymentPopup('stripe')">
+            <div class="card-form-title">Credit or Debit Card Number</div>
+            <div class="card-form-field">
+              <span class="card-form-icon" aria-hidden="true">▭</span>
+              <span class="card-form-placeholder">XXXX XXXX XXXX XXXX</span>
+            </div>
+
+            <div class="card-form-row-title">
+              <span>Expiry Date</span>
+              <span>CVV/CVC</span>
+            </div>
+            <div class="card-form-row">
+              <div class="card-form-field card-form-field--half">
+                <span class="card-form-placeholder">MM/YY</span>
+              </div>
+              <div class="card-form-field card-form-field--half">
+                <span class="card-form-placeholder">CVV</span>
+                <span class="card-form-info" aria-hidden="true">!</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="card-pay-button"
+              :disabled="!productInfo || isCreatingStripeCheckout"
+              @click.stop="openPaymentPopup('stripe')"
+            >
+              <span class="card-pay-lock" aria-hidden="true">◍</span>
+              <span>Pay</span>
             </button>
           </div>
 
@@ -474,6 +524,7 @@ onUnmounted(() => {
 .drawer-card {
   position: relative;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   padding: 16px 16px 18px;
   border-radius: 12px;
@@ -599,6 +650,7 @@ onUnmounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   color: #ffffff;
   font-family: Poppins, sans-serif;
   font-size: 18px;
@@ -607,6 +659,141 @@ onUnmounted(() => {
 
 .apple-brand {
   letter-spacing: -0.01em;
+}
+
+.apple-pay-icon {
+  width: 20px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.google-brand {
+  gap: 6px;
+}
+
+.google-pay-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.card-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 0 0 14px;
+  color: #a4a4aa;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.card-form-shell {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e8ebf0;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.card-form-title,
+.card-form-row-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #30343b;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.card-form-row-title {
+  margin-top: 14px;
+  padding-right: 10px;
+}
+
+.card-form-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  margin-top: 10px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: #f6f7fa;
+}
+
+.card-form-field--half {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.card-form-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.card-form-icon {
+  color: #b9bec6;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.card-form-placeholder {
+  color: #c8ccd3;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.card-form-info {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cfd4db;
+  border-radius: 999px;
+  color: #c3c8cf;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.card-pay-button {
+  width: 100%;
+  height: 50px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #ff4a4a;
+  color: #ffffff;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.card-pay-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.card-pay-lock {
+  font-size: 16px;
+  line-height: 1;
 }
 
 .panel-error {
@@ -720,6 +907,14 @@ onUnmounted(() => {
   .payment-entry {
     min-height: 56px;
     padding: 14px 18px;
+  }
+
+  .card-form-row-title {
+    font-size: 13px;
+  }
+
+  .card-form-row {
+    flex-direction: column;
   }
 
   .payment-popup-root {
