@@ -23,10 +23,6 @@ export function clearPaymentFlowState() {
   window.sessionStorage.removeItem(STORAGE_KEY);
 }
 
-export function setPaymentFlowState(value) {
-  return writeStorage(value);
-}
-
 export function updatePaymentFlowState(patch) {
   const currentValue = readStorage() || {};
   return writeStorage({

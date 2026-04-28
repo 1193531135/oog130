@@ -5,6 +5,7 @@ import 'swiper/css';
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
+import PaymentDrawer from '@/components/paywall/PaymentDrawer.vue'
 import { PushControl } from '@/tool/index.js'
 import { PageData,BMI } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
@@ -25,6 +26,8 @@ const priceClick = ref(0)
 const discount = ref(false)
 //商品列表
 const productList = ref([])
+const productInfo = ref(null)
+const showPaymentDrawer = ref(false)
 // 容器 DOM
 const lottieContainer = ref(null)
 const lottieContainer1 = ref(null)
@@ -68,8 +71,22 @@ const calcBodyFat = (bmi, gender, age) =>
         : 1.2 * bmi + 0.23 * age - 5.4
     ).toFixed(2));
 console.log(1111, userData.value, currentKcal,fillPercent)
+function selectProduct(index) {
+    priceClick.value = index
+    productInfo.value = productList.value[index] || null
+}
+
+function goIt() {
+    if (!productInfo.value) {
+        return
+    }
+    console.log(productInfo.value)
+    showPaymentDrawer.value = true
+}
+
 getPriceList(uid, { uid, lpId: '' }).then(res => {
-    productList.value = res.data.products
+    productList.value = res.data.products || []
+    productInfo.value = productList.value[0] || null
     console.log(res.data.products)
 })
 function change(val) {
@@ -503,10 +520,10 @@ function calcRecommendedCalories(weightObj, heightObj) {
                         <div class="text">You won the biggest extradiscount!</div>
                     </div>
                 </div>
-                <div>
+                <div v-if="!showPaymentDrawer" class="product-box">
                     <div class="box6-right-title">Debby, get your Tai Chi workout plan</div>
                     <!-- 商品1 -->
-                    <div class="price1 priceItam" @click="priceClick = 0"
+                    <div class="price1 priceItam" @click="selectProduct(0)"
                         :class="priceClick == 0 ? 'blueBorder lightBlueBg' : ''">
                         <div class="priceItam-left">
                             <img v-if="priceClick != 0" src="../assets/image/suoerwall_bg2_0.png" alt="" srcset="">
@@ -540,7 +557,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                         </div>
                     </div>
                     <!-- 商品2 -->
-                    <div class="price2" @click="priceClick = 1" :class="priceClick == 1 ? 'blueBorder' : ''">
+                    <div class="price2" @click="selectProduct(1)" :class="priceClick == 1 ? 'blueBorder' : ''">
                         <div class="price2-title" :class="priceClick == 1 ? 'whiteColor blueBg' : ''">MOST POPULAR</div>
                         <div class="priceItam" :class="priceClick == 1 ? 'lightBlueBg' : ''">
                             <div class="priceItam-left">
@@ -580,7 +597,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                             2026 included</div>
                     </div>
                     <!-- 商品三 -->
-                    <div class="price3" @click="priceClick = 2" :class="priceClick == 2 ? 'blueBorder' : ''">
+                    <div class="price3" @click="selectProduct(2)" :class="priceClick == 2 ? 'blueBorder' : ''">
                         <div class="priceItam" :class="priceClick == 2 ? 'lightBlueBg' : ''">
                             <div class="priceItam-left">
                                 <img v-if="priceClick != 2" src="../assets/image/suoerwall_bg2_0.png" alt="" srcset="">
@@ -619,14 +636,23 @@ function calcRecommendedCalories(weightObj, heightObj) {
                             2026 included</div>
                     </div>
                 </div>
-                <div class="price-button">
+                <div v-if="!showPaymentDrawer" class="price-button">
                     <div class="continue-btn" @click="goIt">
                         <div class="spacer"></div>
                         <div>Continue</div>
                         <img src="@/assets/continue-icon.webp">
                     </div>
                 </div>
-                <div class="price-right-text">
+                <div v-if="showPaymentDrawer" class="payment-drawer-inline-wrap">
+                <PaymentDrawer
+                    v-model="showPaymentDrawer"
+                    :product-info="productInfo"
+                    :customer-name="pageData.UserName || ''"
+                    :customer-email="pageData.EnterEmail || ''"
+                    :discount="discount"
+                />
+                </div>
+                <div v-if="!showPaymentDrawer" class="price-right-text">
                     By continuing, you agree that your subscription will be auto-renewed at the ful price of 39.99 USD
                     each month at the end of the month intro period unless you cancel in
                     <span class="underline">Settings</span>
@@ -1631,6 +1657,11 @@ function calcRecommendedCalories(weightObj, heightObj) {
                     cursor: not-allowed;
                     pointer-events: none;
                 }
+            }
+
+            .payment-drawer-inline-wrap {
+                width: 100%;
+                margin-top: 24px;
             }
 
             .price-right-text {

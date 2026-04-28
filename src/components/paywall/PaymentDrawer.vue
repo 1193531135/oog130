@@ -1,15 +1,21 @@
 <script setup>
-import { computed, nextTick, onUnmounted, ref, watch } from "vue";
+// 导入必要的 Vue 组合式 API
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+// 导入支付相关 SDK
 import { loadStripe } from "@stripe/stripe-js";
 import { loadScript } from "@paypal/paypal-js";
-import { createAnonymousAccount } from "@/utils/firebase.js";
+// 导入 Firebase 匿名账户创建功能
+import { createAnonymousAccount } from "@/config/firebase.js";
+// 导入支付相关 API
 import {
   createCheckoutPaypalSession,
   createCheckoutSessionEmbedded,
   synchPaypalSubscription,
 } from "@/api/system/index.js";
+// 导入配置文件
 import webConfig from "@/config/index.js";
+// 导入支付流程状态管理工具
 import {
   clearPaymentFlowState,
   getPaymentFlowState,
@@ -17,133 +23,74 @@ import {
   updatePaymentFlowState,
 } from "@/tool/payment.js";
 
+// 定义组件 props
 const props = defineProps({
   modelValue: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   productInfo: {
     type: Object,
     default: null,
   },
-  customerName: {
-    type: String,
-    default: "",
-  },
-  customerEmail: {
-    type: String,
-    default: "",
-  },
 });
 
+// 定义组件事件
 const emit = defineEmits(["update:modelValue"]);
 
+// 路由和语言数据
 const route = useRoute();
 const pageText = window.languageData[route.name];
 
-const paymentError = ref("");
-const isPreparingPaypal = ref(false);
-const isCreatingStripeCheckout = ref(false);
-const activePopup = ref("");
-const checkout = ref(null);
-const checkoutMounted = ref(false);
-const paypalButtonsRendered = ref(false);
-const paypalToken = ref("");
-const paypalSubscriptionId = ref("");
-const activeSession = ref(getPaymentFlowState());
-let stripeInstancePromise = null;
-let paypalInstancePromise = null;
+// 状态变量
+const paymentError = ref(""); // 支付错误信息
+const isPreparingPaypal = ref(false); // PayPal 准备状态
+const isCreatingStripeCheckout = ref(false); // Stripe 结账创建状态
+const activePopup = ref(""); // 当前激活的弹窗
+const checkout = ref(null); // Stripe 结账对象
+const checkoutMounted = ref(false); // Stripe 结账是否已挂载
+const paypalButtonsRendered = ref(false); // PayPal 按钮是否已渲染
+const paypalToken = ref(""); // PayPal 令牌
+const paypalSubscriptionId = ref(""); // PayPal 订阅 ID
+const activeSession = ref(getPaymentFlowState()); // 当前支付流程状态
 
-const isOpen = computed(() => props.modelValue);
-const productTitle = computed(
-  () => props.productInfo?.title || props.productInfo?.name || pageText.summary.planPending,
-);
-const productPrice = computed(() => formatDisplayPrice(props.productInfo));
-const popupOrderRows = computed(() => [
-  {
-    label: pageText.summary.planLabel,
-    value: productTitle.value,
-  },
-  {
-    label: pageText.summary.priceLabel,
-    value: productPrice.value,
-  },
-  {
-    label: pageText.summary.customerLabel,
-    value: props.customerName || pageText.summary.notProvided,
-  },
-  {
-    label: pageText.summary.emailLabel,
-    value: props.customerEmail || pageText.summary.notProvided,
-  },
-]);
-const drawerText = computed(() => ({
-  applePay: pageText.paymentModal?.applePay || "Stripe Pay",
-  popupNote:
-    pageText.paymentModal?.popupNote || "Complete this checkout in the secure payment window below.",
-  popupSummaryTitle: pageText.paymentModal?.popupSummaryTitle || "Order details",
-}));
-const popupTitle = computed(() => {
-  if (activePopup.value === "paypal") {
-    return pageText.paymentModal.paypal;
-  }
+// 支付 SDK 实例
+let stripeInstancePromise = null; // Stripe SDK 实例
+let paypalInstancePromise = null; // PayPal SDK 实例
 
-  if (activePopup.value === "stripe") {
-    return pageText.paymentModal.stripe;
-  }
+// 计算属性
+const productTitle = computed(() => props.productInfo?.name || "",); // 产品标题
+const stripeText = computed(() => pageText?.stripeText || "",); // 产品标题
+const productPrice = computed(() => formatDisplayPrice(props.productInfo)); // 产品价格
+const privacyText1 = computed(() => pageText?.privacyText1 || "",); 
+const privacyText2 = computed(() => pageText?.privacyText2 || "",); 
 
-  return "";
-});
-
-function getFallbackUid() {
-  const cachedUid = window.sessionStorage.getItem("uid");
-  if (cachedUid) {
-    return cachedUid;
-  }
-
-  const fallbackUid = `web_guest_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-  window.sessionStorage.setItem("uid", fallbackUid);
-  return fallbackUid;
-}
-
-function formatDisplayPrice(product) {
-  if (!product || !product.priceUnitAmount || !product.priceCurrency) {
-    return pageText.summary.pricePending;
-  }
-
-  return `${(product.priceUnitAmount / 100).toFixed(2)} ${product.priceCurrency.toUpperCase()}`;
-}
-
-function getCheckoutReturnUrl() {
-  return `${window.location.origin}${window.location.pathname}#/paymentResult?paymentSuccess=true`;
-}
-
-function getPaymentResultUrl(params = {}) {
-  const queryString = new URLSearchParams(params).toString();
-  return `${window.location.origin}${window.location.pathname}#/paymentResult${queryString ? `?${queryString}` : ""}`;
-}
-
+// 获取 UID
 async function ensureUid() {
+  // 首先尝试从 sessionStorage 中获取 uid
   const existingUid = window.sessionStorage.getItem("uid");
   if (existingUid) {
     return existingUid;
   }
 
   try {
+    // 尝试创建匿名账户
     return await createAnonymousAccount();
   } catch (error) {
     console.error("Falling back to session uid:", error);
-    return getFallbackUid();
+    // 如果创建失败，生成一个备用 uid
+    const fallbackUid = `web_guest_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    window.sessionStorage.setItem("uid", fallbackUid);
+    return fallbackUid;
   }
 }
-
-function getPaymentPayload() {
-  return {
-    discountEnum: "NORMAL",
-    product: props.productInfo.id,
-    return_url: getCheckoutReturnUrl(),
-    visitor: 1,
-  };
+//待确认：折扣判断
+function formatDisplayPrice(product) {
+  if (!product || !product.priceUnitAmount || !product.priceCurrency) {
+    return pageText.summary.pricePending;
+  }
+  let price = props.discount ? (product.priceDiscountUnitAmount / 100).toFixed(2) : (product.priceUnitAmount / 100).toFixed(2);  
+  return `${price} ${product.priceCurrency.toUpperCase()}`;
 }
 
 function resetPaymentArtifacts({ clearState = false } = {}) {
@@ -169,8 +116,9 @@ function resetStripeArtifacts({ clearState = false } = {}) {
   }
 }
 
+// 支付Stripe函数
 async function createStripeCheckout() {
-  if (!props.productInfo || isCreatingStripeCheckout.value || !isOpen.value || activePopup.value !== "stripe") {
+  if (!props.productInfo || isCreatingStripeCheckout.value || activePopup.value !== "stripe") {
     return;
   }
 
@@ -178,8 +126,7 @@ async function createStripeCheckout() {
   isCreatingStripeCheckout.value = true;
 
   try {
-    const uid = await ensureUid();
-
+    const uid = await ensureUid();    
     clearPaymentFlowState();
     activeSession.value = await startPaymentFlow({
       uid,
@@ -187,11 +134,16 @@ async function createStripeCheckout() {
       productName: productTitle.value,
       priceDisplay: productPrice.value,
       routePath: route.path,
-      customerName: props.customerName,
-      customerEmail: props.customerEmail,
     });
 
-    const { data } = await createCheckoutSessionEmbedded(uid, getPaymentPayload());
+    let params = {
+      discountEnum: props.discount ? "DISCOUNT" : "NORMAL",
+      product: props.productInfo.id,
+      return_url: window.location.origin + "/register",
+      cancel_url: window.location.origin + "/superwall",
+      visitor: 0,
+    };
+    const { data } = await createCheckoutSessionEmbedded(uid, params);
 
     if (!data?.clientSecret || !data?.sessionId) {
       throw new Error("Missing clientSecret or sessionId");
@@ -216,14 +168,13 @@ async function createStripeCheckout() {
       clientSecret: data.clientSecret,
     });
 
-    if (!isOpen.value || activePopup.value !== "stripe") {
+    if (activePopup.value !== "stripe") {
       return;
     }
 
     await mountCheckout();
   } catch (error) {
-    console.error("Failed to start Stripe checkout:", error);
-    paymentError.value = pageText.errors.createCheckout;
+    paymentError.value = pageText?.errors?.createCheckout || 'Failed to create Stripe checkout';
     destroyCheckout();
     activeSession.value = updatePaymentFlowState({
       paymentMethod: "stripe",
@@ -236,35 +187,34 @@ async function createStripeCheckout() {
   }
 }
 
+// 支付Paypal函数
 async function createPaypalCheckout() {
-  if (!props.productInfo || isPreparingPaypal.value || !isOpen.value) {
+  if (!props.productInfo || isPreparingPaypal.value) {
     return;
   }
-
-  paymentError.value = "";
-  isPreparingPaypal.value = true;
-
-  try {
-    const uid = await ensureUid();
-
-    clearPaymentFlowState();
-    activeSession.value = await startPaymentFlow({
+  const uid = await ensureUid();
+  clearPaymentFlowState();
+  activeSession.value = await startPaymentFlow({
       uid,
       productId: props.productInfo.id,
       productName: productTitle.value,
       priceDisplay: productPrice.value,
       routePath: route.path,
-      customerName: props.customerName,
-      customerEmail: props.customerEmail,
     });
 
-    const { data } = await createCheckoutPaypalSession(uid, {
-      ...getPaymentPayload(),
-      cancel_url: getPaymentResultUrl({
-        paymentCancelled: "true",
-        paymentMethod: "paypal",
-      }),
-    });
+  paymentError.value = "";
+  isPreparingPaypal.value = true;
+  try {
+    const uid = await ensureUid();
+    clearPaymentFlowState();
+    let params = {
+      discountEnum: props.discount ? "DISCOUNT" : "NORMAL",
+      product: props.productInfo.id,
+      return_url: window.location.origin + "/register",
+      cancel_url: window.location.origin + "/superwall",
+      visitor: 0,
+    };
+    const { data } = await createCheckoutPaypalSession(uid, params);
 
     if (!data?.token || !data?.subscriptionId) {
       throw new Error("Missing PayPal token or subscriptionId");
@@ -279,81 +229,83 @@ async function createPaypalCheckout() {
       status: "paypal_ready",
       priceDisplay: productPrice.value,
     });
+    await initPayPalPayment(paypalToken.value, uid);
+    paypalButtonsRendered.value = true;
+  } catch (error) {
+    console.error("Failed to start PayPal checkout:", error);
+    paymentError.value = pageText?.errors?.createPaypal || 'Failed to create PayPal checkout';
+    clearPaypalButtons();
+  } finally {
+    isPreparingPaypal.value = false;
+  }
+}
 
-    paypalInstancePromise ||= loadScript({
-      clientId: webConfig.paypalConfig.clientId,
-      vault: true,
-      intent: "tokenize",
-    });
+async function initPayPalPayment(baToken, uid) {
+  paypalInstancePromise ||= loadScript({
+    clientId: webConfig.paypalConfig.clientId,
+    vault: true,
+    intent: "tokenize",
+  });
 
-    const paypal = await paypalInstancePromise;
-    if (!paypal) {
-      throw new Error("PayPal initialization failed");
-    }
+  const paypal = await paypalInstancePromise;
+  if (!paypal) {
+    throw new Error("PayPal initialization failed");
+  }
 
-    await nextTick();
-    const paypalContainer = document.getElementById("payment-inline-paypal");
-    if (!paypalContainer) {
-      return;
-    }
+  await nextTick();
+  const paypalContainer = document.getElementById("payment-inline-paypal");
+  if (!paypalContainer) {
+    console.error("initPayPalPayment: PayPal container not found");
+    return;
+  }
 
-    paypalContainer.innerHTML = "";
+  paypalContainer.innerHTML = "";
 
-    const paypalButton = paypal.Buttons({
-        fundingSource: paypal.FUNDING.PAYPAL,
-        style: {
-          shape: "rect",
-          color: "gold",
-          layout: "vertical",
-          label: "paypal",
-          height: 55,
-        },
-        createBillingAgreement: () => paypalToken.value,
-        onApprove: async () => {
+  try {
+    const buttons = paypal.Buttons({
+      style: {
+        shape: "rect",
+        color: "gold",
+        layout: "horizontal",
+        label: "buynow",
+        height: 55,
+        text: {
+          color: "#FFFFFF"
+        }
+      },
+      createBillingAgreement: () => {
+        return baToken;
+      },
+      onApprove: async () => {
+        try {
           await synchPaypalSubscription(uid, paypalSubscriptionId.value);
-          updatePaymentFlowState({
+          activeSession.value = updatePaymentFlowState({
             paymentMethod: "paypal",
             provider: "paypal",
             subscriptionId: paypalSubscriptionId.value,
             status: "paid",
             result: "success",
           });
-          window.location.hash = "#/paymentResult?paymentSuccess=true&paymentMethod=paypal";
-        },
-        onError: (error) => {
-          console.error("PayPal payment error:", error);
-          paymentError.value = pageText.errors.createPaypal;
-        },
-        onCancel: () => {
-          updatePaymentFlowState({
-            paymentMethod: "paypal",
-            provider: "paypal",
-            subscriptionId: paypalSubscriptionId.value,
-            status: "cancelled",
-            result: "cancelled",
-          });
-        },
-      });
-
-    if (!paypalButton.isEligible()) {
-      throw new Error("PayPal funding source is not eligible for this buyer");
-    }
-
-    await paypalButton.render("#payment-inline-paypal");
-
-    paypalButtonsRendered.value = true;
-  } catch (error) {
-    console.error("Failed to start PayPal checkout:", error);
-    paymentError.value = pageText.errors.createPaypal;
-    clearPaypalButtons();
-    activeSession.value = updatePaymentFlowState({
-      paymentMethod: "paypal",
-      provider: "paypal",
-      status: "failed",
-      result: "failed",
+          //待确认：跳转到支付成功的界面
+          window.location.hash = "";
+        } catch (error) {
+          console.error("initPayPalPayment: synchPaypalSubscription failed:", error);
+          paymentError.value = pageText?.errors?.createPaypal || 'Failed to create PayPal checkout';
+        }
+      },
+      onError: (error) => {
+        console.error("PayPal payment error:", error);
+        paymentError.value = pageText?.errors?.createPaypal || 'Failed to create PayPal checkout';
+      },
+      onCancel: () => {
+        console.log("PayPal payment cancelled");
+      },
     });
-  } finally {
-    isPreparingPaypal.value = false;
+    
+    await buttons.render("#payment-inline-paypal");
+  } catch (error) {
+    console.error("initPayPalPayment: error rendering PayPal buttons:", error);
+    throw error;
   }
 }
 
@@ -361,7 +313,6 @@ async function openPaymentPopup(method) {
   if (method !== "stripe" || !props.productInfo || isCreatingStripeCheckout.value) {
     return;
   }
-
   unmountCheckout();
   destroyCheckout();
   paymentError.value = "";
@@ -373,8 +324,9 @@ async function openPaymentPopup(method) {
   await createStripeCheckout();
 }
 
+// 挂载 Stripe 结账
 async function mountCheckout() {
-  if (!checkout.value || checkoutMounted.value || !isOpen.value || activePopup.value !== "stripe") {
+  if (!checkout.value || checkoutMounted.value || activePopup.value !== "stripe") {
     return;
   }
 
@@ -423,145 +375,150 @@ function closePaymentPopup() {
 function closeDrawer() {
   activePopup.value = "";
   resetPaymentArtifacts({ clearState: true });
-  document.body.style.overflow = "";
   emit("update:modelValue", false);
 }
 
-watch(isOpen, (open) => {
-  if (open) {
-    document.body.style.overflow = "hidden";
-    paymentError.value = "";
-    nextTick(() => {
-      createPaypalCheckout();
-    });
-    return;
-  }
-
-  document.body.style.overflow = "";
-  activePopup.value = "";
-  resetPaymentArtifacts({ clearState: true });
+// 组件挂载时调用 createPaypalCheckout
+onMounted(() => {
+  paymentError.value = "";
+  nextTick(() => {
+    createPaypalCheckout();
+  });
+  console.log("pageText", pageText);
 });
 
 onUnmounted(() => {
-  document.body.style.overflow = "";
-  resetPaymentArtifacts({ clearState: true });
+  resetPaymentArtifacts({ clearState: true });  
 });
 </script>
 
 <template>
-  <Teleport to="body">
-    <transition name="drawer-fade">
-      <div v-if="modelValue" class="drawer-root">
-        <div class="drawer-backdrop" @click="closeDrawer"></div>
-        <div class="drawer-panel">
-          <div class="drawer-card">
-            <button class="drawer-close" @click="closeDrawer" aria-label="Close payment drawer">
+  <transition name="drawer-fade">
+    <div v-if="modelValue" class="drawer-root">
+      <div class="drawer-card">
+        <button class="drawer-close" @click="closeDrawer" aria-label="Close payment drawer">
+          ×
+        </button>
+
+        <div class="drawer-content">
+          <div class="product-block">
+            <div class="product-title">{{ productTitle }}</div>
+            <div class="product-price">{{ productPrice }}</div>
+          </div>
+
+          <div class="action-section">
+            <div class="paypal-entry" :class="{ 'paypal-entry--loading': isPreparingPaypal }">
+              <div v-if="isPreparingPaypal" class="panel-message inline-message">
+                {{ pageText?.paymentModal?.paypalLoading || 'Loading PayPal...' }}
+              </div>
+              <div
+                id="payment-inline-paypal"
+                class="paypal-inline-container"
+              ></div>
+            </div>
+
+            <button
+              class="payment-entry wallet-entry"
+              :disabled="!productInfo || isCreatingStripeCheckout"
+              @click="openPaymentPopup('stripe')"
+            >
+              <span class="wallet-brand apple-brand">
+                <span>{{ stripeText }}</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="card-toggle">
+            <span>Pay by credit card</span>
+            <span class="card-toggle-icon" aria-hidden="true">⌃</span>
+          </div>
+
+          <div class="card-form-shell" @click="openPaymentPopup('stripe')">
+            <div class="card-form-title">Credit or Debit Card Number</div>
+            <div class="card-form-field">
+              <span class="card-form-icon" aria-hidden="true">▭</span>
+              <span class="card-form-placeholder">XXXX XXXX XXXX XXXX</span>
+            </div>
+
+            <div class="card-form-row-title">
+              <span>Expiry Date</span>
+              <span>CVV/CVC</span>
+            </div>
+            <div class="card-form-row">
+              <div class="card-form-field card-form-field--half">
+                <span class="card-form-placeholder">MM/YY</span>
+              </div>
+              <div class="card-form-field card-form-field--half">
+                <span class="card-form-placeholder">CVV</span>
+                <span class="card-form-info" aria-hidden="true">!</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="card-pay-button"
+              :disabled="!productInfo || isCreatingStripeCheckout"
+              @click.stop="openPaymentPopup('stripe')"
+            >
+              <span class="card-pay-lock" aria-hidden="true">▣</span>
+              <span>Pay</span>
+            </button>
+          </div>
+
+          <div v-if="paymentError && !activePopup" class="panel-error">
+            {{ paymentError }}
+          </div>
+
+          <div class="pay-description">
+            {{ privacyText1 }}
+            <span class="des-underline">{{ privacyText2 }}</span>.
+          </div>
+        </div>
+      </div>
+
+      <transition name="popup-fade">
+        <div v-if="activePopup" class="payment-popup-root">
+          <div class="payment-popup-backdrop" @click="closePaymentPopup"></div>
+          <div class="payment-popup-card">
+            <button class="payment-popup-close" @click="closePaymentPopup" aria-label="Close payment window">
               ×
             </button>
 
-            <div class="drawer-content">
-              <div class="product-block">
-                <div class="product-title">{{ productTitle }}</div>
-                <div class="product-price">{{ productPrice }}</div>
-              </div>
-
-              <div class="action-section">
-                <div class="paypal-entry">
-                  <div v-if="isPreparingPaypal" class="panel-message inline-message">
-                    {{ pageText.paymentModal.paypalLoading }}
-                  </div>
-                  <div
-                    id="payment-inline-paypal"
-                    class="paypal-inline-container"
-                    :class="{ 'paypal-inline-container--loading': isPreparingPaypal }"
-                  ></div>
-                </div>
-
-                <button
-                  class="payment-entry wallet-entry"
-                  :disabled="!productInfo || isCreatingStripeCheckout"
-                  @click="openPaymentPopup('stripe')"
-                >
-                  <span class="wallet-brand apple-brand">
-                    <span>{{ drawerText.applePay }}</span>
-                  </span>
-                </button>
-              </div>
-
-              <div v-if="paymentError && !activePopup" class="panel-error">
+            <div v-if="activePopup === 'stripe'">
+              <div v-if="paymentError" class="panel-error popup-error">
                 {{ paymentError }}
               </div>
 
-              <div class="pay-description">
-                We store a secure payment token to process subscription renewals and any add-ons you choose to buy. Read how we  process your data in the <span class="des-underline">Privacy Policy</span>.
+              <div class="payment-popup-body">
+                <div v-if="isCreatingStripeCheckout" class="panel-message">
+                  {{ pageText.processing }}
+                </div>
+                <div id="payment-popup-checkout"></div>
               </div>
             </div>
           </div>
         </div>
-
-        <transition name="popup-fade">
-          <div v-if="activePopup" class="payment-popup-root">
-            <div class="payment-popup-backdrop" @click="closePaymentPopup"></div>
-            <div class="payment-popup-card">
-              <button class="payment-popup-close" @click="closePaymentPopup" aria-label="Close payment window">
-                ×
-              </button>
-
-              <div v-if="activePopup === 'stripe'"> d
-                <div v-if="paymentError" class="panel-error popup-error">
-                  {{ paymentError }}
-                </div>
-
-                <div class="payment-popup-body">
-                  <div v-if="isCreatingStripeCheckout" class="panel-message">
-                    {{ pageText.processing }}
-                  </div>
-                  <div id="payment-popup-checkout"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </transition>
-      </div>
-    </transition>
-  </Teleport>
+      </transition>
+    </div>
+  </transition>
 </template>
 
 <style scoped lang="less">
 .drawer-root {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-}
-
-.drawer-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.32);
-  backdrop-filter: blur(6px);
-}
-
-.drawer-panel {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: top;
-  justify-content: center;
-  padding: 24px 20px;
-  box-sizing: border-box;
-  background: #f3f5f7;
+  position: relative;
+  width: 100%;
+  z-index: 1;
 }
 
 .drawer-card {
   position: relative;
-  width: min(100%, 360px);
-  max-height: 100%;
-  overflow-y: auto;
-  // padding: 18px 18px 22px;
-  // border-radius: 22px;
-  // background: #ffffff;
-  // border: 1px solid #edf0f4;
-  // box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 16px 18px;
+  border-radius: 12px;
+  border: 1px solid #e9edf2;
+  background: #f8f8f8;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
 .drawer-close,
@@ -576,24 +533,22 @@ onUnmounted(() => {
 
 .drawer-close {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 14px;
+  right: 14px;
   z-index: 1001;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #eeeeee;
   border-radius: 999px;
   color: #323233;
-  background: #f3f5f7;
+  background: #ffffff;
 }
 
 .drawer-content {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  position: relative;
 }
 
 .product-block {
-  padding: 24px 0 20px;
+  padding: 24px 0 18px;
   text-align: center;
 }
 
@@ -625,7 +580,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 58px;
+  min-height: 56px;
   padding: 16px 20px;
   border-radius: 8px;
   border: 0;
@@ -648,9 +603,17 @@ onUnmounted(() => {
   border-radius: 8px;
   background: #f7c04b;
   overflow: hidden;
+  position: relative;
+}
+
+.paypal-entry--loading {
+  pointer-events: none;
 }
 
 .inline-message {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -659,18 +622,17 @@ onUnmounted(() => {
   color: #7d5b0f;
   font-size: 14px;
   font-weight: 600;
+  background: #f7c04b;
 }
 
 .paypal-inline-container {
+  width: 100%;
   min-height: 55px;
 }
 
 :deep(.paypal-inline-container iframe) {
+  width: 100% !important;
   min-height: 55px !important;
-}
-
-.paypal-inline-container--loading {
-  display: none;
 }
 
 .wallet-brand {
@@ -688,57 +650,18 @@ onUnmounted(() => {
   letter-spacing: -0.01em;
 }
 
-.apple-icon {
-  font-size: 24px;
-  line-height: 1;
-}
-
-.google-brand {
-  gap: 6px;
-}
-
-.google-copy,
-.google-pay-copy {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.google-icon {
-  font-size: 32px;
-  line-height: 1;
-  font-weight: 700;
-  background: conic-gradient(
-    from 10deg,
-    #4285f4 0deg 90deg,
-    #34a853 90deg 180deg,
-    #fbbc05 180deg 250deg,
-    #ea4335 250deg 360deg
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 .card-toggle {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 16px;
-  padding: 6px 0 12px;
-  border: 0;
-  background: transparent;
+  margin-top: 14px;
+  padding: 0 0 14px;
   color: #a4a4aa;
   font-size: 16px;
   font-weight: 500;
-  cursor: pointer;
-}
-
-.card-toggle:disabled,
-.card-preview:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+  line-height: 1.4;
 }
 
 .card-toggle-icon {
@@ -746,41 +669,108 @@ onUnmounted(() => {
   line-height: 1;
 }
 
-.card-preview {
+.card-form-shell {
   width: 100%;
+  box-sizing: border-box;
   padding: 16px;
   border-radius: 10px;
-  border: 1px solid #eaedf1;
+  border: 1px solid #e8ebf0;
   background: #ffffff;
   cursor: pointer;
-  text-align: left;
 }
 
-.card-preview-field,
-.card-preview-half {
+.card-form-title,
+.card-form-row-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #30343b;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.card-form-row-title {
+  margin-top: 14px;
+  padding-right: 10px;
+}
+
+.card-form-field {
   display: flex;
   align-items: center;
-  min-height: 54px;
-  padding: 0 16px;
+  gap: 10px;
+  min-height: 40px;
+  margin-top: 10px;
+  padding: 0 12px;
   border-radius: 10px;
-  border: 1px solid #edf0f4;
-  background: #ffffff;
+  background: #f6f7fa;
 }
 
-.card-preview-row {
+.card-form-field--half {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.card-form-row {
   display: flex;
   gap: 10px;
   margin-top: 10px;
 }
 
-.card-preview-half {
-  flex: 1;
+.card-form-icon {
+  color: #b9bec6;
+  font-size: 18px;
+  line-height: 1;
 }
 
-.card-preview-label {
-  font-size: 15px;
+.card-form-placeholder {
+  color: #c8ccd3;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
   font-weight: 500;
-  color: #30343b;
+  line-height: 1;
+}
+
+.card-form-info {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cfd4db;
+  border-radius: 999px;
+  color: #c3c8cf;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.card-pay-button {
+  width: 100%;
+  height: 50px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #ff4a4a;
+  color: #ffffff;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.card-pay-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.card-pay-lock {
+  font-size: 16px;
+  line-height: 1;
 }
 
 .panel-error {
@@ -930,24 +920,35 @@ onUnmounted(() => {
 
 .pay-description{
   font-family: Poppins;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  margin-top: 18px;
   color: #969696;
   font-size: 14px;
   line-height: 1.6;
+  text-align: left;
 }
 
 .des-underline{
   text-decoration: underline;
 }
+
 @media (max-width: 767px) {
-  .drawer-panel {
-    padding: 16px;
+  .drawer-card {
+    padding: 16px 14px 18px;
   }
 
-  .drawer-content {
-    padding: 0;
+  .drawer-close {
+    width: 38px;
+    height: 38px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .card-form-row-title {
+    font-size: 13px;
+  }
+
+  .card-form-row {
+    flex-direction: column;
   }
 
   .product-title {

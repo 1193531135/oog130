@@ -626,6 +626,9 @@
           "is a measure that uses your height and weight to work out if your weight is healthy."
         ]
       }
-    ]
+    ],
+    "stripeText": "Cradit Card",
+    "privacyText1": "We store a secure payment token to process subscription renewals and any add-ons you choose to buy. Read how we process your data in the ",
+    "privacyText2": "Privacy Policy"
   }
 }

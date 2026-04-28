@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import {
+  getSubscriptionList,
   getPaypalSubscriptionInfo,
   getSubscriptionInfo,
 } from "@/api/system/index.js";
@@ -128,13 +129,7 @@ async function verifyPayment() {
   try {
     let response;
     if (activeSession.value?.provider === "paypal") {
-      if (!activeSession.value?.subscriptionId) {
-        throw new Error("Missing PayPal subscriptionId");
-      }
-      response = await getPaypalSubscriptionInfo(
-        activeSession.value.uid,
-        activeSession.value.subscriptionId,
-      );
+      response = await verifyPaypalPayment();
     } else {
       if (!activeSession.value?.sessionId) {
         throw new Error("Missing Stripe sessionId");
@@ -158,6 +153,32 @@ async function verifyPayment() {
   } finally {
     isLoadingVerification.value = false;
   }
+}
+
+async function verifyPaypalPayment(retryCount = 0) {
+  const { data } = await getSubscriptionList(activeSession.value.uid);
+  const subscriptions = Array.isArray(data) ? data : [];
+  const currentSubscription =
+    subscriptions.find((item) => item.active == 1) ||
+    subscriptions.find((item) => item.subscriptionId === activeSession.value?.subscriptionId);
+
+  if (!currentSubscription?.subscriptionId) {
+    if (retryCount >= 5) {
+      throw new Error("No active PayPal subscription found");
+    }
+
+    await new Promise((resolve) => window.setTimeout(resolve, 3000));
+    return verifyPaypalPayment(retryCount + 1);
+  }
+
+  activeSession.value = updatePaymentFlowState({
+    subscriptionId: currentSubscription.subscriptionId,
+  });
+
+  return getPaypalSubscriptionInfo(
+    activeSession.value.uid,
+    currentSubscription.subscriptionId,
+  );
 }
 
 async function backToPaywall() {
