@@ -2007,7 +2007,7 @@ function change(val) {
 }
 
 .show {
-    display: block;
+    display: flex;
     z-index: 999;
     opacity: 1;
 }
