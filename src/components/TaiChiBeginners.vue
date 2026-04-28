@@ -1,9 +1,10 @@
 <script setup>
-import {ref} from 'vue'
+import {ref,onMounted} from 'vue'
 import Select from './module/select.vue'
 import { PushControl } from '@/tool/index.js'
 import { PageData } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
+import { Mixpanel } from "@/config/mixpanel.js"
 const pushControl = new PushControl()
 
 const route = useRoute()
@@ -19,6 +20,13 @@ function change(val){
   //
   pushControl.push()
 }
+
+onMounted(() => {
+  // 进入页面触发Mixpanel事件
+  const mixpanel = new Mixpanel();
+  mixpanel.setmMxpanelValue("OB Started Web")
+})
+
 </script>
 
 <template>

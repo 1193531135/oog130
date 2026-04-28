@@ -1,5 +1,5 @@
 // router/index.js
-import { defineComponent, defineAsyncComponent, h, ref } from "vue"
+import {defineComponent, defineAsyncComponent, h, shallowRef, onMounted} from "vue"
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { pageConfig } from "@/config.js"
 // 引入模板
@@ -10,16 +10,15 @@ const autoRegisterList = Object.keys(pageConfig).filter(i => pageConfig[i]).map(
     // 创建模板壳子
     const component = defineComponent({
         setup() {
-            const templateProps = ref({})
-            const Comp = defineAsyncComponent(async () => {
-                const pageText = window.languageData[name]
-                const props = pageConfig[name].props ? pageConfig[name].props(pageText) : pageText
-                templateProps.value = props
+            const Comp = shallowRef(null)
+            const pageText = window.languageData[name]
+            const props = pageConfig[name].props ? pageConfig[name].props(pageText) : pageText
+            const loadModule = async () => {
                 const module = await pageConfig[name].module()
-                return module.default
-            })
-
-            return () => h(Comp, templateProps.value)
+                Comp.value = module.default
+            }
+            loadModule()
+            return () => Comp.value ? h(Comp.value,props):h("div", "Loading...")
         }
     })
     return {

@@ -200,7 +200,6 @@ const config = {
         module: () => import('@/components/ProgressLoading.vue')
     },
     Superwall: {
-
         module: () => import('@/components/Superwall.vue'),
         props(content) {
             const pageData = new PageData()
@@ -229,8 +228,8 @@ const config = {
             ]
             return content
         }
-    }
-
+    },
+    Register: () => import('@/components/Register.vue')
 }
 // 做一些统一处理
 Object.keys(config).forEach(key => {

@@ -3,45 +3,35 @@ import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
 import { ref } from 'vue'
+import { createAccount } from "@/config/firebase.js";
 const pushControl = new PushControl()
 
 const pageData = new PageData()
-pageData
+
 const route = useRoute()
-const pageText = window.languageData[route.name]
 
 
-function change(val) {
-  pageData.set(route.name, email.value)
-  pushControl.push()
-}
-const isDisabled = ref(!pageData[route.name])
-const email = ref(pageData[route.name] || '')
+const email = ref(pageData["EnterEmail"] || '')
+const password = ref("")
 const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
 const isErrorText = ref('Please enter your email address')
 //邮箱正则
-const reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+const reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
 
-// ft/in输入框
 // 验证逻辑：失焦时检查是否为空
 const validate = () => {
   let istrue = reg.test(email.value)
   if (istrue) {
     isFocused.value = true
     isError.value = false
-    isDisabled.value = false
-
   } else {
     isFocused.value = false
     isError.value = true
-    isDisabled.value = true
-
   }
 }
 const onInput = (e) => {
-  console.log(e.target.value)
   validate()
 }
 //  聚焦
@@ -51,20 +41,25 @@ const focusInput = () => {
     inputRef.value.focus()
   }
 }
+
+const register = () => {
+  // 匿名账户绑定真实邮箱密码数据
+  createAccount(email.value, password.value).then(() => {
+  }).catch((error) => {
+    // 处理注册错误
+    console.error("Registration error:", error);
+    isErrorText.value = error.message || 'Registration failed. Please try again.';
+    isError.value = true;
+  });
+  // 匿名账户转正
+  // 跳转下载链接
+}
 </script>
 
 <template>
   <div class="text-page">
-
-    <div class="title">
-      <span>{{ pageText.title[0] }}</span>
-
-      <span style="color: #2E73E0;">&nbsp;{{ pageText.title[1] }}&nbsp;</span>
-
-      <span>{{ pageText.title[2] }}</span>
-    </div>
-    <div class="description">{{ pageText.text }}</div>
-    <div class="inputLable">{{ pageText.inputLable }}</div>
+    <div class="title">Create Your Account</div>
+    <div class="inputLable">Email</div>
     <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
@@ -77,14 +72,12 @@ const focusInput = () => {
     </div>
     <!-- 错误提示文字 -->
     <p v-if="isError" class="error-text">{{ isErrorText }}</p>
-
-    <div class="promptBox">
-      ✅ &nbsp;&nbsp; {{ pageText.Subheading }}
-    </div>
+    <div class="inputLable">Password</div>
+    <input class="input-wrapper" type="password" v-model="password"/>
     <div class="btn-container">
-      <div class="continue-btn" :class="{ 'disabled': isDisabled }" @click="change">
+      <div class="continue-btn" :class="{ 'disabled': !(password && email)  }" @click="register">
         <div class="spacer"></div>
-        <div>{{ pageText.continue }}</div>
+        <div>Register</div>
         <img src="@/assets/continue-icon.webp">
       </div>
     </div>
@@ -96,7 +89,6 @@ const focusInput = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 628px;
 
   .promptBox {
 
