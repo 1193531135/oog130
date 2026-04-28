@@ -32,6 +32,7 @@ onMounted(() => {
             progress.value += 1
         } else if(progress.value>=100) {
             clearInterval(timer)
+            change()
         }else{
             progress.value += 1
         }
