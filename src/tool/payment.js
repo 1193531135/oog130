@@ -1,4 +1,5 @@
 const STORAGE_KEY = "paymentFlow";
+const PAYMENT_GATEWAY_KEY = "paymentGateway";
 
 function readStorage() {
   try {
@@ -23,6 +24,10 @@ export function clearPaymentFlowState() {
   window.sessionStorage.removeItem(STORAGE_KEY);
 }
 
+export function setPaymentGateway(gateway) {
+  window.sessionStorage.setItem(PAYMENT_GATEWAY_KEY, gateway);
+}
+
 export function updatePaymentFlowState(patch) {
   const currentValue = readStorage() || {};
   return writeStorage({
@@ -31,48 +36,17 @@ export function updatePaymentFlowState(patch) {
   });
 }
 
-export async function startPaymentFlow({
+export function startPaymentFlow({
   routePath = "/paywall",
-  customerName = "",
-  customerEmail = "",
   uid = "",
   productId = "",
-  productName = "",
-  priceDisplay = "",
 } = {}) {
   const session = {
-    mode: import.meta.env.MODE === "production" ? "live" : "test",
-    provider: "stripe",
     status: "creating_session",
-    result: "pending",
-    sessionId: "",
     routePath,
-    returnPath: "/paymentResult",
-    cancelPath: routePath,
     uid,
     productId,
-    productName,
-    priceDisplay,
-    customerName,
-    customerEmail,
     createdAt: new Date().toISOString(),
   };
   return writeStorage(session);
-}
-
-export function completePaymentFlow(result = "success") {
-  const currentSession = readStorage();
-
-  if (!currentSession) {
-    return null;
-  }
-
-  const nextSession = {
-    ...currentSession,
-    status: result === "success" ? "paid" : "cancelled",
-    result,
-    finishedAt: new Date().toISOString(),
-  };
-
-  return writeStorage(nextSession);
 }

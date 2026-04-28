@@ -153,154 +153,154 @@ const thumbPosition = computed(() => {
     return Math.max(0, Math.min(100, percent))
 })
 
-    //lottie动画
-    // 配置项
-    const lottieOptions = {
+//lottie动画
+// 配置项
+const lottieOptions = {
+    container: lottieContainer.value,
+    renderer: 'svg', // 渲染方式：svg / canvas / html
+    loop: false, // 是否循环
+    autoplay: true, // 自动播放
+    // 动画资源：可以是本地JSON / 在线URL
+    animationData: animationData,
+}
+const lottieOptions1 = {
+    container: lottieContainer1.value,
+    renderer: 'svg', // 渲染方式：svg / canvas / html
+    loop: false, // 是否循环
+    autoplay: true, // 自动播放
+    // 动画资源：可以是本地JSON / 在线URL
+    animationData: animationData1,
+}
+// 挂载后初始化动画
+onMounted(() => {
+    if (!lottieContainer.value) return
+
+    anim = lottie.loadAnimation({
         container: lottieContainer.value,
-        renderer: 'svg', // 渲染方式：svg / canvas / html
-        loop: false, // 是否循环
-        autoplay: true, // 自动播放
-        // 动画资源：可以是本地JSON / 在线URL
-        animationData: animationData,
-    }
-    const lottieOptions1 = {
+        renderer: 'svg',
+        loop: false,
+        autoplay: false, // 自动播放
+        animationData: animationData // 已经导入的JSON
+    })
+    anim1 = lottie.loadAnimation({
         container: lottieContainer1.value,
-        renderer: 'svg', // 渲染方式：svg / canvas / html
-        loop: false, // 是否循环
-        autoplay: true, // 自动播放
-        // 动画资源：可以是本地JSON / 在线URL
-        animationData: animationData1,
-    }
-    // 挂载后初始化动画
-    onMounted(() => {
-        if (!lottieContainer.value) return
-
-        anim = lottie.loadAnimation({
-            container: lottieContainer.value,
-            renderer: 'svg',
-            loop: false,
-            autoplay: false, // 自动播放
-            animationData: animationData // 已经导入的JSON
-        })
-        anim1 = lottie.loadAnimation({
-            container: lottieContainer1.value,
-            renderer: 'svg',
-            loop: false,
-            autoplay: false, // 自动播放
-            animationData: animationData1 // 已经导入的JSON
-        })
-
-        // 监听加载完成
-        anim.addEventListener('DOMLoaded', () => {
-            console.log('✅ Lottie 动画加载成功')
-            // anim.goToAndStop(50, true) // 跳到指定帧
-        })
-
-        // 监听动画开始
-        anim.addEventListener('data_ready', () => {
-            console.log('🎬 动画开始')
-        })
-
-        // 监听动画结束
-        anim.addEventListener('complete', () => {
-            console.log('🏁 动画播放完成')
-            anim1?.play()
-            discount.value = true
-            // 这里可以写关闭弹窗、执行后续逻辑
-        })
-        anim1.addEventListener("complete", () => {
-            isDisabled.value = false
-        })
-        setTimeout(() => {
-            console.log('显示抽奖弹窗')
-            isShow.value = true
-            isDisabled.value = false
-            anim?.play()
-        }, 5000)
+        renderer: 'svg',
+        loop: false,
+        autoplay: false, // 自动播放
+        animationData: animationData1 // 已经导入的JSON
     })
 
-    // 销毁时清理
-    onUnmounted(() => {
-        if (anim) anim.destroy()
+    // 监听加载完成
+    anim.addEventListener('DOMLoaded', () => {
+        console.log('✅ Lottie 动画加载成功')
+        // anim.goToAndStop(50, true) // 跳到指定帧
     })
-    function ButtonClick() {
-        if (discount.value) {
-            // 已经有折扣了，点击按钮应该是去结算或者关闭弹窗
-            isShow.value = false
-            console.log('去结算')
-        } else {
-            isDisabled.value = true
-            anim.goToAndStop(300, true)
-            anim?.play()
-        }
-    }
-    // swiper
-    // 注册需要的模块
-    const swiperModules = [Autoplay]
 
-    // 1:1还原截图里的评价数据
-    const reviewList = [
-        {
-            name: 'Andrew',
-            content: `As someone who's not a fitness pro, the customized workout plan in this app is a lifesaver. It caters to my specific needs and fitness level. It's not one-size-fits-all, and that's what makes it stand out.`
-        },
-        {
-            name: 'Richard',
-            content: `I'm loving the customized workouts this app offers. It's like having a tailor-made fitness program in my pocket. It takes my preferences and fitness level into account, making it super effective and enjoyable!`
-        },
-        {
-            name: 'Matthew',
-            content: `I was skeptical at first, but this app surprised me. The workouts are decent, and I appreciate the progress tracking. A good option for those who can't make it to the gym.`
-        },
-        {
-            name: 'Michael',
-            content: `I'm not fitness pro, but this app easy for anyone to get in shape, instructional videos are clear, enjoying my daily workouts. T up!`
-        },
-        {
-            name: '匿名用户',
-            content: `so good! The personalized plan it provided was spot on. It having a personal trainer who exactly what I need. I'm already progress after just a few weeks!`
-        }
-    ]
+    // 监听动画开始
+    anim.addEventListener('data_ready', () => {
+        console.log('🎬 动画开始')
+    })
 
-    // 响应式适配配置
-    const responsiveConfig = {
-        0: { slidesPerView: 1, spaceBetween: 16 },   // 手机：1张
-        768: { slidesPerView: 2, spaceBetween: 20 }, // 平板：2张
-        1200: { slidesPerView: 4, spaceBetween: 24 } // 电脑：3张
-    }
-    //年龄计算
-    function calcAge(birthDayStr) {
-        const [day, month, year] = birthDayStr.split('/')
-        const birth = new Date(year, month - 1, day)
-        const now = new Date()
-        let age = now.getFullYear() - birth.getFullYear()
-        if (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate())) {
-            age--
-        }
-        return age
-    }
-    //卡路里计算
-    function calcRecommendedCalories(weightObj, heightObj) {
-        // 体重转换：lb → kg
-        const weight = weightObj.unit === 'lb'
-            ? Number(weightObj.value) * 0.453592
-            : Number(weightObj.value);
+    // 监听动画结束
+    anim.addEventListener('complete', () => {
+        console.log('🏁 动画播放完成')
+        anim1?.play()
+        discount.value = true
+        // 这里可以写关闭弹窗、执行后续逻辑
+    })
+    anim1.addEventListener("complete", () => {
+        isDisabled.value = false
+    })
+    setTimeout(() => {
+        console.log('显示抽奖弹窗')
+        isShow.value = true
+        isDisabled.value = false
+        anim?.play()
+    }, 5000)
+})
 
-        // 身高转换：ft/in 字符串 → cm（规则：123 = 1ft 23in）
-        let height;
-        if (heightObj.unit === 'ft/in') {
-            const hStr = String(heightObj.value);
-            const ft = Number(hStr[0]);
-            const inch = Number(hStr.slice(1));
-            height = ft * 30.48 + inch * 2.54;
-        } else {
-            height = Number(heightObj.value);
-        }
-        console.log(weight, height, 55555)
-        // 卡路里计算公式
-        const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
-        return Math.round(recommendedCalories);
+// 销毁时清理
+onUnmounted(() => {
+    if (anim) anim.destroy()
+})
+function ButtonClick() {
+    if (discount.value) {
+        // 已经有折扣了，点击按钮应该是去结算或者关闭弹窗
+        isShow.value = false
+        console.log('去结算')
+    } else {
+        isDisabled.value = true
+        anim.goToAndStop(300, true)
+        anim?.play()
     }
+}
+// swiper
+// 注册需要的模块
+const swiperModules = [Autoplay]
+
+// 1:1还原截图里的评价数据
+const reviewList = [
+    {
+        name: 'Andrew',
+        content: `As someone who's not a fitness pro, the customized workout plan in this app is a lifesaver. It caters to my specific needs and fitness level. It's not one-size-fits-all, and that's what makes it stand out.`
+    },
+    {
+        name: 'Richard',
+        content: `I'm loving the customized workouts this app offers. It's like having a tailor-made fitness program in my pocket. It takes my preferences and fitness level into account, making it super effective and enjoyable!`
+    },
+    {
+        name: 'Matthew',
+        content: `I was skeptical at first, but this app surprised me. The workouts are decent, and I appreciate the progress tracking. A good option for those who can't make it to the gym.`
+    },
+    {
+        name: 'Michael',
+        content: `I'm not fitness pro, but this app easy for anyone to get in shape, instructional videos are clear, enjoying my daily workouts. T up!`
+    },
+    {
+        name: '匿名用户',
+        content: `so good! The personalized plan it provided was spot on. It having a personal trainer who exactly what I need. I'm already progress after just a few weeks!`
+    }
+]
+
+// 响应式适配配置
+const responsiveConfig = {
+    0: { slidesPerView: 1, spaceBetween: 16 },   // 手机：1张
+    768: { slidesPerView: 2, spaceBetween: 20 }, // 平板：2张
+    1200: { slidesPerView: 4, spaceBetween: 24 } // 电脑：3张
+}
+//年龄计算
+function calcAge(birthDayStr) {
+    const [day, month, year] = birthDayStr.split('/')
+    const birth = new Date(year, month - 1, day)
+    const now = new Date()
+    let age = now.getFullYear() - birth.getFullYear()
+    if (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate())) {
+        age--
+    }
+    return age
+}
+//卡路里计算
+function calcRecommendedCalories(weightObj, heightObj) {
+    // 体重转换：lb → kg
+    const weight = weightObj.unit === 'lb'
+        ? Number(weightObj.value) * 0.453592
+        : Number(weightObj.value);
+
+    // 身高转换：ft/in 字符串 → cm（规则：123 = 1ft 23in）
+    let height;
+    if (heightObj.unit === 'ft/in') {
+        const hStr = String(heightObj.value);
+        const ft = Number(hStr[0]);
+        const inch = Number(hStr.slice(1));
+        height = ft * 30.48 + inch * 2.54;
+    } else {
+        height = Number(heightObj.value);
+    }
+    console.log(weight, height, 55555)
+    // 卡路里计算公式
+    const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
+    return Math.round(recommendedCalories);
+}
 </script>
 
 <template>
@@ -691,18 +691,17 @@ const thumbPosition = computed(() => {
                             for
                             2026 included</div>
                     </div>
-                </div>
-                <div v-if="!showPaymentDrawer" class="price-button">
-                    <div class="continue-btn" @click="goIt">
-                        <div class="spacer"></div>
-                        <div>Continue</div>
-                        <img src="@/assets/continue-icon.webp">
+                    <div class="price-button">
+                        <div class="continue-btn" @click="goIt">
+                            <div class="spacer"></div>
+                            <div>Continue</div>
+                            <img src="@/assets/continue-icon.webp">
+                        </div>
                     </div>
                 </div>
                 <div v-if="showPaymentDrawer" class="payment-drawer-inline-wrap">
-                    <PaymentDrawer v-model="showPaymentDrawer" :product-info="productInfo"
-                        :customer-name="pageData.UserName || ''" :customer-email="pageData.EnterEmail || ''"
-                        :discount="discount" />
+                    <PaymentDrawer v-model="showPaymentDrawer" :product-info="productInfo" :discount="discount"
+                        :eventTracker="eventTracker" />
                 </div>
                 <div v-if="!showPaymentDrawer" class="price-right-text">
                     By continuing, you agree that your subscription will be auto-renewed at the ful price of 39.99 USD
@@ -2043,36 +2042,31 @@ const thumbPosition = computed(() => {
     .text-page {
         width: 100%;
 
-        .box1 {
-            .box1-content {
-                height: auto;
+        .box1 .box1-content {
+            height: auto;
+        }
 
-                .box1-itam {
-                    .box1-itam-content {
-                        box-sizing: border-box;
-                        padding: 24px 0 24px 24px !important;
+        .box1 .box1-itam .box1-itam-content {
+            box-sizing: border-box;
+            padding: 24px 0 24px 24px !important;
 
-                        .textBox1 {
-                            margin-top: 0;
+            .textBox1 {
+                margin-top: 0;
 
-                            .text2 {
-                                font-size: 18px;
-                            }
-                        }
-
-                        .textBox2 {
-                            .bar-ul {
-                                width: 151px;
-
-                                .bar-li {
-                                    width: 27px;
-                                }
-                            }
-                        }
-                    }
+                .text2 {
+                    font-size: 18px;
                 }
             }
 
+            .textBox2 {
+                .bar-ul {
+                    width: 151px;
+
+                    .bar-li {
+                        width: 27px;
+                    }
+                }
+            }
         }
 
         .text {
