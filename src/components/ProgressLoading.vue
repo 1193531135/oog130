@@ -10,9 +10,6 @@ const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 
-function change(val) {
-    pushControl.push()
-}
 const label = ref(pageText.text[0])
 // 进度值（可动态修改，0-100）
 const progress = ref(0)
