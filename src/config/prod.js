@@ -1,6 +1,8 @@
 const sdkConfig = {
     webVersion: "-V171.043.2000.44", //  网页版本
     mixpanelwebVersion: "1.0.0",//main-page埋点版本号
+    progectName: "oog104",
+    defaultPriceGroup: "9BKFW",
     emailAddress: "contact-us@7mfitness.com", //联系我们-公司邮箱地址
     fbqName: "",
     ga4Name: '',
@@ -61,6 +63,22 @@ const sdkConfig = {
         onboardingEventKey: 'OB',
         homePageEventKey: '1st',
         purchaseKey: 'OB',
+    },
+    systemApiVersion: {
+        sendTempMail: "v1",
+        sendContactUsEmail: "v1",
+        getSubscriptionList: "v1",
+        getPriceList: "v4",
+        createCheckoutSessionEmbedded: "v3",
+        createCheckoutPaypalSession: "v3",
+        synchPaypalSubscription: "v1",
+        getSubscriptionInfo: "v1",
+        getPaypalSubscriptionInfo: "v1",
+        cancelSubscription: "v1",
+        transferSubscription: "v3",
+        resumeSubscriptionInfo: "v1",
+        mergeMixpanelData: "v1",
+        getPayPlatformName: "v1"
     },
     sentryConfig: {
         dsn: 'https://2aa5bb6af04c3cea03e69fbbb16b08dd@o4507304172388352.ingest.us.sentry.io/4508436024197120'

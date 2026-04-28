@@ -202,30 +202,6 @@ const config = {
     Superwall: {
         module: () => import('@/components/Superwall.vue'),
         props(content) {
-            const pageData = new PageData()
-            const nowBMI = BMI({
-                height: pageData['YourHeight'].value,
-                weight: pageData['CurrentWeight'].value,
-                isFt: pageData['YourHeight']?.unit == "ft/in",
-                isLb: pageData['CurrentWeight']?.unit == "lb"
-            }).toFixed(2)
-            if (nowBMI < 18) {
-                content.promptNum = window.languageData["Superwall"].promptNum[0]
-            } else if (nowBMI >= 19 && nowBMI < 25) {
-                content.promptNum = window.languageData["Superwall"].promptNum[1]
-            } else if (nowBMI >= 26 && nowBMI < 35) {
-                content.promptNum = window.languageData["Superwall"].promptNum[2]
-            } else {
-                content.promptNum = window.languageData["Superwall"].promptNum[3]
-            }
-            console.log('content.promptNum ',content.promptNum )
-            const male = pageData["ChooserGender"] || 0
-            content.bgImageList = [
-                images[`/src/assets/image/superwall_img1_${male}.png`]?.default,
-                images[`/src/assets/image/superwall_img2_${male}.png`]?.default,
-                images[`/src/assets/image/superwall_img5_${male}.png`]?.default,
-                images[`/src/assets/image/superwall_img2-390_${male}.png`]?.default,
-            ]
             return content
         }
     },

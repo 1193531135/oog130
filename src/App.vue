@@ -12,6 +12,17 @@ const loaded = ref(false);
 const route = useRoute()
 const routeIndex = computed(() => registerList.findIndex(i=> i.path === route.path) )
 
+function getFallbackUid() {
+  const cachedUid = window.sessionStorage.getItem("uid");
+  if (cachedUid) {
+    return cachedUid;
+  }
+
+  const fallbackUid = `web_guest_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  window.sessionStorage.setItem("uid", fallbackUid);
+  return fallbackUid;
+}
+
 // watch(routeIndex, (newVal) => {
 //   // 路由变化时预加载下一个页面
 //   registerList[newVal + 1]?.meta.preload()

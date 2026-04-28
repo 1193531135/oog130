@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
@@ -10,12 +10,10 @@ const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 
-function change(val) {
-    pushControl.push()
-}
 const label = ref(pageText.text[0])
 // 进度值（可动态修改，0-100）
 const progress = ref(0)
+let timer = null
 
 // 圆环半径（和viewBox对应，计算周长用）
 const radius = 45
@@ -40,7 +38,25 @@ onMounted(() => {
         }else{
             progress.value += 1
         }
+
+        if (progress.value >= 100) {
+            progress.value = 100
+            clearInterval(timer)
+            timer = null
+            window.setTimeout(() => {
+                change()
+            }, 200)
+            return
+        }
+
+        progress.value += 1
     }, 70) // 每10毫秒增加1%，25%需要2500毫秒
+})
+
+onUnmounted(() => {
+    if (timer) {
+        clearInterval(timer)
+    }
 })
 </script>
 <template>

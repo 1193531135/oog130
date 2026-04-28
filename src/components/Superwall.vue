@@ -5,6 +5,7 @@ import 'swiper/css';
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import lottie from 'lottie-web'
 import Select from './module/select.vue'
+import PaymentDrawer from '@/components/paywall/PaymentDrawer.vue'
 import { PushControl } from '@/tool/index.js'
 import { PageData, BMI } from "@/tool/index.js";
 import { useRoute } from 'vue-router'
@@ -13,6 +14,13 @@ import animationData from '../assets/json/superwall_lottie1.json'
 import animationData1 from '../assets/json/superwall_lottie2.json'
 import { Mixpanel } from "@/config/mixpanel.js"
 
+const images = import.meta.glob('@/assets/image/*', { eager: true })
+// 预加载图片
+Object.values(images).forEach((src) => {
+    const img = new Image()
+    img.src = src.default
+})
+
 const pushControl = new PushControl()
 const mixpanel = new Mixpanel();
 
@@ -20,16 +28,22 @@ const uid = sessionStorage.getItem("uid");
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const props = defineProps({
-    bgImageList: Array,
-    promptNum: Object
-})
+const male = pageData["ChooserGender"] || 0
+const bgImageList = [
+    images[`/src/assets/image/superwall_img1_${male}.png`]?.default,
+    images[`/src/assets/image/superwall_img2_${male}.png`]?.default,
+    images[`/src/assets/image/superwall_img5_${male}.png`]?.default,
+    images[`/src/assets/image/superwall_img2-390_${male}.png`]?.default,
+]
+
 
 const priceClick = ref(0)
 //折扣状态
 const discount = ref(false)
 //商品列表
 const productList = ref([])
+const productInfo = ref(null)
+const showPaymentDrawer = ref(false)
 // 容器 DOM
 const lottieContainer = ref(null)
 const lottieContainer1 = ref(null)
@@ -40,6 +54,8 @@ let anim1 = null
 const isShow = ref(false)
 //变量数据
 const userData = ref({})
+//控制按钮
+const isDisabled = ref(false)
 
 const nowBMI = BMI({
     height: pageData['YourHeight'].value,
@@ -53,7 +69,17 @@ const targetBMI = BMI({
     isFt: pageData['YourHeight']?.unit === "ft/in",
     isLb: pageData['TargetWeight']?.unit === "lb"
 }).toFixed(2)
-
+let promptNum = ref(0)
+if (nowBMI < 18) {
+    promptNum.value = 0
+} else if (nowBMI >= 19 && nowBMI < 25) {
+    promptNum.value = 1
+} else if (nowBMI >= 26 && nowBMI < 35) {
+    promptNum.value = 2
+} else {
+    promptNum.value = 3
+}
+console.log('promptNum',promptNum.value,pageText.promptNum)
 userData.value.age = calcAge(pageData['DateOfBirth'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
@@ -74,63 +100,72 @@ const calcBodyFat = (bmi, gender, age) =>
         : 1.2 * bmi + 0.23 * age - 5.4
     ).toFixed(2));
 console.log(1111, userData.value, currentKcal, fillPercent)
+function selectProduct(index) {
+    priceClick.value = index
+    productInfo.value = productList.value[index] || null
+}
+
+function goIt() {
+    if (!productInfo.value) {
+        return
+    }
+    console.log(productInfo.value)
+    showPaymentDrawer.value = true
+}
 
 // 设置mixpanel配置项
-/*
-design_id：paywall-page页面id，命名规则  Web-Paywall-(随机8位数字字母)；工具地址：https://tool.ip138.com/uuid/（取-前8位）
-*/
 const design_id = ""
 const product_id = computed(() => productList.value[priceClick.value]?.id || '')
 const mixpanelConfig = () => {
-  return {
-    design_id,
-    product_id:product_id.value,
-    paywall_source:"onboarding",
-    paywall_type:"onboarding",
-  }
+    return {
+        design_id,
+        product_id: product_id.value,
+        paywall_source: "onboarding",
+        paywall_type: "onboarding",
+    }
 }
 const mixpanelConfigOB = () => {
-  return {
-    design_id,
-    product_id:product_id.value,
-  }
+    return {
+        design_id,
+        product_id: product_id.value,
+    }
 }
 const eventTracker = {
-  // 初始化触发
-  view(){
-    mixpanel.setmMxpanelValue("OB Paywall Viewed Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Viewed Web",mixpanelConfig())
-  },
-  // 点击支付触发
-  clickPay(){
-    mixpanel.setmMxpanelValue("OB Paywall Continued Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Continued Web",mixpanelConfig())
-  },
-  // 免费试用支付成功触发
-  payFree(){
-    mixpanel.setmMxpanelValue("OB Paywall Trialed Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Trialed Web",mixpanelConfig())
-  },
-  // 正常付费成功触发
-  paySuccess(){
-    mixpanel.setmMxpanelValue("OB Paywall Purchased Web",mixpanelConfigOB())
-    mixpanel.setmMxpanelValue("Paywall Purchased Web",mixpanelConfig())
-  }
+    // 初始化触发
+    view() {
+        mixpanel.setmMxpanelValue("OB Paywall Viewed Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Viewed Web", mixpanelConfig())
+    },
+    // 点击支付触发
+    clickPay() {
+        mixpanel.setmMxpanelValue("OB Paywall Continued Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Continued Web", mixpanelConfig())
+    },
+    // 免费试用支付成功触发
+    payFree() {
+        mixpanel.setmMxpanelValue("OB Paywall Trialed Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Trialed Web", mixpanelConfig())
+    },
+    // 正常付费成功触发
+    paySuccess() {
+        mixpanel.setmMxpanelValue("OB Paywall Purchased Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Purchased Web", mixpanelConfig())
+    }
 }
 
+// 获取商品列表
 getPriceList(uid, { uid, lpId: '' }).then(res => {
-    productList.value = res.data.products
+    productList.value = res.data.products || []
+    productInfo.value = productList.value[0] || null
     console.log(res.data.products)
+    console.log(1111, userData.value, currentKcal, fillPercent)
     // 进入页面触发加载埋点，因为要传入价格，所以放在获取价格列表之后
     eventTracker.view()
 })
 
-//BMI计算
-// 基础数据
-
 // BMI 区间范围（可按需修改）
-const MIN_BMI = 15
-const MAX_BMI = 40
+const MIN_BMI = 18
+const MAX_BMI = 36
 
 // 计算滑块百分比位置
 const thumbPosition = computed(() => {
@@ -194,9 +229,13 @@ onMounted(() => {
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
     })
+    anim1.addEventListener("complete", () => {
+        isDisabled.value = false
+    })
     setTimeout(() => {
         console.log('显示抽奖弹窗')
         isShow.value = true
+        isDisabled.value = false
         anim?.play()
     }, 5000)
 })
@@ -211,6 +250,7 @@ function ButtonClick() {
         isShow.value = false
         console.log('去结算')
     } else {
+        isDisabled.value = true
         anim.goToAndStop(300, true)
         anim?.play()
     }
@@ -281,11 +321,6 @@ function calcRecommendedCalories(weightObj, heightObj) {
     // 卡路里计算公式
     const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
     return Math.round(recommendedCalories);
-}
-
-// change
-function change(val) {
-  priceClick.value = val;
 }
 </script>
 
@@ -371,7 +406,8 @@ function change(val) {
                     <p class="label">Current BMI</p>
                     <div class="value-row">
                         <p class="bmi-value">{{ nowBMI }} BMI</p>
-                        <p class="normal-mark">{{ promptNum.title }} <span class="diff">-{{ nowBMI }}</span></p>
+                        <p class="normal-mark">{{ pageText.promptNum[promptNum]?.title }} <span class="diff">-{{ nowBMI
+                                }}</span></p>
                     </div>
                 </div>
 
@@ -389,11 +425,12 @@ function change(val) {
 
                 <!-- 底部状态说明卡片 -->
                 <div class="status-card">
-                    <h2 class="status-title" :style="'color:' + promptNum.color + ';'">{{ promptNum.title }}</h2>
+                    <h2 class="status-title" :style="'color:' + pageText.promptNum[promptNum]?.color + ';'">{{
+                        pageText.promptNum[promptNum]?.title }}</h2>
                     <p class="status-desc">
-                        <span>{{ promptNum.text[0] }}</span>
+                        <span>{{ pageText.promptNum[promptNum]?.text[0] }}</span>
                         <span>({{ nowBMI }})</span>
-                        <span>{{ promptNum.text[1] }}</span>
+                        <span>{{ pageText.promptNum[promptNum]?.text[1] }}</span>
                     </p>
                 </div>
 
@@ -556,10 +593,10 @@ function change(val) {
                         <div class="text">You won the biggest extradiscount!</div>
                     </div>
                 </div>
-                <div>
+                <div v-if="!showPaymentDrawer" class="product-box">
                     <div class="box6-right-title">Debby, get your Tai Chi workout plan</div>
                     <!-- 商品1 -->
-                    <div class="price1 priceItam" @click="change(0)"
+                    <div class="price1 priceItam" @click="selectProduct(0)"
                         :class="priceClick == 0 ? 'blueBorder lightBlueBg' : ''">
                         <div class="priceItam-left">
                             <img v-if="priceClick != 0" src="../assets/image/suoerwall_bg2_0.png" alt="" srcset="">
@@ -584,8 +621,10 @@ function change(val) {
                                 <div class="priceItam-right-box2-text1" :class="priceClick == 0 ? 'blueColor' : ''">
                                     <span class="span1">$</span>
                                     <span class="span2">
-                                        {{ discount ? (productList[0]?.priceDiscountUnitAmount / 100 / 7).toFixed(2) :
-                                            (productList[0]?.priceUnitAmount / 100 / 7).toFixed(2) }}
+                                        {{ discount ? (productList[0]?.priceDiscountUnitAmount / 100 / 7
+                                            * productList[0]?.intervalCount).toFixed(2) :
+                                            (productList[0]?.priceUnitAmount / 100 / 7
+                                                * productList[0]?.intervalCount).toFixed(2) }}
                                     </span>
                                 </div>
                                 <div class="priceItam-right-box2-text2">per day</div>
@@ -593,7 +632,7 @@ function change(val) {
                         </div>
                     </div>
                     <!-- 商品2 -->
-                    <div class="price2" @click="change(1)" :class="priceClick == 1 ? 'blueBorder' : ''">
+                    <div class="price2" @click="selectProduct(1)" :class="priceClick == 1 ? 'blueBorder' : ''">
                         <div class="price2-title" :class="priceClick == 1 ? 'whiteColor blueBg' : ''">MOST POPULAR</div>
                         <div class="priceItam" :class="priceClick == 1 ? 'lightBlueBg' : ''">
                             <div class="priceItam-left">
@@ -619,9 +658,11 @@ function change(val) {
                                     <div class="priceItam-right-box2-text1" :class="priceClick == 1 ? 'blueColor' : ''">
                                         <span class="span1">$</span>
                                         <span class="span2">
-                                            {{ discount ? (productList[1]?.priceDiscountUnitAmount / 100 / 7).toFixed(2)
+                                            {{ discount ? (productList[1]?.priceDiscountUnitAmount / 100 /
+                                                7 * productList[0]?.intervalCount).toFixed(2)
                                                 :
-                                                (productList[1]?.priceUnitAmount / 100 / 7).toFixed(2) }}
+                                                (productList[1]?.priceUnitAmount / 100 /
+                                                    7 * productList[0]?.intervalCount).toFixed(2) }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -633,7 +674,7 @@ function change(val) {
                             2026 included</div>
                     </div>
                     <!-- 商品三 -->
-                    <div class="price3" @click="change(2)" :class="priceClick == 2 ? 'blueBorder' : ''">
+                    <div class="price3" @click="selectProduct(2)" :class="priceClick == 2 ? 'blueBorder' : ''">
                         <div class="priceItam" :class="priceClick == 2 ? 'lightBlueBg' : ''">
                             <div class="priceItam-left">
                                 <img v-if="priceClick != 2" src="../assets/image/suoerwall_bg2_0.png" alt="" srcset="">
@@ -658,9 +699,11 @@ function change(val) {
                                     <div class="priceItam-right-box2-text1" :class="priceClick == 2 ? 'blueColor' : ''">
                                         <span class="span1">$</span>
                                         <span class="span2">
-                                            {{ discount ? (productList[2]?.priceDiscountUnitAmount / 100 / 7).toFixed(2)
+                                            {{ discount ? (productList[2]?.priceDiscountUnitAmount / 100 /
+                                                7 * productList[0]?.intervalCount).toFixed(2)
                                                 :
-                                                (productList[2]?.priceUnitAmount / 100 / 7).toFixed(2) }}
+                                                (productList[2]?.priceUnitAmount / 100 /
+                                                    7 * productList[0]?.intervalCount).toFixed(2) }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -671,15 +714,19 @@ function change(val) {
                             for
                             2026 included</div>
                     </div>
-                </div>
-                <div class="price-button">
-                    <div class="continue-btn" @click="goIt">
-                        <div class="spacer"></div>
-                        <div>Continue</div>
-                        <img src="@/assets/continue-icon.webp">
+                    <div class="price-button">
+                        <div class="continue-btn" @click="goIt">
+                            <div class="spacer"></div>
+                            <div>Continue</div>
+                            <img src="@/assets/continue-icon.webp">
+                        </div>
                     </div>
                 </div>
-                <div class="price-right-text">
+                <div v-if="showPaymentDrawer" class="payment-drawer-inline-wrap">
+                    <PaymentDrawer v-model="showPaymentDrawer" :product-info="productInfo" :discount="discount"
+                        :eventTracker="eventTracker" />
+                </div>
+                <div v-if="!showPaymentDrawer" class="price-right-text">
                     By continuing, you agree that your subscription will be auto-renewed at the ful price of 39.99 USD
                     each month at the end of the month intro period unless you cancel in
                     <span class="underline">Settings</span>
@@ -760,7 +807,7 @@ function change(val) {
             </div>
             <div class="text" v-if="discount">*The discount will be added automatically to the first billing period
             </div>
-            <div @click="ButtonClick" class="button">
+            <div @click="ButtonClick" class="button" :class="{ 'disabled': isDisabled }">
                 {{ discount ? 'Get my discount' : 'Stop' }}
             </div>
             <div ref="lottieContainer1" class="lottie2"></div>
@@ -1461,6 +1508,8 @@ function change(val) {
 
         .box6-right {
             width: 396px;
+            display: flex;
+            flex-direction: column;
 
             .box6-right-textBox {
                 width: 100%;
@@ -1693,10 +1742,20 @@ function change(val) {
                     }
                 }
 
-                .continue-btn.disabled {
-                    background-color: #C7C9CC;
-                    cursor: not-allowed;
-                    pointer-events: none;
+
+            }
+
+            .payment-drawer-inline-wrap {
+                width: 100%;
+                margin-top: 24px;
+                flex: 1;
+                min-height: 0;
+                display: flex;
+
+                :deep(.drawer-root) {
+                    width: 100%;
+                    height: 100%;
+                    overflow: visible;
                 }
             }
 
@@ -1888,6 +1947,7 @@ function change(val) {
 }
 
 .mask {
+    display: none;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.30);
@@ -1897,12 +1957,12 @@ function change(val) {
     z-index: -1;
     opacity: 0.5;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .box {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        position: relative;
         display: flex;
         width: 544px;
         padding: 40px;
@@ -1964,48 +2024,85 @@ function change(val) {
             position: relative;
             z-index: 5;
         }
+
+        .button.disabled {
+            background-color: #C7C9CC;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
     }
 }
 
 .show {
+    display: flex;
     z-index: 999;
     opacity: 1;
 }
 
 @media (max-width: 768px) {
+    .mask {
+        padding: 0 16px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+
+        .box {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            padding: 16px;
+
+            .title {
+                font-size: 24px;
+            }
+
+            .lottie-box {
+                width: 100%;
+                height: auto;
+            }
+
+            .text {
+                font-size: 14px;
+            }
+
+            .button {
+                margin-top: 12px;
+                box-sizing: border-box;
+            }
+
+        }
+    }
+
     .text-page {
         width: 100%;
 
-        .box1 {
-            .box1-content {
-                height: auto;
+        .box1 .box1-content {
+            height: auto;
+        }
 
-                .box1-itam {
-                    .box1-itam-content {
-                        box-sizing: border-box;
-                        padding: 24px 0 24px 24px !important;
+        .box1 .box1-itam .box1-itam-content {
+            box-sizing: border-box;
+            padding: 24px 0 24px 24px !important;
 
-                        .textBox1 {
-                            margin-top: 0;
+            .textBox1 {
+                margin-top: 0;
 
-                            .text2 {
-                                font-size: 18px;
-                            }
-                        }
-
-                        .textBox2 {
-                            .bar-ul {
-                                width: 151px;
-
-                                .bar-li {
-                                    width: 27px;
-                                }
-                            }
-                        }
-                    }
+                .text2 {
+                    font-size: 18px;
                 }
             }
 
+            .textBox2 {
+                .bar-ul {
+                    width: 151px;
+
+                    .bar-li {
+                        width: 27px;
+                    }
+                }
+            }
         }
 
         .text {
@@ -2035,6 +2132,19 @@ function change(val) {
                         .bmi-value {
                             font-size: 24px;
                         }
+                    }
+
+
+                }
+
+                .slider-wrapper {
+                    .slider-track {
+                        background: linear-gradient(90deg,
+                                #409eff 0%,
+                                #36d399 20%,
+                                #51e85b 35%,
+                                #f9a826 60%,
+                                #ff5549 100%) !important;
                     }
                 }
             }
@@ -2229,15 +2339,58 @@ function change(val) {
                         font-size: 13px;
                     }
                 }
+
+                .box6-left-img {
+                    width: 240px;
+                }
             }
 
             .box6-right {
                 margin-top: 24px;
                 width: 100%;
+                display: block;
 
                 .box6-right-title {
                     margin-top: 24px;
                     font-size: 20px;
+                }
+
+                .payment-drawer-inline-wrap {
+                    flex: none;
+                    min-height: auto;
+                    display: block;
+                }
+
+                .priceItam {
+                    padding: ;
+
+                    .priceItam-left {}
+
+                    .priceItam-right {
+                        .priceItam-right-box1 {
+                            .priceItam-right-text1 {
+                                font-size: 18px;
+                            }
+
+                        }
+
+                        .priceItam-right-text2 {
+                            font-size: 16px;
+
+                            .line-through {
+                                font-size: 16px;
+                            }
+                        }
+
+                        .priceItam-right-box2 {
+                            width: 106px;
+                            height: 58px;
+
+                            .priceItam-right-box2-text1 {
+                                margin-top: 0;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -2247,23 +2400,27 @@ function change(val) {
             box-sizing: border-box;
             margin-top: 36px;
             padding: 0 16px;
-            .box7-cont{
+
+            .box7-cont {
                 width: 100%;
                 padding: 16px;
                 display: block;
-                .box7-textBox{
+
+                .box7-textBox {
                     width: 100%;
                 }
-              .box7-img{
-                margin-top: 16px;
-                width: 120px;
-                height: 120px;
-                margin-left: calc(100% - 120px);
-              }
-                
+
+                .box7-img {
+                    margin-top: 16px;
+                    width: 120px;
+                    height: 120px;
+                    margin-left: calc(100% - 120px);
+                }
+
             }
         }
-        .box8{
+
+        .box8 {
             padding: 16px;
             box-sizing: border-box;
         }

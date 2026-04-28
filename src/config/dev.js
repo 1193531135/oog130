@@ -1,13 +1,15 @@
 const sdkConfig = {
     webVersion: "-V171.043.2000.42", // 网页版本
     mixpanelwebVersion: "1.0.0",//main-page埋点版本号
+    progectName: "oog104",
+    defaultPriceGroup: "9BKFW",
     emailAddress: "liuchenglong@laien.io", //联系我们-公司邮箱地址
     fbqName: "test",
     ga4Name: 'test',
     ga4MeasurementID: 'G-D872RR3TG0',
     ga4DebugMode: true, //开启debuger模式
     paypalConfig: {
-        clientId: 'AYNPNwaTD4O2wdBiBxcqSLESrTPgTf6YQMK_2DEtoYwKq2C2xxfAXPxApW7BgbzPtuwa_qa2YWp_Hbur', //PayPal 支付clientid
+        clientId: 'AVqL5s5k0WQR46b1_Zrl1iSrHS3Zgpapf24o3fzT_3vqaTCl_uxvNT7bzbLYdt3eoQnkz3n_Pl09Nrvg', //PayPal 支付clientid
     },
     statsigConfig: {
         statsigClientKey: 'client-pit9UptOZp4pl3qWvJnoh02qce3S2Hw1ldHZrXvu72x',
@@ -70,6 +72,22 @@ const sdkConfig = {
         onboardingEventKey: 'test_OB',
         homePageEventKey: 'test_1st',
         purchaseKey: 'test_OB'
+    },
+    systemApiVersion: {
+        sendTempMail: "v1",
+        sendContactUsEmail: "v1",
+        getSubscriptionList: "v1",
+        getPriceList: "v4",
+        createCheckoutSessionEmbedded: "v3",
+        createCheckoutPaypalSession: "v3",
+        synchPaypalSubscription: "v1",
+        getSubscriptionInfo: "v1",
+        getPaypalSubscriptionInfo: "v1",
+        cancelSubscription: "v1",
+        transferSubscription: "v3",
+        resumeSubscriptionInfo: "v1",
+        mergeMixpanelData: "v1",
+        getPayPlatformName: "v1"
     },
     sentryConfig: {
         dsn: 'https://74225e934b3c865171a36b93cf4bae02@o4507304172388352.ingest.us.sentry.io/4508101837586432'
