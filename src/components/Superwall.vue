@@ -1755,6 +1755,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                 :deep(.drawer-root) {
                     width: 100%;
                     height: 100%;
+                    overflow: visible;
                 }
             }
 

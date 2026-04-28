@@ -416,22 +416,16 @@ onUnmounted(() => {
               <div id="payment-inline-paypal" class="paypal-inline-container"></div>
             </div>
 
-            <button
-              class="payment-entry wallet-entry"
-              :disabled="!productInfo || isCreatingStripeCheckout"
-              @click="openPaymentPopup('stripe')"
-            >
+            <button class="payment-entry wallet-entry" :disabled="!productInfo || isCreatingStripeCheckout"
+              @click="openPaymentPopup('stripe')">
               <span class="wallet-brand apple-brand">
                 <img class="apple-pay-icon" src="@/assets/image/payment_apple_logo.png" alt="" aria-hidden="true" />
                 <span>Pay</span>
               </span>
             </button>
 
-            <button
-              class="payment-entry wallet-entry"
-              :disabled="!productInfo || isCreatingStripeCheckout"
-              @click="openPaymentPopup('stripe')"
-            >
+            <button class="payment-entry wallet-entry" :disabled="!productInfo || isCreatingStripeCheckout"
+              @click="openPaymentPopup('stripe')">
               <span class="wallet-brand google-brand">
                 <span>Buy with</span>
                 <img class="google-pay-icon" src="@/assets/image/payment_google_g_logo.png" alt="" aria-hidden="true" />
@@ -465,12 +459,8 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <button
-              type="button"
-              class="card-pay-button"
-              :disabled="!productInfo || isCreatingStripeCheckout"
-              @click.stop="openPaymentPopup('stripe')"
-            >
+            <button type="button" class="card-pay-button" :disabled="!productInfo || isCreatingStripeCheckout"
+              @click.stop="openPaymentPopup('stripe')">
               <span class="card-pay-lock" aria-hidden="true">◍</span>
               <span>Pay</span>
             </button>
@@ -486,7 +476,12 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-
+      <div class="payment-cards-row">
+        <img src="@/assets/image/payment_card_amex.png" alt="AMEX" />
+        <img src="@/assets/image/payment_card_discover.png" alt="Discover" />
+        <img src="@/assets/image/payment_card_mastercard.png" alt="Mastercard" />
+        <img src="@/assets/image/payment_card_visa.png" alt="VISA" />
+      </div>
       <transition name="popup-fade">
         <div v-if="activePopup" class="payment-popup-root">
           <div class="payment-popup-backdrop" @click="closePaymentPopup"></div>
@@ -524,13 +519,15 @@ onUnmounted(() => {
 .drawer-card {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
   padding: 16px 16px 18px;
   border-radius: 12px;
   border: 1px solid #e9edf2;
   background: #f8f8f8;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
 }
 
 .drawer-close,
@@ -557,6 +554,7 @@ onUnmounted(() => {
 .drawer-content {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .product-block {
@@ -888,6 +886,21 @@ onUnmounted(() => {
   text-decoration: underline;
 }
 
+.payment-cards-row {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.payment-cards-row img {
+  width: calc((100% - 30px) / 4);
+  max-width: 88px;
+  height: auto;
+  object-fit: contain;
+}
+
 @media (max-width: 767px) {
   .drawer-card {
     padding: 16px 14px 18px;
@@ -924,6 +937,14 @@ onUnmounted(() => {
   .payment-popup-card {
     width: 100%;
     border-radius: 24px;
+  }
+
+  .payment-cards-row {
+    gap: 8px;
+  }
+
+  .payment-cards-row img {
+    width: calc((100% - 24px) / 4);
   }
 }
 </style>
