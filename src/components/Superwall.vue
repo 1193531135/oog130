@@ -92,75 +92,66 @@ function goIt() {
     showPaymentDrawer.value = true
 }
 
+// 设置mixpanel配置项
+const design_id = ""
+const product_id = computed(() => productList.value[priceClick.value]?.id || '')
+const mixpanelConfig = () => {
+    return {
+        design_id,
+        product_id: product_id.value,
+        paywall_source: "onboarding",
+        paywall_type: "onboarding",
+    }
+}
+const mixpanelConfigOB = () => {
+    return {
+        design_id,
+        product_id: product_id.value,
+    }
+}
+const eventTracker = {
+    // 初始化触发
+    view() {
+        mixpanel.setmMxpanelValue("OB Paywall Viewed Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Viewed Web", mixpanelConfig())
+    },
+    // 点击支付触发
+    clickPay() {
+        mixpanel.setmMxpanelValue("OB Paywall Continued Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Continued Web", mixpanelConfig())
+    },
+    // 免费试用支付成功触发
+    payFree() {
+        mixpanel.setmMxpanelValue("OB Paywall Trialed Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Trialed Web", mixpanelConfig())
+    },
+    // 正常付费成功触发
+    paySuccess() {
+        mixpanel.setmMxpanelValue("OB Paywall Purchased Web", mixpanelConfigOB())
+        mixpanel.setmMxpanelValue("Paywall Purchased Web", mixpanelConfig())
+    }
+}
+
+// 获取商品列表
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products || []
     productInfo.value = productList.value[0] || null
     console.log(res.data.products)
     console.log(1111, userData.value, currentKcal, fillPercent)
+    // 进入页面触发加载埋点，因为要传入价格，所以放在获取价格列表之后
+    eventTracker.view()
+})
 
-    // 设置mixpanel配置项
-    /*
-    design_id：paywall-page页面id，命名规则  Web-Paywall-(随机8位数字字母)；工具地址：https://tool.ip138.com/uuid/（取-前8位）
-    */
-    const design_id = ""
-    const product_id = computed(() => productList.value[priceClick.value]?.id || '')
-    const mixpanelConfig = () => {
-        return {
-            design_id,
-            product_id: product_id.value,
-            paywall_source: "onboarding",
-            paywall_type: "onboarding",
-        }
-    }
-    const mixpanelConfigOB = () => {
-        return {
-            design_id,
-            product_id: product_id.value,
-        }
-    }
-    const eventTracker = {
-        // 初始化触发
-        view() {
-            mixpanel.setmMxpanelValue("OB Paywall Viewed Web", mixpanelConfigOB())
-            mixpanel.setmMxpanelValue("Paywall Viewed Web", mixpanelConfig())
-        },
-        // 点击支付触发
-        clickPay() {
-            mixpanel.setmMxpanelValue("OB Paywall Continued Web", mixpanelConfigOB())
-            mixpanel.setmMxpanelValue("Paywall Continued Web", mixpanelConfig())
-        },
-        // 免费试用支付成功触发
-        payFree() {
-            mixpanel.setmMxpanelValue("OB Paywall Trialed Web", mixpanelConfigOB())
-            mixpanel.setmMxpanelValue("Paywall Trialed Web", mixpanelConfig())
-        },
-        // 正常付费成功触发
-        paySuccess() {
-            mixpanel.setmMxpanelValue("OB Paywall Purchased Web", mixpanelConfigOB())
-            mixpanel.setmMxpanelValue("Paywall Purchased Web", mixpanelConfig())
-        }
-    }
+// BMI 区间范围（可按需修改）
+const MIN_BMI = 15
+const MAX_BMI = 40
 
-    getPriceList(uid, { uid, lpId: '' }).then(res => {
-        productList.value = res.data.products
-        console.log('products', res.data.products)
-        // 进入页面触发加载埋点，因为要传入价格，所以放在获取价格列表之后
-        eventTracker.view()
-    })
-
-    //BMI计算
-    // 基础数据
-
-    // BMI 区间范围（可按需修改）
-    const MIN_BMI = 15
-    const MAX_BMI = 40
-
-    // 计算滑块百分比位置
-    const thumbPosition = computed(() => {
-        const percent = ((nowBMI - MIN_BMI) / (MAX_BMI - MIN_BMI)) * 100
-        // 限制滑块不超出轨道边界
-        return Math.max(0, Math.min(100, percent))
-    })
+// 计算滑块百分比位置
+const thumbPosition = computed(() => {
+    const percent = ((nowBMI - MIN_BMI) / (MAX_BMI - MIN_BMI)) * 100
+    // 限制滑块不超出轨道边界
+    return Math.max(0, Math.min(100, percent))
+})
 
     //lottie动画
     // 配置项
@@ -309,11 +300,6 @@ getPriceList(uid, { uid, lpId: '' }).then(res => {
         // 卡路里计算公式
         const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
         return Math.round(recommendedCalories);
-    }
-
-    // change
-    function change(val) {
-        priceClick.value = val;
     }
 </script>
 
