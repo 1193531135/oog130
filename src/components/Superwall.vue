@@ -1920,6 +1920,7 @@ function change(val) {
 }
 
 .mask {
+    display: none;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.30);
@@ -2006,6 +2007,7 @@ function change(val) {
 }
 
 .show {
+    display: block;
     z-index: 999;
     opacity: 1;
 }
