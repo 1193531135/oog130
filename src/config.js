@@ -200,13 +200,12 @@ const config = {
         module: () => import('@/components/ProgressLoading.vue')
     },
     Superwall: {
-
         module: () => import('@/components/Superwall.vue'),
         props(content) {
             const pageData = new PageData()
             const nowBMI = BMI({
-                height: pageData['YourHeight'].value,
-                weight: pageData['CurrentWeight'].value,
+                height: pageData['YourHeight']?.value,
+                weight: pageData['CurrentWeight']?.value,
                 isFt: pageData['YourHeight']?.unit == "ft/in",
                 isLb: pageData['CurrentWeight']?.unit == "lb"
             }).toFixed(2)
@@ -225,11 +224,12 @@ const config = {
                 images[`/src/assets/image/superwall_img1_${male}.png`]?.default,
                 images[`/src/assets/image/superwall_img2_${male}.png`]?.default,
                 images[`/src/assets/image/superwall_img5_${male}.png`]?.default,
+                images[`/src/assets/image/superwall_img2-390_${male}.png`]?.default,
             ]
             return content
         }
-    }
-
+    },
+    Register: () => import('@/components/Register.vue')
 }
 // 做一些统一处理
 Object.keys(config).forEach(key => {

@@ -205,21 +205,6 @@ export function getAnonymousAuth() {
     return auth.currentUser;
 }
 // 匿名账号转正式账号
-// export async function createAccount(email, password) {
-//     await hasExitedAnonymousAccount();
-//     const auth = getAuth();
-//     // 创建邮箱密码凭据
-//     const credential = EmailAuthProvider.credential(email, password);
-//     try {
-//         const res = await linkWithCredential(auth.currentUser, credential);
-//         console.log("匿名账号成功转化为正式账号：");
-//         // await utils.sleep(25000);
-//         return res;
-//     } catch (err) {
-//         console.error("匿名账号转正式账号失败：");
-//         throw err; // 保持错误向上传递
-//     }
-// }
 
 export async function createAccount(email, password) {
     let userAuth = getAuth();
