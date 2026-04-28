@@ -32,8 +32,7 @@ const back = () => {
 
 onMounted(async () => {
   // 创建匿名账号
-  const uid = await createAnonymousAccount();
-  sessionStorage.setItem("uid",uid);
+  await createAnonymousAccount();
   // 初始化mixpanel
   const mixpanel = new Mixpanel();
   mixpanel.init();

@@ -27,41 +27,14 @@ let redirectPath = '/get-start-page';
 
 
 //侦听器 监听用户登陆状态
-onAuthStateChanged(auth, async (user) => {
-    console.log("Auth state changed:", user);
-    // 更新uid
-    if (user && user.uid) {
-        window.sessionStorage.setItem('uid', user.uid);
-        userOnAuthInfo = user;
-    }
-    //正式账号登陆
-    if (user && !user.isAnonymous) {
-        try {
-            // 更新用户信息到 Vuex Store 并处理分析数据
-            // mergeMixpanelInfo(user.uid);
-            // store.commit("updateuserInfo", user);
-            // const userData = await getFirestoreDataByUid(user.uid);
-            // if (userData?.isDeletedAccount) {
-            //     // 用户账号被删除，退出登录并清除用户信息
-            //     store.commit("updateuserInfo", null);
-            //     await signOutWithEmail();
-            // } else {
-            //     // 更新用户信息到 Vuex Store 并处理分析数据
-            //     mergeMixpanelInfo(user.uid);
-            //     store.commit("updateuserInfo", user);
-            // }
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-        }
-    } else {
-        //正式账号登陆过期返回登陆页面
-        if (currentPath === '/user-profile-page') {
-            // utils.routerReplace('/main-page')
-        }
-        // store.commit("updateuserInfo", null);
-    }
-
-});
+// onAuthStateChanged(auth, async (user) => {
+//     console.log("Auth state changed:", user);
+//     // 更新uid
+//     if (user && user.uid) {
+//         window.sessionStorage.setItem('uid', user.uid);
+//         userOnAuthInfo = user;
+//     }
+// });
 // 重置页面权限
 function resetPage() {
     window.sessionStorage.removeItem("onBoardingRecordInfo");
@@ -192,6 +165,8 @@ export async function createAnonymousAccount() {
     const auth = getAuth(); // 确保 auth 已初始化
     try {
         let { user } = await signInAnonymously(auth);
+        // 存储匿名用户 UID 到 sessionStorage
+        window.sessionStorage.setItem('uid', user.uid)
         console.log('创建的匿名账号：' + user.uid);
         return user.uid; // 返回用户 UID
     } catch (error) {
@@ -210,9 +185,11 @@ export async function createAccount(email, password) {
     let userAuth = getAuth();
     // 确保当前用户为匿名账号
     if (!userAuth.currentUser) {
+        // 登录失效后,创建新的匿名账户，转移用户的ob,订阅关系转移
         await createAnonymousAccount();
     }
     userAuth = getAuth();
+    // 绑定用户ob数据
     const credential = EmailAuthProvider.credential(email, password);
     return new Promise(function (resolve, reject) {
         linkWithCredential(userAuth.currentUser, credential).then(res => {

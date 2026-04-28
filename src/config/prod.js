@@ -49,7 +49,8 @@ const sdkConfig = {
         storageBucket: "oog126---tai-chi-for-beginners.firebasestorage.app",
         messagingSenderId: "985747364944",
         appId: "1:985747364944:web:0b080adb0934029f238555",
-        measurementId: "G-HXZHP15BS4"
+        measurementId: "G-HXZHP15BS4",
+        defaultCollectionPath: 'web2app',
     },
     stripeConfig: {
         revenuecatStripeAppPublicApiKey: "strp_BfIdOSUqjdxNacFnNCUoVCzJKIt",

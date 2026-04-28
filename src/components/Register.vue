@@ -3,18 +3,18 @@ import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
 import { ref } from 'vue'
-import { createAccount } from "@/config/firebase.js";
-const pushControl = new PushControl()
+import { transferSubscription,getSubscriptionList } from "@/api/system/index.js";
+import { webConfig } from "@/config/index.js";
+import { addFirestoreData } from "@/config/firebase.js";
 
 const pageData = new PageData()
 
-const route = useRoute()
-
-
+// 加载之前输入的邮箱（如果有的话）
 const email = ref(pageData["EnterEmail"] || '')
 const password = ref("")
 const isFocused = ref(false)
 const isError = ref(false)
+const loading = ref(false);
 //提示文本
 const isErrorText = ref('Please enter your email address')
 //邮箱正则
@@ -42,46 +42,66 @@ const focusInput = () => {
   }
 }
 
-const register = () => {
-  // 匿名账户绑定真实邮箱密码数据
-  createAccount(email.value, password.value).then(() => {
-  }).catch((error) => {
-    // 处理注册错误
-    console.error("Registration error:", error);
-    isErrorText.value = error.message || 'Registration failed. Please try again.';
-    isError.value = true;
-  });
-  // 匿名账户转正
-  // 跳转下载链接
+const register = async () => {
+  loading.value = true;
+  // 通过接口把用户账户升级成正式账户
+  let subscriptionId = ""
+  const uid = sessionStorage.getItem("uid")
+  // 获取订阅id
+  let { data } = await getSubscriptionList(uid);
+  if (data && data.length) {
+    subscriptionId = data.find(item => item.active === 1).subscriptionId;
+  }
+  const accountInfo = {
+    email: email.value,
+    password: password.value,
+    subscriptionId,
+  }
+  try {
+    // ob 绑定
+    await addFirestoreData(uid, pageData);
+    // 发起订阅转移(实际上是转为正式账号)
+    await transferSubscription(uid, accountInfo);
+    // 跳转下载链接
+    const a = window.document.createElement("a")
+    a.href = webConfig.applink
+    a.click()
+    loading.value = false;
+  } catch (err) {
+    // 转移失败，可能是因为用户没有订阅或者其他原因
+    // 失败后应该发起邮件
+  }
 }
 </script>
 
 <template>
-  <div class="text-page">
-    <div class="title">Create Your Account</div>
-    <div class="inputLable">Email</div>
-    <div @click="focusInput" class="input-wrapper" :class="{
+  <a-spin tip="We are setting up your account after payment. Please keep this page open until the process is completed, otherwise your account may not be created successfully" :spinning="loading" >
+    <div class="text-page">
+      <div class="title">Create Your Account</div>
+      <div class="inputLable">Email</div>
+      <div @click="focusInput" class="input-wrapper" :class="{
             error: isError,
             focus: isFocused
         }">
-      <input ref="inputRef" v-model="email" @input="onInput" class="input" placeholder="name@example.com"
-             @focus="isFocused = true" @blur="validate" />
+        <input ref="inputRef" v-model="email" @input="onInput" class="input" placeholder="name@example.com"
+               @focus="isFocused = true"/>
 
-      <!-- 错误提示图标 -->
-      <div v-if="isError" class="error-icon">!</div>
-    </div>
-    <!-- 错误提示文字 -->
-    <p v-if="isError" class="error-text">{{ isErrorText }}</p>
-    <div class="inputLable">Password</div>
-    <input class="input-wrapper" type="password" v-model="password"/>
-    <div class="btn-container">
-      <div class="continue-btn" :class="{ 'disabled': !(password && email)  }" @click="register">
-        <div class="spacer"></div>
-        <div>Register</div>
-        <img src="@/assets/continue-icon.webp">
+        <!-- 错误提示图标 -->
+        <div v-if="isError" class="error-icon">!</div>
+      </div>
+      <!-- 错误提示文字 -->
+      <p v-if="isError" class="error-text">{{ isErrorText }}</p>
+      <div class="inputLable">Password</div>
+      <input class="input-wrapper" type="password" v-model="password"/>
+      <div class="btn-container">
+        <div class="continue-btn" :class="{ 'disabled': !(password && email)  }" @click="register">
+          <div class="spacer"></div>
+          <div>Register</div>
+          <img src="@/assets/continue-icon.webp">
+        </div>
       </div>
     </div>
-  </div>
+  </a-spin>
 </template>
 
 <style scoped lang="less">

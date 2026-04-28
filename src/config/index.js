@@ -11,6 +11,7 @@ const configMap = {
 export const webConfig = {
     ...configMap[env],
     progectName: "oog104", //接口项目名称
+    applink:"https://taichi.onelink.me/n4v6/ysfpjeu3",
     systemApiVersion: {
         sendTempMail: "v1",
         sendContactUsEmail: "v1",
