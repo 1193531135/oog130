@@ -9,7 +9,7 @@ const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const selectOptions = pageText.selectOptions
-const developOptions = pageText.develop 
+const developOptions = pageText.develop
 const loseOptions = pageText.lose
 const isLose = ref(false)
 const textBox = ref(developOptions[0])
@@ -30,7 +30,7 @@ const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
 const isErrorText = ref('Weight must be greater than or equal to 77 lb')
-
+const percent = ref(0)
 
 const weightComparison = () => {
     let CurrentWeight = pageData.CurrentWeight
@@ -45,11 +45,27 @@ const weightComparison = () => {
     } else {
         newWeight = Number(targetWeight_kg.value)
     }
-
+    let d = newWeight - oldWeight
+    percent.value = Math.abs(d / oldWeight * 100).toFixed(1)
     isLose.value = newWeight < oldWeight ? true : false
-    console.log(newWeight, oldWeight)
-
+    let i = 0
+    if (Math.abs(d) <= 5.5) {
+        i = 0
+    } else if (Math.abs(d) > 5.5 && Math.abs(d) <= 11) {
+        i = 1
+    } else if (Math.abs(d) > 11 && Math.abs(d) <= 20.7) {
+        i = 2
+    } else {
+        i = 3
+    }
+    if (d < 0) {
+        textBox.value = loseOptions[i]
+    } else {
+        textBox.val = developOptions[i]
+    }
+    console.log('newWeight', newWeight, oldWeight, percent, textBox.value, i, d)
 }
+weightComparison()
 // ft/in输入框
 // 验证逻辑：失焦时检查是否为空
 const validate = () => {
@@ -174,7 +190,7 @@ const focusInput = () => {
         <div class="texBox lose" v-if="isLose">
             <div class="texBox-top">
                 <span class="icon">{{ textBox.title[0] }}</span>
-                <span class="checkboxLabel">{{ textBox.title[1] + 12 + textBox.title[2] }}</span>
+                <span class="checkboxLabel">{{ textBox.title[1] + percent + '%' + textBox.title[2] }}</span>
             </div>
             <div class="texBox-top">
                 <span class="icon" style="opacity: 0;">☝️</span>
@@ -210,7 +226,7 @@ const focusInput = () => {
     box-sizing: border-box;
 
     .title {
-        
+
         text-align: center;
     }
 
@@ -380,11 +396,13 @@ const focusInput = () => {
             display: flex;
             width: 100%;
             align-items: top;
+
             .icon {
                 font-size: 26px;
                 margin-right: 8px;
                 line-height: 26px;
             }
+
             .checkboxLabel {
                 color: #242424;
                 font-size: 16px;
@@ -430,19 +448,23 @@ const focusInput = () => {
         .lable {
             width: 80vw;
         }
+
         .input-wrapper {
             .input-text {
                 font-size: 14px;
-                .unit{
+
+                .unit {
                     min-width: 25px;
                 }
             }
-            .input{
+
+            .input {
                 font-size: 14px;
             }
 
         }
-        .inputLable{
+
+        .inputLable {
             margin-top: 32px;
             font-size: 16px;
         }

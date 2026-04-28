@@ -13,6 +13,13 @@ import animationData from '../assets/json/superwall_lottie1.json'
 import animationData1 from '../assets/json/superwall_lottie2.json'
 import { Mixpanel } from "@/config/mixpanel.js"
 
+const images = import.meta.glob('@/assets/image/*', { eager: true })
+// 预加载图片
+Object.values(images).forEach((src) => {
+    const img = new Image()
+    img.src = src.default
+})
+
 const pushControl = new PushControl()
 const mixpanel = new Mixpanel();
 
@@ -20,10 +27,14 @@ const uid = sessionStorage.getItem("uid");
 const route = useRoute()
 const pageText = window.languageData[route.name]
 const pageData = new PageData()
-const props = defineProps({
-    bgImageList: Array,
-    promptNum: Object
-})
+const male = pageData["ChooserGender"] || 0
+const bgImageList = [
+    images[`/src/assets/image/superwall_img1_${male}.png`]?.default,
+    images[`/src/assets/image/superwall_img2_${male}.png`]?.default,
+    images[`/src/assets/image/superwall_img5_${male}.png`]?.default,
+    images[`/src/assets/image/superwall_img2-390_${male}.png`]?.default,
+]
+
 
 const priceClick = ref(0)
 //折扣状态
@@ -55,7 +66,17 @@ const targetBMI = BMI({
     isFt: pageData['YourHeight']?.unit === "ft/in",
     isLb: pageData['TargetWeight']?.unit === "lb"
 }).toFixed(2)
-
+let promptNum = ref(0)
+if (nowBMI < 18) {
+    promptNum.value = 0
+} else if (nowBMI >= 19 && nowBMI < 25) {
+    promptNum.value = 1
+} else if (nowBMI >= 26 && nowBMI < 35) {
+    promptNum.value = 2
+} else {
+    promptNum.value = 3
+}
+console.log('promptNum',promptNum.value,pageText.promptNum)
 userData.value.age = calcAge(pageData['DateOfBirth'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
@@ -131,8 +152,8 @@ getPriceList(uid, { uid, lpId: '' }).then(res => {
 // 基础数据
 
 // BMI 区间范围（可按需修改）
-const MIN_BMI = 15
-const MAX_BMI = 40
+const MIN_BMI = 18
+const MAX_BMI = 36
 
 // 计算滑块百分比位置
 const thumbPosition = computed(() => {
@@ -378,7 +399,8 @@ function change(val) {
                     <p class="label">Current BMI</p>
                     <div class="value-row">
                         <p class="bmi-value">{{ nowBMI }} BMI</p>
-                        <p class="normal-mark">{{ promptNum.title }} <span class="diff">-{{ nowBMI }}</span></p>
+                        <p class="normal-mark">{{ pageText.promptNum[promptNum]?.title }} <span class="diff">-{{ nowBMI
+                                }}</span></p>
                     </div>
                 </div>
 
@@ -396,11 +418,12 @@ function change(val) {
 
                 <!-- 底部状态说明卡片 -->
                 <div class="status-card">
-                    <h2 class="status-title" :style="'color:' + promptNum.color + ';'">{{ promptNum.title }}</h2>
+                    <h2 class="status-title" :style="'color:' + pageText.promptNum[promptNum]?.color + ';'">{{
+                        pageText.promptNum[promptNum]?.title }}</h2>
                     <p class="status-desc">
-                        <span>{{ promptNum?.text[0] }}</span>
+                        <span>{{ pageText.promptNum[promptNum]?.text[0] }}</span>
                         <span>({{ nowBMI }})</span>
-                        <span>{{ promptNum?.text[1] }}</span>
+                        <span>{{ pageText.promptNum[promptNum]?.text[1] }}</span>
                     </p>
                 </div>
 
@@ -632,7 +655,7 @@ function change(val) {
                                                 7 * productList[0]?.intervalCount).toFixed(2)
                                                 :
                                                 (productList[1]?.priceUnitAmount / 100 /
-                                            7*productList[0]?.intervalCount).toFixed(2) }}
+                                                    7 * productList[0]?.intervalCount).toFixed(2) }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -673,7 +696,7 @@ function change(val) {
                                                 7 * productList[0]?.intervalCount).toFixed(2)
                                                 :
                                                 (productList[2]?.priceUnitAmount / 100 /
-                                            7*productList[0]?.intervalCount).toFixed(2) }}
+                                                    7 * productList[0]?.intervalCount).toFixed(2) }}
                                         </span>
                                     </div>
                                     <div class="priceItam-right-box2-text2">per day</div>
@@ -2086,6 +2109,19 @@ function change(val) {
                             font-size: 24px;
                         }
                     }
+
+
+                }
+
+                .slider-wrapper {
+                    .slider-track {
+                        background: linear-gradient(90deg,
+                                #409eff 0%,
+                                #36d399 20%,
+                                #51e85b 35%,
+                                #f9a826 60%,
+                                #ff5549 100%) !important;
+                    }
                 }
             }
 
@@ -2296,6 +2332,7 @@ function change(val) {
 
                 .priceItam {
                     padding: ;
+
                     .priceItam-left {}
 
                     .priceItam-right {
@@ -2308,14 +2345,17 @@ function change(val) {
 
                         .priceItam-right-text2 {
                             font-size: 16px;
-                            .line-through{
+
+                            .line-through {
                                 font-size: 16px;
                             }
                         }
-                        .priceItam-right-box2{
+
+                        .priceItam-right-box2 {
                             width: 106px;
                             height: 58px;
-                            .priceItam-right-box2-text1{
+
+                            .priceItam-right-box2-text1 {
                                 margin-top: 0;
                             }
                         }

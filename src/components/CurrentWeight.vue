@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { PageData } from "@/tool/index.js";
+import { PageData, BMI } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
 import { ref, computed, watch } from 'vue'
 const pushControl = new PushControl()
@@ -15,6 +15,7 @@ const selectOptions = pageText.selectOptions
 const textBoxOptions = pageText.textBox
 const textBox = ref(textBoxOptions[0])
 const unit = ref(pageData[route.name]?.unit || selectOptions[0])
+
 function change(val) {
     pageData.set(route.name, {
         unit: unit.value,
@@ -30,7 +31,15 @@ const isFocused = ref(false)
 const isError = ref(false)
 //提示文本
 const isErrorText = ref('Weight must be greater than or equal to 77 lb')
-
+let nowBMI = ref(
+    BMI({
+        height: pageData['YourHeight'].value,
+        weight: pageData['CurrentWeight'].value,
+        isFt: pageData['YourHeight']?.unit === "ft/in",
+        isLb: pageData['CurrentWeight']?.unit === "lb"
+    }).toFixed(2)
+)
+updateBMI(nowBMI.value)
 // ft/in输入框
 // 验证逻辑：失焦时检查是否为空
 const validate = () => {
@@ -56,6 +65,13 @@ const onInput = (e) => {
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
     CurrentWeight_lb.value = val
+    nowBMI.value = BMI({
+        height: pageData['YourHeight'].value,
+        weight: val,
+        isFt: pageData['YourHeight']?.unit === "ft/in",
+        isLb: true
+    }).toFixed(2)
+    updateBMI(nowBMI.value)
     validate()
 }
 // cm输入框
@@ -79,6 +95,13 @@ const onInput1 = (e) => {
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
     CurrentWeight_kg.value = val
     validate1()
+    nowBMI.value = BMI({
+        height: pageData['YourHeight'].value,
+        weight: val,
+        isFt: pageData['YourHeight']?.unit === "ft/in",
+        isLb: false
+    }).toFixed(2)
+    updateBMI(nowBMI.value)
 }
 // 单位切换时重置所有状态
 watch(unit, () => {
@@ -93,6 +116,18 @@ const focusInput = () => {
     if (inputRef.value) {
         inputRef.value.focus()
     }
+}
+function updateBMI(nowBMI) {
+    if (nowBMI < 18) {
+        textBox.value = textBoxOptions[0]
+    } else if (nowBMI >= 19 && nowBMI < 25) {
+        textBox.value = textBoxOptions[1]
+    } else if (nowBMI >= 26 && nowBMI < 35) {
+        textBox.value = textBoxOptions[2]
+    } else {
+        textBox.value = textBoxOptions[3]
+    }
+    console.log(textBox.value)
 }
 
 </script>
@@ -150,10 +185,10 @@ const focusInput = () => {
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
 
-        <div class="texBox">
+        <div class="texBox" :style="'background: ' + textBox.bgColor + ';'">
             <div class="texBox-top">
                 <span class="icon">{{ textBox.title[0] }}</span>
-                <span class="checkboxLabel">{{ textBox.title[1] + 12 + textBox.title[2] }}</span>
+                <span class="checkboxLabel">{{ textBox.title[1] + nowBMI + textBox.title[2] }}</span>
             </div>
             <div class="texBox-top">
                 <span class="icon" style="opacity: 0;">☝️</span>
@@ -397,11 +432,13 @@ const focusInput = () => {
         .input-wrapper {
             .input-text {
                 font-size: 14px;
-                .unit{
+
+                .unit {
                     min-width: 25px;
                 }
             }
-            .input{
+
+            .input {
                 font-size: 14px;
             }
 
