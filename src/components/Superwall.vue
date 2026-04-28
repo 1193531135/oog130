@@ -11,7 +11,11 @@ import { useRoute } from 'vue-router'
 import { getPriceList } from '@/api/system/index.js'
 import animationData from '../assets/json/superwall_lottie1.json'
 import animationData1 from '../assets/json/superwall_lottie2.json'
+import { Mixpanel } from "@/config/mixpanel.js"
+
 const pushControl = new PushControl()
+const mixpanel = new Mixpanel();
+
 const uid = sessionStorage.getItem("uid");
 const route = useRoute()
 const pageText = window.languageData[route.name]
@@ -20,6 +24,7 @@ const props = defineProps({
     bgImageList: Array,
     promptNum: Object
 })
+
 const priceClick = ref(0)
 //折扣状态
 const discount = ref(false)
@@ -39,15 +44,16 @@ const userData = ref({})
 const nowBMI = BMI({
     height: pageData['YourHeight'].value,
     weight: pageData['CurrentWeight'].value,
-    isFt: pageData['YourHeight']?.unit == "ft/in",
-    isLb: pageData['CurrentWeight']?.unit == "lb"
+    isFt: pageData['YourHeight']?.unit === "ft/in",
+    isLb: pageData['CurrentWeight']?.unit === "lb"
 }).toFixed(2)
 const targetBMI = BMI({
     height: pageData['YourHeight'].value,
     weight: pageData['TargetWeight'].value,
-    isFt: pageData['YourHeight']?.unit == "ft/in",
-    isLb: pageData['TargetWeight']?.unit == "lb"
+    isFt: pageData['YourHeight']?.unit === "ft/in",
+    isLb: pageData['TargetWeight']?.unit === "lb"
 }).toFixed(2)
+
 userData.value.age = calcAge(pageData['DateOfBirth'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
@@ -68,16 +74,56 @@ const calcBodyFat = (bmi, gender, age) =>
         : 1.2 * bmi + 0.23 * age - 5.4
     ).toFixed(2));
 console.log(1111, userData.value, currentKcal, fillPercent)
+
+// 设置mixpanel配置项
+/*
+design_id：paywall-page页面id，命名规则  Web-Paywall-(随机8位数字字母)；工具地址：https://tool.ip138.com/uuid/（取-前8位）
+*/
+const design_id = ""
+const product_id = computed(() => productList.value[priceClick.value]?.id || '')
+const mixpanelConfig = () => {
+  return {
+    design_id,
+    product_id:product_id.value,
+    paywall_source:"onboarding",
+    paywall_type:"onboarding",
+  }
+}
+const mixpanelConfigOB = () => {
+  return {
+    design_id,
+    product_id:product_id.value,
+  }
+}
+const eventTracker = {
+  // 初始化触发
+  view(){
+    mixpanel.setmMxpanelValue("OB Paywall Viewed Web",mixpanelConfigOB())
+    mixpanel.setmMxpanelValue("Paywall Viewed Web",mixpanelConfig())
+  },
+  // 点击支付触发
+  clickPay(){
+    mixpanel.setmMxpanelValue("OB Paywall Continued Web",mixpanelConfigOB())
+    mixpanel.setmMxpanelValue("Paywall Continued Web",mixpanelConfig())
+  },
+  // 免费试用支付成功触发
+  payFree(){
+    mixpanel.setmMxpanelValue("OB Paywall Trialed Web",mixpanelConfigOB())
+    mixpanel.setmMxpanelValue("Paywall Trialed Web",mixpanelConfig())
+  },
+  // 正常付费成功触发
+  paySuccess(){
+    mixpanel.setmMxpanelValue("OB Paywall Purchased Web",mixpanelConfigOB())
+    mixpanel.setmMxpanelValue("Paywall Purchased Web",mixpanelConfig())
+  }
+}
+
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products
     console.log(res.data.products)
+    // 进入页面触发加载埋点，因为要传入价格，所以放在获取价格列表之后
+    eventTracker.view()
 })
-function change(val) {
-    // 存储数据
-    //   pageData.set(route.name,val)
-    //
-    pushControl.push()
-}
 
 //BMI计算
 // 基础数据
@@ -235,6 +281,11 @@ function calcRecommendedCalories(weightObj, heightObj) {
     // 卡路里计算公式
     const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
     return Math.round(recommendedCalories);
+}
+
+// change
+function change(val) {
+  priceClick.value = val;
 }
 </script>
 
@@ -508,7 +559,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                 <div>
                     <div class="box6-right-title">Debby, get your Tai Chi workout plan</div>
                     <!-- 商品1 -->
-                    <div class="price1 priceItam" @click="priceClick = 0"
+                    <div class="price1 priceItam" @click="change(0)"
                         :class="priceClick == 0 ? 'blueBorder lightBlueBg' : ''">
                         <div class="priceItam-left">
                             <img v-if="priceClick != 0" src="../assets/image/suoerwall_bg2_0.png" alt="" srcset="">
@@ -542,7 +593,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                         </div>
                     </div>
                     <!-- 商品2 -->
-                    <div class="price2" @click="priceClick = 1" :class="priceClick == 1 ? 'blueBorder' : ''">
+                    <div class="price2" @click="change(1)" :class="priceClick == 1 ? 'blueBorder' : ''">
                         <div class="price2-title" :class="priceClick == 1 ? 'whiteColor blueBg' : ''">MOST POPULAR</div>
                         <div class="priceItam" :class="priceClick == 1 ? 'lightBlueBg' : ''">
                             <div class="priceItam-left">
@@ -582,7 +633,7 @@ function calcRecommendedCalories(weightObj, heightObj) {
                             2026 included</div>
                     </div>
                     <!-- 商品三 -->
-                    <div class="price3" @click="priceClick = 2" :class="priceClick == 2 ? 'blueBorder' : ''">
+                    <div class="price3" @click="change(2)" :class="priceClick == 2 ? 'blueBorder' : ''">
                         <div class="priceItam" :class="priceClick == 2 ? 'lightBlueBg' : ''">
                             <div class="priceItam-left">
                                 <img v-if="priceClick != 2" src="../assets/image/suoerwall_bg2_0.png" alt="" srcset="">

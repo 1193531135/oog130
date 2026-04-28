@@ -24,6 +24,8 @@ function getPageOptions(pathName) {
 
 export const eventProps = {
     "/taiChiBeginners": { eventKey:"OB Started Clicked Web"},
+    // 手动触发埋点
+    // "/taiChiBeginners": { eventKey:"OB Started Web"},
     "/chooserGender": { eventKey:"OB Gender Web",dataKey:"gender"},
     "/taiChiExperienceCheck": { eventKey:"OB Ever Web",dataKey:"ever"},
     "/taiChiBeginnerGuide": { eventKey:"OB Right Place Web"},
@@ -105,7 +107,6 @@ export class Mixpanel {
                 const dataKey = "ob_" + config.dataKey
                 // 用于用户携带传参
                 const userKey = "user_" + config.dataKey
-                let dataValue = ""
                 const pageData = new PageData();
                 const value = pageData[pageName]
                 if(value === undefined) throw `${pageName}数据不存在`;
@@ -129,11 +130,17 @@ export class Mixpanel {
                 }
                 // 默认处理
                 else {
-                    dataValue = options ? (options[value].constructor === String ? options[value] : options[value].label) : value
-                    info[dataKey] = dataValue
+                    info[dataKey] = options ? (options[value].constructor === String ? options[value] : options[value].label) : value
                 }
+                // 更新用户数据
+                const userInfo = {};
+                Object.keys(info).forEach(key => {
+                    if(key.includes("ob_")) userInfo[key.replace("ob_", "user_")] = info[key]
+                });
+                this.setmMxpanelUserInfo(userInfo)
             }
             this.setmMxpanelValue(config.eventKey, info)
+
         }
     }
     setmMxpanelUserInfo(info) {

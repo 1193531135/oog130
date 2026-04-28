@@ -3,11 +3,12 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageData } from "@/tool/index.js";
 import { PushControl } from '@/tool/index.js'
+import { Mixpanel } from "@/config/mixpanel.js"
+
 const pushControl = new PushControl()
 const pageData = new PageData()
 const route = useRoute()
 const pageText = window.languageData[route.name]
-
 
 function change(val) {
     pushControl.push()
@@ -26,12 +27,16 @@ const dashOffset = computed(() => {
 })
 
 onMounted(() => {
+    // 进入页面触发Mixpanel事件
+    const mixpanel = new Mixpanel();
+    mixpanel.setmMxpanelValue("OB Completed Web")
     const timer = setInterval(() => {
         if (progress.value == 25) {
             label.value = pageText.text[1]
             progress.value += 1
         } else if(progress.value>=100) {
             clearInterval(timer)
+            pushControl.push()
         }else{
             progress.value += 1
         }
