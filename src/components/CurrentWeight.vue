@@ -32,12 +32,15 @@ const isError = ref(false)
 //提示文本
 const isErrorText = ref('Weight must be greater than or equal to 77 lb')
 let nowBMI = ref(
+    pageData['CurrentWeight']?
     BMI({
         height: pageData['YourHeight'].value,
         weight: pageData['CurrentWeight'].value,
         isFt: pageData['YourHeight']?.unit === "ft/in",
         isLb: pageData['CurrentWeight']?.unit === "lb"
     }).toFixed(2)
+        :
+        0
 )
 updateBMI(nowBMI.value)
 // ft/in输入框
@@ -185,7 +188,7 @@ function updateBMI(nowBMI) {
         <!-- 错误提示文字 -->
         <p v-if="isError" class="error-text">{{ isErrorText }}</p>
 
-        <div class="texBox" :style="'background: ' + textBox.bgColor + ';'">
+        <div class="texBox" v-if="nowBMI !== 0" :style="'background: ' + textBox.bgColor + ';'">
             <div class="texBox-top">
                 <span class="icon">{{ textBox.title[0] }}</span>
                 <span class="checkboxLabel">{{ textBox.title[1] + nowBMI + textBox.title[2] }}</span>

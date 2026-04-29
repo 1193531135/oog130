@@ -25,39 +25,22 @@ const dashOffset = computed(() => {
 })
 
 onMounted(() => {
-    // 进入页面触发Mixpanel事件
-    const mixpanel = new Mixpanel();
-    mixpanel.setmMxpanelValue("OB Completed Web")
-    const timer = setInterval(() => {
-        if (progress.value == 25) {
-            label.value = pageText.text[1]
-            progress.value += 1
-        } else if(progress.value>=100) {
-            clearInterval(timer)
-            pushControl.push()
-        }else{
-            progress.value += 1
-        }
-
-        if (progress.value >= 100) {
-            progress.value = 100
-            clearInterval(timer)
-            timer = null
-            window.setTimeout(() => {
-                change()
-            }, 200)
-            return
-        }
-
-        progress.value += 1
-    }, 70) // 每10毫秒增加1%，25%需要2500毫秒
-})
-
-onUnmounted(() => {
-    if (timer) {
-        clearInterval(timer)
+  // 进入页面触发Mixpanel事件
+  const mixpanel = new Mixpanel();
+  mixpanel.setmMxpanelValue("OB Completed Web")
+  const timer = setInterval(() => {
+    if (progress.value == 25) {
+      label.value = pageText.text[1]
+      progress.value += 1
+    } else if(progress.value>=100) {
+      clearInterval(timer)
+      pushControl.push()
+    }else{
+      progress.value += 1
     }
+  }, 70) // 每10毫秒增加1%，25%需要2500毫秒
 })
+
 </script>
 <template>
     <div class="text-page">

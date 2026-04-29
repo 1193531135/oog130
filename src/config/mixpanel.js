@@ -77,7 +77,7 @@ export class Mixpanel {
         this.mixpanel = mixpanel;
     }
     init(id) {
-        const mixpanelDeviceId = id || utils.getUrlParams(window.location.href)?.id || sessionStorage.getItem('uid')
+        const mixpanelDeviceId = id || sessionStorage.getItem('uid')
         this.mixpanel.identify(mixpanelDeviceId)
         console.log("Mixpanel initialized with ID:", mixpanelDeviceId);
     }

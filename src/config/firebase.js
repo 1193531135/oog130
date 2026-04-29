@@ -230,7 +230,6 @@ export async function getFirestoreDataByUid(documentId, collectionPath = firebas
 }
 //firestore添加数据
 export async function addFirestoreData(documentId, data, collectionPath = firebaseConfig.defaultCollectionPath) {
-    await hasExitedAnonymousAccount();
     try {
         const documentRef = doc(db, collectionPath, documentId);
         await setDoc(documentRef, data);

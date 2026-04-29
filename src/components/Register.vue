@@ -59,7 +59,7 @@ const register = async () => {
   }
   try {
     // ob 绑定
-    await addFirestoreData(uid, pageData);
+    await addFirestoreData(uid, JSON.parse(JSON.stringify(pageData)));
     // 发起订阅转移(实际上是转为正式账号)
     await transferSubscription(uid, accountInfo);
     // 跳转下载链接
@@ -68,6 +68,7 @@ const register = async () => {
     a.click()
     loading.value = false;
   } catch (err) {
+    console.log("Error transferring subscription:", err);
     // 转移失败，可能是因为用户没有订阅或者其他原因
     // 失败后应该发起邮件
   }

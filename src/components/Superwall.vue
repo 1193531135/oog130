@@ -133,6 +133,7 @@ const mixpanelConfigOB = () => {
 const eventTracker = {
     // 初始化触发
     view() {
+        console.log('view change')
         mixpanel.setmMxpanelValue("OB Paywall Viewed Web", mixpanelConfigOB())
         mixpanel.setmMxpanelValue("Paywall Viewed Web", mixpanelConfig())
     },

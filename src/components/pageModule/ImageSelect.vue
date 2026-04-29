@@ -111,8 +111,9 @@ function goIt() {
 
 @media (max-width: 767px) {
   .select-page-con {
-    padding: 0 16px;
-    overflow: hidden;
+    padding: 0 16px 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
     flex: 1;
     width: 100%;
     .title {

@@ -3,7 +3,7 @@ import { ref,onMounted,computed,watch } from "vue";
 import { readLanguage } from "@/tool";
 import { useRoute } from "vue-router";
 import { registerList } from "@/router/index.js";
-import { getFirestoreDataByUid, createAnonymousAccount } from "@/config/firebase.js"
+import { createAnonymousAccount } from "@/config/firebase.js"
 import  { getPriceList } from "@/api/system"
 import config from "@/config/index.js";
 import { Mixpanel } from "@/config/mixpanel.js"
@@ -47,18 +47,15 @@ onMounted(async () => {
   // 初始化mixpanel
   const mixpanel = new Mixpanel();
   mixpanel.init();
-  // const fetchedData = await getFirestoreDataByUid();
+
   loadResources();
-  // if (fetchedData) {
-  //   console.log('updateOnBoardingRecordInfo', fetchedData);
-  // }
 })
 </script>
 
 <template>
   <div class="page-container" v-if="loaded">
     <div class="head-container">
-      <img src="./assets/back.webp" class="back-btn" @click="back" v-show="routeIndex > 0">
+      <img src="./assets/back.webp" class="back-btn" @click="back" :style="{visibility: routeIndex > 0 ? 'visible' : 'hidden'}">
       <img src="./assets/title-logo.webp" class="head-logo">
       <div class="head-text">Tai CHi</div>
     </div>

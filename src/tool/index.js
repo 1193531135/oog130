@@ -28,8 +28,9 @@ export class PushControl{
     this.isPushing = false
   }
   async push(path){
+    await router.isReady();
     const route = router.currentRoute.value.fullPath;
-    console.log("current route: ", route)
+    console.log("current route: ", router.currentRoute)
     const nextRoute = registerList[registerList.findIndex(i=> i.path === route) + 1]
     const pushUrl = path || nextRoute.path
     // 点击埋点
