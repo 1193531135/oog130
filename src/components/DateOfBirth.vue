@@ -11,7 +11,6 @@ const route = useRoute()
 const pageText = window.languageData[route.name]
 
 const value = ref(pageData[route.name] ? dayjs(pageData[route.name], 'DD/MM/YYYY') : null) // 输入框的值，初始为页面数据中的值
-console.log('pageData[route.name]',dayjs(pageData[route.name]),pageData[route.name])
 const displayValue = computed(() => {
   return value.value
     ? value.value.format('DD/MM/YYYY')
@@ -19,7 +18,6 @@ const displayValue = computed(() => {
 })
 
 function change(val) {
-  console.log(val)
   pageData.set(route.name, val.format('DD/MM/YYYY'))
 }
 

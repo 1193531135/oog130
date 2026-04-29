@@ -23,7 +23,6 @@ function change(val) {
 }
 const validate = () => {
   let val = hopeDate.value.replace(/\D/g, '').length
-  console.log(val)
   if (val == 8) {
     isFocused.value = true
     isError.value = false
@@ -39,11 +38,9 @@ const onInput = (e) => {
   const year = now.getFullYear()
   const month = String(now.getMonth() + 1).padStart(2, '0')
   const day = String(now.getDate()).padStart(2, '0')
-  console.log('onInput正在输入：', e.target.value.length, '-------', hopeDate.value.length)
   // 这里写你要的逻辑：限制数字、格式化、校验等
   let val = e.target.value.replace(/\D/g, '') // 去掉非数字
   let oldVal = hopeDate.value.replace(/\D/g, '')
-  console.log('onInput去掉非数字：', '新：：' + val, e.target.value, '旧：' + oldVal, hopeDate.value)
   if (val.length > oldVal.length) {
     if (val.length == 1) {
       if (val > 3) {

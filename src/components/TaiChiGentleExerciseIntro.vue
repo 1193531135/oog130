@@ -7,16 +7,13 @@ const pageData = new PageData()
 pageData
 const route = useRoute()
 let viewMode = Number(pageData.ChooserGender) || 0
-console.log('viewMode', pageData)
 const pageText = window.languageData[route.name]
 viewMode = viewMode === 0 ? 0 : 1
 
 
 function change(val) {
-    console.log(val)
     pushControl.push()
 }
-console.log(pageText, viewMode)
 </script>
 
 <template>

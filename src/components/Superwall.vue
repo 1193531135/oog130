@@ -76,11 +76,9 @@ if (nowBMI < 18) {
 } else {
     promptNum.value = 3
 }
-console.log('promptNum', promptNum.value, pageText.promptNum)
 userData.value.age = calcAge(pageData['DateOfBirth'])
 userData.value.gender = pageData['ChooserGender']
 const currentKcal = calcRecommendedCalories(pageData['CurrentWeight'], pageData['YourHeight'])
-console.log('YourHeight', pageData['YourHeight'])
 
 if (pageData['YourHeight']?.unit == "ft/in") { }
 // if(pageData['YourHeight'])
@@ -96,7 +94,6 @@ const calcBodyFat = (bmi, gender, age) =>
         ? 1.2 * bmi + 0.23 * age - 16.2
         : 1.2 * bmi + 0.23 * age - 5.4
     ).toFixed(2));
-console.log(1111, userData.value, currentKcal, fillPercent)
 
 // 设置mixpanel配置项
 /*
@@ -143,7 +140,6 @@ const eventTracker = {
 
 getPriceList(uid, { uid, lpId: '' }).then(res => {
     productList.value = res.data.products
-    console.log('products', res.data.products)
     // 进入页面触发加载埋点，因为要传入价格，所以放在获取价格列表之后
     eventTracker.view()
 })
@@ -201,18 +197,15 @@ onMounted(() => {
 
     // 监听加载完成
     anim.addEventListener('DOMLoaded', () => {
-        console.log('✅ Lottie 动画加载成功')
         // anim.goToAndStop(50, true) // 跳到指定帧
     })
 
     // 监听动画开始
     anim.addEventListener('data_ready', () => {
-        console.log('🎬 动画开始')
     })
 
     // 监听动画结束
     anim.addEventListener('complete', () => {
-        console.log('🏁 动画播放完成')
         anim1?.play()
         discount.value = true
         // 这里可以写关闭弹窗、执行后续逻辑
@@ -221,7 +214,6 @@ onMounted(() => {
         isDisabled.value = false
     })
     setTimeout(() => {
-        console.log('显示抽奖弹窗')
         isShow.value = true
         isDisabled.value = false
         anim?.play()
@@ -236,7 +228,6 @@ function ButtonClick() {
     if (discount.value) {
         // 已经有折扣了，点击按钮应该是去结算或者关闭弹窗
         isShow.value = false
-        console.log('去结算')
     } else {
         isDisabled.value = true
         anim.goToAndStop(300, true)
@@ -305,7 +296,6 @@ function calcRecommendedCalories(weightObj, heightObj) {
     } else {
         height = Number(heightObj.value);
     }
-    console.log(weight, height, 55555)
     // 卡路里计算公式
     const recommendedCalories = ((10 * weight + 6.25 * height - 300) * 1.2) - 300;
     return Math.round(recommendedCalories);

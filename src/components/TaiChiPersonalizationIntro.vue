@@ -10,7 +10,6 @@ const pageText = window.languageData[route.name]
 
 
 function change(val) {
-  console.log(val)
   pushControl.push()
 }
 </script>

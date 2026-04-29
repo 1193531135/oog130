@@ -35,7 +35,6 @@ const validate = () => {
     let val = height.value.replace(/\D/g, '')
 
     isErrorText.value = "Height must be greater than or equal to 3 ft"
-    console.log(val)
     if (val.length == 3 && (val - 0) % 100 >= 3) {
         isFocused.value = true
         isError.value = false
@@ -48,17 +47,13 @@ const validate = () => {
     }
 }
 const onInput = (e) => {
-    console.log('onInput正在输入：', e.target.value.length, '-------', height.value.length)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     let oldVal = height.value.replace(/\D/g, '')
-    console.log('onInput去掉非数字：', '新：：' + val, '旧：' + oldVal)
     if (e.target.value.length < height.value.length) {
-        console.log('onInput用户按下了删除键')
         //删除
         if (oldVal.length == 3) {
             height.value = val[0] + ' ft ' + val[1]
-            console.log(height.value)
             placeholder_2.value = '_in'
             e.target.value = height.value
         } else if (oldVal.length == 2) {
@@ -73,21 +68,17 @@ const onInput = (e) => {
             e.target.value = height.value
         }
     } else {
-        console.log('onInput用户正在输入', height.value, val)
         //输入
         if (val.length == 1) {
-            console.log('输入1')
             height.value = val + ' ft'
             placeholder_1.value = ''
             e.target.value = height.value
         } else if (val.length == 2) {
-            console.log('输入2')
             height.value = val[0] + ' ft ' + val[1]
             placeholder_1.value = ''
             placeholder_2.value = "_in"
             e.target.value = height.value
         } else if (val.length == 3) {
-            console.log('输入3')
             height.value = val[0] + ' ft ' + val[1] + val[2] + ' in'
             placeholder_1.value = ''
             placeholder_2.value = ''
@@ -142,7 +133,6 @@ const focusInput = () => {
 onMounted(() => {
     if (unit.value === 'ft/in') {
         const inputDom = inputRef.value
-        console.log('inputDom', inputDom)
         inputDom.value = pageData[route.name]?.value
         inputRef.value.dispatchEvent(new Event('input'))
     }

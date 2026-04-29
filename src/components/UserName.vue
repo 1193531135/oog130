@@ -40,7 +40,6 @@ const validate = () => {
     }
 }
 const onInput = (e) => {
-    console.log(e.target.value)
     validate()
 
 }

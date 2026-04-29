@@ -63,7 +63,6 @@ const weightComparison = () => {
     } else {
         textBox.val = developOptions[i]
     }
-    console.log('newWeight', newWeight, oldWeight, percent, textBox.value, i, d)
 }
 weightComparison()
 // ft/in输入框
@@ -72,7 +71,6 @@ const validate = () => {
     let val = targetWeight_lb.value.replace(/\D/g, '') - 0
 
     isErrorText.value = "Weight must be greater than or equal to 77 lb"
-    console.log(val)
     if (val >= 77) {
         isFocused.value = true
         isError.value = false
@@ -85,7 +83,6 @@ const validate = () => {
     }
 }
 const onInput = (e) => {
-    console.log('onInput正在输入：', e.target.value.length, '-------', targetWeight_lb.value.length)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
@@ -108,7 +105,6 @@ const validate1 = () => {
     }
 }
 const onInput1 = (e) => {
-    console.log('正在输入：', e.target.value)
     // 这里写你要的逻辑：限制数字、格式化、校验等
     let val = e.target.value.replace(/\D/g, '') // 去掉非数字
     if (val.length > 3) val = val.slice(0, 3)   // 最多3位
