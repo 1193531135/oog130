@@ -49,7 +49,6 @@ const sdkConfig = {
         messagingSenderId: "493620055150",
         appId: "1:493620055150:web:38d916d82f3d07bb532a7f",
         measurementId: "G-HZ5M6LL56P",
-
         defaultCollectionPath: 'web2app'
     },
     apiConfig: {
@@ -61,7 +60,7 @@ const sdkConfig = {
         stripeKey: "pk_test_51O5L81DOSX8YAb7RBP6pbsCt2Nyh9WJgmarDuYY7i25D9EXZQYc1s39FkSq3TOWUyFnKAaS0x1zM8BiVozEdsho300CTYNpxNj",
     },
     mixpanelConfig: {
-        token: '905c2315470093926e258d9937dd60dd',
+        token: '1e39f8d80172d066f7ef852a64c88245',
         onboardingEventKey: 'test_OB',
         homePageEventKey: 'test_1st',
         purchaseKey: 'test_OB'
